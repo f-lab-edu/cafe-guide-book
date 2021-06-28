@@ -4,11 +4,11 @@
 
 - cafe-guide-book은 사용자가 카페를 검색하고 메뉴를 주문할 수 있는 서비스입니다.
 - 단순한 기능 구현이 아닌 확장성, 유지보수성, Trade-Off를 고려하여 문제의 해결 방안을 제시하고자 노력했습니다.
-- 자세한 구현 내용은 PR에서 확인하실 수 있고, 기술적인 문제에 대한 해결 과정은 Wiki에서 확인할 수 있습니다.
+- 자세한 구현 내용은 PR에서 확인하실 수 있고, 기술적인 문제에 대한 해결 과정은 기술블로그와 Wiki에서 확인할 수 있습니다.
 
 <h4>기술 블로그</h4>
 
-- [minseong.kim](minseong.kim)
+- [https://www.minseong.kim/](https://www.minseong.kim/)
 - [https://velog.io/@jsj3282](https://velog.io/@jsj3282)
 
 <h4>프로젝트 목표</h4>
@@ -24,7 +24,7 @@
 <h4>기술 스택</h4>
 
 - Java 11
-- Spring Boot
+- Spring Boot 2.5.2
 - Junit5
 - MySQL
 - Redis
