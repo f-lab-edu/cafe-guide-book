@@ -14,6 +14,10 @@ repositories {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+    implementation 'org.springframework.boot:spring-boot-starter-jdbc:2.5.2'
+    implementation 'mysql:mysql-connector-java:8.0.25'
+    implementation 'javax.validation:validation-api:2.0.1.Final'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
