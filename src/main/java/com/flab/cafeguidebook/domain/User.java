@@ -1,6 +1,5 @@
 package com.flab.cafeguidebook.domain;
 
-import com.flab.cafeguidebook.enumeration.UserStatus;
 import com.flab.cafeguidebook.enumeration.UserType;
 
 public class User {
@@ -13,7 +12,7 @@ public class User {
   private UserType userType;
 
   public User(String email, String password, String name, String phone, String address,
-      UserType userType, UserStatus userStatus) {
+      UserType userType) {
     this.email = email;
     this.password = password;
     this.name = name;
