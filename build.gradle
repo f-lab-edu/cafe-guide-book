@@ -1,7 +1,13 @@
 plugins {
-    id 'org.springframework.boot' version '2.5.2'
+    id 'org.springframework.boot' version "2.5.2"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+}
+
+ext{
+    springBootVersion = "2.5.2"
+    springBootMybatisVersion = "2.2.0"
+    springBootMysqlVersion = "8.0.25"
 }
 
 group = 'com.flab'
@@ -13,8 +19,11 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
+    implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$springBootMybatisVersion"
+    implementation "org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion"
+    implementation "mysql:mysql-connector-java:$springBootMysqlVersion"
+    testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 }
 
 test {
