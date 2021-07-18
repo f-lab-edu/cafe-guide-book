@@ -36,6 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 
-**/application.properties
-
-src/test/java/com/flab/cafeguidebook/MySqlConnectionTest.java
+src/main/resources/application-local.properties
