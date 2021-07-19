@@ -52,3 +52,4 @@ public class CafeControllerTest {
             .andExpect(jsonPath("tel").value(testCafe.getTel()));
     }
 }
+
