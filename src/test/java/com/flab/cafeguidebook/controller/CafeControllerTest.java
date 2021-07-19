@@ -39,3 +39,4 @@ public class CafeControllerTest {
             .andExpect(status().isOk());
     }
 }
+

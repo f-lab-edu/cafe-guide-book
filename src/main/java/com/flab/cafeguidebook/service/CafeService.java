@@ -15,3 +15,5 @@ public class CafeService {
         int insertCafe = cafeMapper.insertCafe(cafeDTO);
     }
 }
+
+

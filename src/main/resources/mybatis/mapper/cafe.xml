@@ -37,3 +37,4 @@
             #{cafeRegistration})
   </insert>
 </mapper>
+

@@ -20,3 +20,4 @@ public class CafeServiceTest {
         cafeMapper.insertCafe(cafeDTO);
     }
 }
+
