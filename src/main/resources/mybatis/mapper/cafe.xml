@@ -1,27 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.cafeguidebook.mapper.CafeMapper">
   <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.cafe.CafeDTO">
-    INSERT INTO CAFE(
-      id,
-      cafe_name,
-      biz_number,
-      tel,
-      address_code,
-      address_detail,
-      operating_time,
-      cafe_info,
-      social_media,
-      wifi,
-      reservation,
-      parking_space,
-      no_kids_zone,
-      with_pet,
-      cafe_condition,
-      cafe_registration
-    )
-    VALUES(
-            #{id},
+    INSERT INTO CAFE(id,
+                     cafe_name,
+                     biz_number,
+                     tel,
+                     address_code,
+                     address_detail,
+                     operating_time,
+                     cafe_info,
+                     social_media,
+                     wifi,
+                     reservation,
+                     parking_space,
+                     no_kids_zone,
+                     with_pet,
+                     cafe_condition,
+                     cafe_registration)
+    VALUES (#{id},
             #{cafeName},
             #{bizNumber},
             #{tel},
@@ -36,7 +34,6 @@
             #{noKidsZone},
             #{withPet},
             #{cafeCondition},
-            #{cafeRegistration}
-          )
+            #{cafeRegistration})
   </insert>
 </mapper>

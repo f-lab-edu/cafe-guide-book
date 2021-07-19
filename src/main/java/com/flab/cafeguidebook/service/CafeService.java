@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class CafeService {
 
     @Autowired
-    CafeMapper cafeMapper;
+    private CafeMapper cafeMapper;
 
     public void addCafe(CafeDTO cafeDTO) {
         int insertCafe = cafeMapper.insertCafe(cafeDTO);
