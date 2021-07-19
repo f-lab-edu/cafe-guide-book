@@ -2,87 +2,64 @@ package com.flab.cafeguidebook.dto.cafe;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import org.springframework.lang.NonNull;
+import javax.validation.constraints.NotBlank;
 
 public class CafeDTO {
 
-    // 카페 영업 유무(오픈, 마감)
-    public enum CafeCondition{
+    public enum CafeCondition {
         OPEN, CLOSE
     }
 
-    // 카페 등록 여부(대기, 반려, 승인)
-    public enum CafeRegistration{
+    public enum CafeRegistration {
         PENDING, DENY, APPROVAL
     }
 
-    // 외래키
-    // 카페 주인 아이디
-    @NonNull
+    @NotBlank
     private String id;
 
-    // 외래키
-    // 해시태그 매핑 아이디
     private String hashTageId;
 
-    // 카페 이름
-    @NonNull
+    @NotBlank
     private String cafeName;
 
-    // 카페 사업자 등록번호
     private String bizNumber;
 
-    // 전화번호
     private String tel;
 
-    // 주소 코드
     private String addressCode;
 
-    // 상세 주소
     private String addressDetail;
 
-    // 영업 시간
     private String operatingTime;
 
-    // 카페 소개
     private String cafeInfo;
 
-    // sns 주소
     private String socialMedia;
 
-    // 카페 등록일
     private LocalDateTime registrationDate;
 
-    // 최종 수정일
     private LocalDateTime updateDate;
 
-    // wifi 유무
     private Boolean wifi;
 
-    // 예약 가능 여부
     private Boolean reservation;
 
-    // 주차 공간 여부
     private Boolean parkingSpace;
 
-    // 노키즈존 여부
     private Boolean noKidsZone;
 
-    // 애견동반 여부
     private Boolean withPet;
 
-    // 카페 영업 유무(오픈, 마감)
     private CafeCondition cafeCondition;
 
-    // 카페 등록 여부(대기, 반려, 승인)
     private CafeRegistration cafeRegistration;
 
-    @NonNull
+    @NotBlank
     public String getId() {
         return id;
     }
 
-    public void setId(@NonNull String id) {
+    public void setId(@NotBlank String id) {
         this.id = id;
     }
 
@@ -94,12 +71,12 @@ public class CafeDTO {
         this.hashTageId = hashTageId;
     }
 
-    @NonNull
+    @NotBlank
     public String getCafeName() {
         return cafeName;
     }
 
-    public void setCafeName(@NonNull String cafeName) {
+    public void setCafeName(@NotBlank String cafeName) {
         this.cafeName = cafeName;
     }
 
