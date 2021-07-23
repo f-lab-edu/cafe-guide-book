@@ -3,8 +3,7 @@ package com.flab.cafeguidebook.service.impl;
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.UserService;
-
-import com.flab.cafeguidebook.util.Encryptor;
+import com.flab.cafeguidebook.util.HashingUtil;
 
 public class UserServiceImpl implements UserService{
 
@@ -17,7 +16,7 @@ public class UserServiceImpl implements UserService{
   // TODO : 이메일 중복체크 기능 추가 예정
   @Override
   public void signUp(UserDTO userDTO) {
-    userDTO.setPassword(Encryptor.sha256Encrypt(userDTO.getPassword()));
+    userDTO.setPassword(HashingUtil.sha256Hashing(userDTO.getPassword()));
     userMapper.insertUser(userDTO);
   }
 }
