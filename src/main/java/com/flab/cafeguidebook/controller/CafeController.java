@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,15 +44,28 @@ public class CafeController {
     }
 
     @GetMapping
-    public ResponseEntity myAllCafe(HttpSession httpSession) {
+    public ResponseEntity getMyAllCafe(HttpSession httpSession) {
         String id = (String) httpSession.getAttribute("id");
-        List<CafeDTO> myAllCafe = cafeService.myAllCafe(id);
+        List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(id);
         if (myAllCafe.size() > 0) {
-            cafeService.myAllCafe(id);
             return ResponseEntity.ok().body(myAllCafe);
         } else {
             LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @GetMapping("/{cafeId}")
+    public ResponseEntity getMyCafe(@PathVariable String cafeId,
+        HttpSession httpSession) {
+        String id = (String) httpSession.getAttribute("id");
+        cafeService.validateMyCafe(cafeId, id);
+        CafeDTO myCafe = cafeService.getMyCafe(cafeId, id);
+        if (myCafe == null) {
+            LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.ok(myCafe);
         }
     }
 

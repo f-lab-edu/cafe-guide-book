@@ -69,5 +69,42 @@
     FROM cafe
     WHERE id = #{id}
   </select>
+
+  <select id="isMyCafe" resultType="boolean" parameterType="map">
+    SELECT EXISTS
+             (SELECT cafe_name FROM cafe WHERE cafe_id = #{cafeId} AND id = #{id})
+  </select>
+
+  <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.cafe.CafeDTO"
+    parameterType="map">
+    SELECT id,
+           cafe_id,
+           hashtag_id,
+           cafe_name,
+           biz_number,
+           tel,
+           address_code,
+           address_detail,
+           operating_time,
+           cafe_info,
+           social_media,
+           cafe_registration,
+           registration_date,
+           update_date,
+           wifi,
+           reservation,
+           parking_space,
+           no_kids_zone,
+           with_pet,
+           cafe_condition,
+           cafe_registration
+    FROM cafe
+    WHERE cafe_id = #{cafeId}
+      AND id = #{id}
+  </select>
+  <delete id="deleteAllCafe">
+    DELETE
+    FROM CAFE;
+  </delete>
 </mapper>
 
