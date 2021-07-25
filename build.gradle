@@ -8,6 +8,7 @@ ext{
     springBootVersion = "2.5.2"
     springBootMybatisVersion = "2.2.0"
     springBootMysqlVersion = "8.0.25"
+    mockitoVersion = "3.11.2"
 }
 
 group = 'com.flab'
@@ -18,12 +19,21 @@ repositories {
     mavenCentral()
 }
 
+configurations {
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+    }
+}
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:$springBootVersion"
     implementation "org.mybatis.spring.boot:mybatis-spring-boot-starter:$springBootMybatisVersion"
     implementation "org.springframework.boot:spring-boot-starter-jdbc:$springBootVersion"
     implementation "mysql:mysql-connector-java:$springBootMysqlVersion"
+    implementation "org.springframework.boot:spring-boot-starter-log4j2:$springBootVersion"
+    implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
 }
 
 test {
