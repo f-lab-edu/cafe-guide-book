@@ -38,8 +38,9 @@ public class CafeControllerTest {
     public void addCafe() throws Exception {
         String id = "testId";
         CafeDTO cafeDTO = new CafeDTO();
+        cafeDTO.setCafeId("testCafeId1");
         cafeDTO.setId(id);
-        cafeDTO.setCafeName("테스트카페");
+        cafeDTO.setCafeName("testId의 첫번째 카페");
         cafeDTO.setTel("010-1234-5678");
 
         mockMvc.perform(post("/owner/cafe/")
@@ -58,11 +59,13 @@ public class CafeControllerTest {
 
         CafeDTO cafeDTO1 = new CafeDTO();
         cafeDTO1.setId(id);
+        cafeDTO1.setCafeId("testCafeId1");
         cafeDTO1.setCafeName("testId의 첫번째 카페");
         cafeDTO1.setTel("010-1234-5678");
 
         CafeDTO cafeDTO2 = new CafeDTO();
         cafeDTO2.setId(id);
+        cafeDTO1.setCafeId("testCafeId2");
         cafeDTO2.setCafeName("testId의 두번째 카페");
         cafeDTO2.setTel("010-2345-6789");
 
@@ -78,4 +81,5 @@ public class CafeControllerTest {
             .andExpect(status().isOk());
     }
 }
+
 

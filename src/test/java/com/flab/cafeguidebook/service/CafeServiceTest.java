@@ -19,6 +19,7 @@ public class CafeServiceTest {
         String id = "testId";
         CafeDTO cafeDTO = new CafeDTO();
         cafeDTO.setId(id);
+        cafeDTO.setCafeId("testCafeId1");
         cafeDTO.setCafeName("테스트카페");
         cafeDTO.setTel("010-1234-5678");
 

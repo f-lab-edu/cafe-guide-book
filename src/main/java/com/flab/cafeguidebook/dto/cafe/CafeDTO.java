@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.dto.cafe;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import javax.validation.constraints.NotBlank;
+import org.springframework.lang.NonNull;
 
 public class CafeDTO {
 
@@ -14,11 +15,17 @@ public class CafeDTO {
         PENDING, DENY, APPROVAL
     }
 
+    @NonNull
     @NotBlank
     private String id;
 
+    @NonNull
+    @NotBlank
+    private String cafeId;
+
     private String hashTageId;
 
+    @NonNull
     @NotBlank
     private String cafeName;
 
@@ -54,13 +61,22 @@ public class CafeDTO {
 
     private CafeRegistration cafeRegistration;
 
-    @NotBlank
+    @NonNull
     public String getId() {
         return id;
     }
 
-    public void setId(@NotBlank String id) {
+    public void setId(@NonNull String id) {
         this.id = id;
+    }
+
+    @NonNull
+    public String getCafeId() {
+        return cafeId;
+    }
+
+    public void setCafeId(@NonNull String cafeId) {
+        this.cafeId = cafeId;
     }
 
     public String getHashTageId() {
@@ -71,12 +87,12 @@ public class CafeDTO {
         this.hashTageId = hashTageId;
     }
 
-    @NotBlank
+    @NonNull
     public String getCafeName() {
         return cafeName;
     }
 
-    public void setCafeName(@NotBlank String cafeName) {
+    public void setCafeName(@NonNull String cafeName) {
         this.cafeName = cafeName;
     }
 
@@ -218,8 +234,8 @@ public class CafeDTO {
             return false;
         }
         CafeDTO cafeDTO = (CafeDTO) o;
-        return getId().equals(cafeDTO.getId()) && Objects
-            .equals(getHashTageId(), cafeDTO.getHashTageId()) && getCafeName()
+        return getId().equals(cafeDTO.getId()) && getCafeId().equals(cafeDTO.getCafeId())
+            && Objects.equals(getHashTageId(), cafeDTO.getHashTageId()) && getCafeName()
             .equals(cafeDTO.getCafeName()) && Objects
             .equals(getBizNumber(), cafeDTO.getBizNumber()) && Objects
             .equals(getTel(), cafeDTO.getTel()) && Objects
@@ -241,18 +257,19 @@ public class CafeDTO {
     @Override
     public int hashCode() {
         return Objects
-            .hash(getId(), getHashTageId(), getCafeName(), getBizNumber(), getTel(),
-                getAddressCode(),
-                getAddressDetail(), getOperatingTime(), getCafeInfo(), getSocialMedia(),
-                getRegistrationDate(), getUpdateDate(), getWifi(), getReservation(),
-                getParkingSpace(),
-                getNoKidsZone(), getWithPet(), getCafeCondition(), getCafeRegistration());
+            .hash(getId(), getCafeId(), getHashTageId(), getCafeName(), getBizNumber(), getTel(),
+                getAddressCode(), getAddressDetail(), getOperatingTime(), getCafeInfo(),
+                getSocialMedia(), getRegistrationDate(), getUpdateDate(), getWifi(),
+                getReservation(),
+                getParkingSpace(), getNoKidsZone(), getWithPet(), getCafeCondition(),
+                getCafeRegistration());
     }
 
     @Override
     public String toString() {
         return "CafeDTO{" +
             "id='" + id + '\'' +
+            ", cafeId='" + cafeId + '\'' +
             ", hashTageId='" + hashTageId + '\'' +
             ", cafeName='" + cafeName + '\'' +
             ", bizNumber='" + bizNumber + '\'' +
