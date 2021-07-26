@@ -1,8 +1,6 @@
 package com.flab.cafeguidebook.dto;
 
 import com.flab.cafeguidebook.enumeration.UserType;
-import java.time.LocalDateTime;
-import java.util.List;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
@@ -29,64 +27,30 @@ public class UserDTO {
   @NotNull(message = "유저 타입을 반드시 지정해야 합니다.")
   private UserType userType;
 
-  public UserDTO(Builder builder){
+  public UserDTO() {
   }
 
-  public static class Builder {
-
-    private String email;
-    private String password;
-    private String name;
-    private String phone;
-    private String address;
-    private UserType userType;
-
-    public Builder Builder() {
-      return this;
-    }
-
-    public UserDTO.Builder email(String email) {
-      this.email = email;
-      return this;
-    }
-
-    public UserDTO.Builder password(String password) {
-      this.password = password;
-      return this;
-    }
-
-    public UserDTO.Builder name(String name) {
-      this.name = name;
-      return this;
-    }
-
-    public UserDTO.Builder phone(String phone) {
-      this.phone = phone;
-      return this;
-    }
-
-    public UserDTO.Builder address(String address) {
-      this.address = address;
-      return this;
-    }
-
-    public UserDTO.Builder userType(UserType userType) {
-      this.userType = userType;
-      return this;
-    }
-
-    public UserDTO build() {
-      return new UserDTO(this);
-    }
+  public UserDTO(Builder builder) {
+    this.email = builder.email;
+    this.password = builder.password;
+    this.name = builder.name;
+    this.phone = builder.phone;
+    this.address = builder.address;
+    this.userType = builder.userType;
   }
 
-  public UserDTO(String id, String password, String email, String phone, String name, String address, UserType userType) {
-    this.password = password;
+  public UserDTO(String email, String password, String name, String phone,
+      String address, UserType userType) {
     this.email = email;
-    this.phone = phone.replaceAll("-", "");;
+    this.password = password;
     this.name = name;
+    this.phone = phone.replaceAll("-", "");
     this.address = address;
     this.userType = userType;
+  }
+
+  public static Builder builder() {
+    return new Builder();
   }
 
   public String getEmail() {
@@ -135,6 +99,54 @@ public class UserDTO {
 
   public void setUserType(UserType userType) {
     this.userType = userType;
+  }
+
+  public static class Builder {
+
+    private String email;
+    private String password;
+    private String name;
+    private String phone;
+    private String address;
+    private UserType userType;
+
+    public Builder Builder() {
+      return this;
+    }
+
+    public UserDTO.Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    public UserDTO.Builder password(String password) {
+      this.password = password;
+      return this;
+    }
+
+    public UserDTO.Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    public UserDTO.Builder phone(String phone) {
+      this.phone = phone;
+      return this;
+    }
+
+    public UserDTO.Builder address(String address) {
+      this.address = address;
+      return this;
+    }
+
+    public UserDTO.Builder userType(UserType userType) {
+      this.userType = userType;
+      return this;
+    }
+
+    public UserDTO build() {
+      return new UserDTO(this);
+    }
   }
 
 }
