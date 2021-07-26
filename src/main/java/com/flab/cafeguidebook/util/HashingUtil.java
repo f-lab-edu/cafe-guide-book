@@ -10,4 +10,8 @@ public class HashingUtil {
         .hashString(originalPassword, StandardCharsets.UTF_8)
         .toString();
   }
+
+  public static Boolean isMatchWithSha256Hashing(String originalPassword, String hashedPassword) {
+    return hashedPassword.equals(sha256Hashing(originalPassword));
+  }
 }
