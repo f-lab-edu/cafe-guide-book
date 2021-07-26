@@ -4,8 +4,10 @@ import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.util.HashingUtil;
+import org.springframework.stereotype.Service;
 
-public class UserServiceImpl implements UserService{
+@Service
+public class UserServiceImpl implements UserService {
 
   private final UserMapper userMapper;
 
