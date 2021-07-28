@@ -6,7 +6,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 import com.flab.cafeguidebook.dto.UserDTO;
-import com.flab.cafeguidebook.extension.UserExtension;
+import com.flab.cafeguidebook.extension.UserFixtures;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -20,7 +20,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith({MockitoExtension.class})
 class UserServiceTest {
 
-  UserDTO user = UserExtension.testUserDto;
+  UserDTO user = UserFixtures.testUserDto;
 
   @Mock
   private UserMapper userMapper;

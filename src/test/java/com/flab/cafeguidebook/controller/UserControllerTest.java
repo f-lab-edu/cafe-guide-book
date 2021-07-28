@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
-import com.flab.cafeguidebook.extension.UserExtension;
+import com.flab.cafeguidebook.extension.UserFixtures;
 import com.flab.cafeguidebook.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,7 +36,7 @@ class UserControllerTest {
   @MockBean
   UserService userService;
 
-  private User testUser = UserExtension.testUser;
+  private User testUser = UserFixtures.testUser;
 
   @BeforeEach
   public void init() {
