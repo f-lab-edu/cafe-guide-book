@@ -6,11 +6,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
-import com.flab.cafeguidebook.extension.UserFixtures;
+import com.flab.cafeguidebook.extension.UserFixtureProvider;
 import com.flab.cafeguidebook.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,6 +22,7 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
+@ExtendWith({UserFixtureProvider.class})
 @WebMvcTest(UserController.class)
 class UserControllerTest {
 
@@ -36,17 +38,14 @@ class UserControllerTest {
   @MockBean
   UserService userService;
 
-  private User testUser = UserFixtures.testUser;
-
   @BeforeEach
   public void init() {
-
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
   }
 
   @Test
   @DisplayName("회원가입 컨트롤러 진입 테스트")
-  void signUpSuccess() throws Exception {
+  void signUpSuccess(User testUser) throws Exception {
     String content = objectMapper.writeValueAsString(testUser);
 
     mockMvc.perform(post("/users/signUp")

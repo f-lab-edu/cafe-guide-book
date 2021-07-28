@@ -6,7 +6,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 import com.flab.cafeguidebook.dto.UserDTO;
-import com.flab.cafeguidebook.extension.UserFixtures;
+import com.flab.cafeguidebook.extension.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.DisplayName;
@@ -17,10 +17,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-@ExtendWith({MockitoExtension.class})
+@ExtendWith({MockitoExtension.class, UserDTOFixtureProvider.class})
 class UserServiceTest {
-
-  UserDTO user = UserFixtures.testUserDto;
 
   @Mock
   private UserMapper userMapper;
@@ -31,8 +29,7 @@ class UserServiceTest {
 
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
-  public void signUpTestSuccess() {
-
+  public void signUpTestSuccess(UserDTO user) {
     ArgumentCaptor<UserDTO> valueCapture = ArgumentCaptor.forClass(UserDTO.class);
 
     doNothing().when(userMapper).insertUser(valueCapture.capture());
@@ -42,6 +39,5 @@ class UserServiceTest {
     verify(userMapper).insertUser(any(UserDTO.class));
 
     assertTrue(user.getPassword().equals(valueCapture.getValue().getPassword()));
-
   }
 }
