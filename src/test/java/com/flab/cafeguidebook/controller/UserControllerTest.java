@@ -6,7 +6,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
-import com.flab.cafeguidebook.enumeration.UserType;
+import com.flab.cafeguidebook.extension.UserExtension;
 import com.flab.cafeguidebook.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -36,18 +36,11 @@ class UserControllerTest {
   @MockBean
   UserService userService;
 
-  private User testUser;
+  private User testUser = UserExtension.testUser;
 
   @BeforeEach
   public void init() {
-    testUser = User.builder()
-        .email("yssj2049@gmail.com")
-        .password("Cafe1234!")
-        .name("김민성")
-        .phone("010-8358-2049")
-        .address("경기도 화성시 호수공원")
-        .userType(UserType.USER)
-        .build();
+
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
   }
 
