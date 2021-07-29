@@ -17,8 +17,8 @@ public class UserServiceImpl implements UserService {
 
   // TODO : 이메일 중복체크 기능 추가 예정
   @Override
-  public void signUp(UserDTO userDTO) {
+  public boolean signUp(UserDTO userDTO) {
     userDTO.setPassword(HashingUtil.sha256Hashing(userDTO.getPassword()));
-    userMapper.insertUser(userDTO);
+    return (userMapper.insertUser(userDTO) == 1);
   }
 }
