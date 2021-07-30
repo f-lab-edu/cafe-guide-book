@@ -37,4 +37,8 @@ public class UserController {
         return userService.getUserInfo(email);
     }
 
+  @PostMapping(value = "/signIn")
+  public void signIn(String email, String password) {
+    userService.signIn(email, password);
+  }
 }
