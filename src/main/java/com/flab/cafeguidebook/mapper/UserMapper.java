@@ -11,4 +11,7 @@ public interface UserMapper {
   UserDTO selectUserByEmail(String email);
 
   UserDTO getUserInfo(String email);
+
+  UserDTO selectUserByEmailAndPassword(String email, String password);
+
 }
