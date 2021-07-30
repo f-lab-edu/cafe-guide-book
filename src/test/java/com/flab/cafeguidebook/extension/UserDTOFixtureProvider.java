@@ -1,7 +1,6 @@
 package com.flab.cafeguidebook.extension;
 
 import com.flab.cafeguidebook.dto.UserDTO;
-import com.flab.cafeguidebook.enumeration.UserType;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
@@ -15,6 +14,7 @@ public class UserDTOFixtureProvider implements ParameterResolver {
     return (parameterContext.getParameter().getType() == UserDTO.class);
   }
 
+  // TODO: Mybatis Enum 매핑 기능 추가 예정
   @Override
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
@@ -24,7 +24,7 @@ public class UserDTOFixtureProvider implements ParameterResolver {
         .name("김민성")
         .phone("010-8358-2049")
         .address("경기도 화성시 호수공원")
-        .userType(UserType.USER)
+//        .userType(UserType.USER)
         .build();
   }
 }

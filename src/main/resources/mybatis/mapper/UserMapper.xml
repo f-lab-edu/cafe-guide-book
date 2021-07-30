@@ -6,7 +6,14 @@
 <mapper namespace="com.flab.cafeguidebook.mapper.UserMapper">
   <insert id="insertUser"
     parameterType="com.flab.cafeguidebook.dto.UserDTO">
-    INSERT INTO user (email, password, name, phone, address, type)
+    INSERT INTO user (email, password, name, phone, address, userType)
     VALUES (#{email}, #{password}, #{name}, #{phone}, #{address}, #{userType})
   </insert>
+
+  <select id="selectUserByEmail" parameterType="String"
+    resultType="com.flab.cafeguidebook.dto.UserDTO">
+    SELECT *
+    FROM user
+    WHERE email = #{email}
+  </select>
 </mapper>
