@@ -29,4 +29,9 @@ public class UserController {
   public void signUp(@RequestBody UserDTO userDTO) {
     userService.signUp(userDTO);
   }
+
+  @PostMapping(value = "/signIn")
+  public void signUp(String email, String password) {
+    userService.signIn(email, password);
+  }
 }

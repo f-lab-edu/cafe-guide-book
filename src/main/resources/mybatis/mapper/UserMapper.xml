@@ -9,4 +9,12 @@
     INSERT INTO user (email, password, name, phone, address, type)
     VALUES (#{email}, #{password}, #{name}, #{phone}, #{address}, #{userType})
   </insert>
+
+  <select id="selectUserByEmailAndPassword" resultType="com.flab.cafeguidebook.dto.UserDTO">
+    SELECT email, name, phone, address, type
+    FROM user
+    WHERE email = #{email}
+      AND password = #{password}
+  </select>
+
 </mapper>

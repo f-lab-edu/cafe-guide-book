@@ -7,4 +7,6 @@ import org.springframework.stereotype.Service;
 public interface UserService {
 
   public boolean signUp(UserDTO userDTO);
+
+  public void signIn(String email, String password);
 }
