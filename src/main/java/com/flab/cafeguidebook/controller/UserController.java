@@ -4,6 +4,7 @@ import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,4 +35,10 @@ public class UserController {
   public void signUp(String email, String password) {
     userService.signIn(email, password);
   }
+
+  @GetMapping(value = "/logout")
+  public void logout() {
+    userService.logout();
+  }
+
 }
