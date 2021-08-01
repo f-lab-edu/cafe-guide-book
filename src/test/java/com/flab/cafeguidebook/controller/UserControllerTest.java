@@ -9,6 +9,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
+import com.flab.cafeguidebook.fixture.UserFixtureProvider;
+import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.extension.UserFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
@@ -75,6 +77,41 @@ class UserControllerTest {
     @DisplayName("회원정보 조회 통합 테스트")
     void getUserSuccess(User testUser) throws Exception {
         String content = objectMapper.writeValueAsString(testUser);
+  @Test
+  @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
+  public void signInUserTestWithSuccess(User testUser) throws Exception {
+
+    insertTestUser(testUser);
+
+    MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+    paramMap.add("email", testUser.getEmail());
+    paramMap.add("password", testUser.getPassword());
+
+    mockMvc.perform(
+        post("/users/signIn")
+            .contentType(MediaType.APPLICATION_JSON)
+            .params(paramMap))
+        .andDo(print())
+        .andExpect(status().isOk());
+  }
+
+  void insertTestUser(User testUser) throws Exception {
+    String content = objectMapper.writeValueAsString(testUser);
+
+    mockMvc.perform(post("/users/signUp")
+        .content(content)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated())
+        .andDo(print());
+  }
+
+
+
+  @Test
+  @DisplayName("회원정보 조회 통합 테스트")
+  void getUserSuccess(User testUser) throws Exception {
+    String content = objectMapper.writeValueAsString(testUser);
 
         mockMvc.perform(post("/users/signUp")
             .content(content)
