@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -30,6 +31,7 @@ class UserServiceTest {
   @Autowired
   private UserMapper userMapper;
 
+  @Mock
   private MockHttpSession mockHttpSession;
 
   @InjectMocks
@@ -76,6 +78,16 @@ class UserServiceTest {
     assertThrows(UserNotFoundException.class, () -> {
       userService.signIn(user.getEmail(), user.getPassword() + "Wrong Password");
     });
+  }
+
+  @Test
+  @DisplayName("로그아웃 성공")
+  public void logoutUserTestWithSuccess(UserDTO user) {
+    mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
+
+    userService.logout();
+
+    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
   }
 
 }
