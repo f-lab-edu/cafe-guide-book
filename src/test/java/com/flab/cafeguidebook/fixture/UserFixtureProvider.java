@@ -1,24 +1,24 @@
-package com.flab.cafeguidebook.extension;
+package com.flab.cafeguidebook.fixture;
 
-import com.flab.cafeguidebook.dto.UserDTO;
+import com.flab.cafeguidebook.domain.User;
 import com.flab.cafeguidebook.enumeration.UserType;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-public class UserDTOFixtureProvider implements ParameterResolver {
+public class UserFixtureProvider implements ParameterResolver {
 
   @Override
   public boolean supportsParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
-    return (parameterContext.getParameter().getType() == UserDTO.class);
+    return (parameterContext.getParameter().getType() == User.class);
   }
 
   @Override
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
-    return UserDTO.builder()
+    return User.builder()
         .email("yssj2049@gmail.com")
         .password("Cafe1234!")
         .name("김민성")
