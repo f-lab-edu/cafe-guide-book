@@ -95,14 +95,5 @@ class UserControllerTest {
         .andDo(print());
   }
 
-  @Test
-  @DisplayName("로그아웃 성공시 200을 리턴함")
-  public void logoutTestWithSuccess(User testUser) throws Exception {
 
-    mockMvc.perform(get("/users/logout"))
-        .andDo(print())
-        .andExpect(status().isOk());
-
-    verify(userService).logout();
-  }
 }
