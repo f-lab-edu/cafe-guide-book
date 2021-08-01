@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
     }
     return foundedUser;
   }
+
+  @Override
+  public void logout() {
+    httpSession.removeAttribute(SessionKeys.USER_EMAIL);
+  }
 }

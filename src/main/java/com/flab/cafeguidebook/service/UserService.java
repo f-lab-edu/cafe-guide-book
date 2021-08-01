@@ -11,4 +11,6 @@ public interface UserService {
   public void signIn(String email, String password);
 
   UserDTO getUserInfo(String email);
+
+  public void logout();
 }
