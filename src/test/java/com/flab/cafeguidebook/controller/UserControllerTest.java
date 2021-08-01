@@ -104,9 +104,6 @@ class UserControllerTest {
         .andDo(print());
   }
 
-  @Test
-  @DisplayName("로그아웃 성공시 200을 리턴함")
-  public void logoutTestWithSuccess(User testUser) throws Exception {
 
 
   @Test
