@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,6 +35,9 @@ class UserServiceTest {
     private UserServiceImpl userService;
     private MockHttpSession mockHttpSession;
 
+    @Mock
+    private MockHttpSession mockHttpSession;
+
     @InjectMocks
     @Autowired
     private UserServiceImpl userService;
@@ -53,7 +57,7 @@ class UserServiceTest {
         assertTrue(isSuccess);
     }
 
-  
+
 
     @Test
     @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
@@ -78,5 +82,21 @@ class UserServiceTest {
       assertThrows(UserNotFoundException.class, () -> {
         userService.signIn(user.getEmail(), user.getPassword() + "Wrong Password");
       });
+    }
+
+    @Test
+    @DisplayName("패스워드를 잘못 입력시 로그인 실패 및 UserNotFoundException throw")
+    public void signInTestFailWithWrongPassword(UserDTO user) {
+      assertThrows(UserNotFoundException.class, () -> {
+        userService.signIn(user.getEmail(), user.getPassword() + "Wrong Password");
+      });
+    }
+
+    @Test
+    @DisplayName("로그아웃 성공")
+    public void logoutUserTestWithSuccess(UserDTO user) {
+      mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
+      userService.logout();
+      assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
     }
 }

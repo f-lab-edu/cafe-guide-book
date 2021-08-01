@@ -3,6 +3,8 @@ package com.flab.cafeguidebook.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.verify;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -77,55 +79,59 @@ class UserControllerTest {
     @DisplayName("회원정보 조회 통합 테스트")
     void getUserSuccess(User testUser) throws Exception {
         String content = objectMapper.writeValueAsString(testUser);
-  @Test
-  @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
-  public void signInUserTestWithSuccess(User testUser) throws Exception {
 
-    insertTestUser(testUser);
+    @Test
+    @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
+    public void signInUserTestWithSuccess(User testUser) throws Exception {
 
-    MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
-    paramMap.add("email", testUser.getEmail());
-    paramMap.add("password", testUser.getPassword());
+      insertTestUser(testUser);
 
-    mockMvc.perform(
-        post("/users/signIn")
-            .contentType(MediaType.APPLICATION_JSON)
-            .params(paramMap))
-        .andDo(print())
-        .andExpect(status().isOk());
-  }
+      MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+      paramMap.add("email", testUser.getEmail());
+      paramMap.add("password", testUser.getPassword());
 
-  void insertTestUser(User testUser) throws Exception {
-    String content = objectMapper.writeValueAsString(testUser);
+      mockMvc.perform(
+          post("/users/signIn")
+              .contentType(MediaType.APPLICATION_JSON)
+              .params(paramMap))
+          .andDo(print())
+          .andExpect(status().isOk());
+    }
 
-    mockMvc.perform(post("/users/signUp")
-        .content(content)
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andDo(print());
-  }
+    void insertTestUser(User testUser) throws Exception {
+      String content = objectMapper.writeValueAsString(testUser);
+
+      mockMvc.perform(post("/users/signUp")
+          .content(content)
+          .contentType(MediaType.APPLICATION_JSON)
+          .accept(MediaType.APPLICATION_JSON))
+          .andExpect(status().isCreated())
+          .andDo(print());
+    }
+
+    @Test
+    @DisplayName("로그아웃 성공시 200을 리턴함")
+    public void logoutTestWithSuccess(User testUser) throws Exception {
 
 
+    @Test
+    @DisplayName("회원정보 조회 통합 테스트")
+    void getUserSuccess(User testUser) throws Exception {
+      String content = objectMapper.writeValueAsString(testUser);
 
-  @Test
-  @DisplayName("회원정보 조회 통합 테스트")
-  void getUserSuccess(User testUser) throws Exception {
-    String content = objectMapper.writeValueAsString(testUser);
+          mockMvc.perform(post("/users/signUp")
+              .content(content)
+              .contentType(MediaType.APPLICATION_JSON)
+              .accept(MediaType.APPLICATION_JSON))
+              .andExpect(status().isCreated())
+              .andDo(print());
 
-        mockMvc.perform(post("/users/signUp")
-            .content(content)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isCreated())
-            .andDo(print());
-
-        mockMvc.perform(get("/users/" + testUser.getEmail())
-            .content(content)
-            .contentType(MediaType.APPLICATION_JSON)
-            .accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andDo(print());
+          mockMvc.perform(get("/users/" + testUser.getEmail())
+              .content(content)
+              .contentType(MediaType.APPLICATION_JSON)
+              .accept(MediaType.APPLICATION_JSON))
+              .andExpect(status().isOk())
+              .andDo(print());
     }
 
     @Test
@@ -144,5 +150,4 @@ class UserControllerTest {
             });
         assertEquals(UserNotFoundException.class, e.getCause().getClass());
     }
-
 }
