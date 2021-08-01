@@ -38,9 +38,4 @@ public class UserServiceImpl implements UserService {
 
     httpSession.setAttribute(SessionKeys.USER_EMAIL, loginedUser.getEmail());
   }
-
-  @Override
-  public void logout() {
-    httpSession.removeAttribute(SessionKeys.USER_EMAIL);
-  }
 }
