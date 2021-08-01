@@ -43,9 +43,4 @@ public class UserController {
   public void signUp(String email, String password) {
     userService.signIn(email, password);
   }
-
-  @GetMapping("/logout")
-  public void logout() {
-    userService.logout();
-  }
 }
