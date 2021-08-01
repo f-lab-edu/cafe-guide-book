@@ -9,4 +9,6 @@ public interface UserService {
   public boolean signUp(UserDTO userDTO);
 
   public void signIn(String email, String password);
+
+  public void logout();
 }
