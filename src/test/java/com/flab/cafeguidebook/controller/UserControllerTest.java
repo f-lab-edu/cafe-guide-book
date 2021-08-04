@@ -7,14 +7,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
 import com.flab.cafeguidebook.extension.UserFixtureProvider;
-import com.flab.cafeguidebook.service.UserService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
@@ -27,16 +25,13 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 class UserControllerTest {
 
-  @Autowired
-  ObjectMapper objectMapper;
+  private MockMvc mockMvc;
 
   @Autowired
-  WebApplicationContext webApplicationContext;
+  private ObjectMapper objectMapper;
 
-  MockMvc mockMvc;
-
-  @MockBean
-  UserService userService;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
   @BeforeEach
   public void init() {
@@ -56,14 +51,12 @@ class UserControllerTest {
         .andDo(print());
   }
 
-
   @Test
   @DisplayName("회원가입 컨트롤러 진입 실패 테스트(입력값 누락)")
   void signUpFailWithMissingParam() throws Exception {
     MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     map.add("email", "yssj2049@gmail.com");
     map.add("password", "Cafe1234!");
-//    map.add("name", "김민성"); 이름이 누락된 경우
     map.add("phone", "010-8358-2049");
     map.add("address", "경기도 화성시 호수공원");
     map.add("type", "0");
