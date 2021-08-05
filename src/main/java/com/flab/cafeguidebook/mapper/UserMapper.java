@@ -10,4 +10,5 @@ public interface UserMapper {
 
   UserDTO selectUserByEmail(String email);
 
+  UserDTO getUserInfo(String email);
 }
