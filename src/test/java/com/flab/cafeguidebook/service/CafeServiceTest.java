@@ -1,72 +1,63 @@
 package com.flab.cafeguidebook.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.fixture.CafeFixture;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
-import org.junit.jupiter.api.TestInstance.Lifecycle;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-@TestInstance(Lifecycle.PER_CLASS)
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CafeServiceTest {
 
-    @Autowired
+    @Mock
     private CafeMapper cafeMapper;
 
-    public String testId = "testId";
+    @InjectMocks
+    private CafeService cafeService;
 
-    public CafeDTO testFixture1() {
-        String id = this.testId;
-        CafeDTO cafeDTO1 = new CafeDTO();
-        cafeDTO1.setCafeId("testCafeId1");
-        cafeDTO1.setId(id);
-        cafeDTO1.setCafeName("testId의 첫번째 카페");
-        cafeDTO1.setTel("010-1234-5678");
-        return cafeDTO1;
-    }
-
-    public CafeDTO testFixture2() {
-        String id = this.testId;
-        CafeDTO cafeDTO2 = new CafeDTO();
-        cafeDTO2.setId(id);
-        cafeDTO2.setCafeId("testCafeId2");
-        cafeDTO2.setCafeName("testId의 두번째 카페");
-        cafeDTO2.setTel("010-2345-6789");
-        return cafeDTO2;
-    }
+    private static CafeFixture cafeFixture;
 
     @BeforeAll
-    public void deleteTestFixtures(){
-        cafeMapper.deleteAllCafe();
+    public static void setUp() {
+        cafeFixture = new CafeFixture();
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        cafeFixture = null;
     }
 
     @Test
     public void addCafe() {
-        CafeDTO cafeDTO = testFixture1();
-        cafeMapper.insertCafe(cafeDTO);
+        CafeDTO cafeDTO = cafeFixture.getCafeFixture1();
+
+        given(cafeMapper.insertCafe(cafeDTO)).willReturn(1);
+        assertThat(cafeService.addCafe(cafeDTO)).isEqualTo(true);
     }
 
     @Test
     public void getMyAllCafe() {
-        cafeMapper.selectMyAllCafe(this.testId);
+        CafeDTO cafeDTO = cafeFixture.getCafeFixture1();
+        cafeMapper.selectMyAllCafe(cafeDTO.getUserId());
     }
 
     @Test
     public void validateMyCafe() {
-        CafeDTO cafeDTO = testFixture1();
-        System.out.println(cafeDTO.getCafeId());
-        cafeMapper.isMyCafe(cafeDTO.getCafeId(), cafeDTO.getId());
+        CafeDTO cafeDTO = cafeFixture.getCafeFixture1();
+        cafeMapper.isMyCafe(cafeDTO.getCafeId(), cafeDTO.getUserId());
     }
 
     @Test
     public void getMyCafe(){
-        CafeDTO cafeDTO = testFixture1();
-        System.out.println(cafeDTO.getCafeId());
-        cafeMapper.selectMyCafe(cafeDTO.getCafeId(), cafeDTO.getId());
+        CafeDTO cafeDTO = cafeFixture.getCafeFixture1();
+        cafeMapper.selectMyCafe(cafeDTO.getCafeId(), cafeDTO.getUserId());
     }
 }

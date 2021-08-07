@@ -1,4 +1,4 @@
-package com.flab.cafeguidebook.dto.cafe;
+package com.flab.cafeguidebook.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
@@ -17,7 +17,7 @@ public class CafeDTO {
 
     @NonNull
     @NotBlank
-    private String id;
+    private String userId;
 
     @NonNull
     @NotBlank
@@ -62,12 +62,12 @@ public class CafeDTO {
     private CafeRegistration cafeRegistration;
 
     @NonNull
-    public String getId() {
-        return id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setId(@NonNull String id) {
-        this.id = id;
+    public void setUserId(@NonNull String userId) {
+        this.userId = userId;
     }
 
     @NonNull
@@ -234,7 +234,7 @@ public class CafeDTO {
             return false;
         }
         CafeDTO cafeDTO = (CafeDTO) o;
-        return getId().equals(cafeDTO.getId()) && getCafeId().equals(cafeDTO.getCafeId())
+        return getUserId().equals(cafeDTO.getUserId()) && getCafeId().equals(cafeDTO.getCafeId())
             && Objects.equals(getHashTageId(), cafeDTO.getHashTageId()) && getCafeName()
             .equals(cafeDTO.getCafeName()) && Objects
             .equals(getBizNumber(), cafeDTO.getBizNumber()) && Objects
@@ -257,7 +257,8 @@ public class CafeDTO {
     @Override
     public int hashCode() {
         return Objects
-            .hash(getId(), getCafeId(), getHashTageId(), getCafeName(), getBizNumber(), getTel(),
+            .hash(getUserId(), getCafeId(), getHashTageId(), getCafeName(), getBizNumber(),
+                getTel(),
                 getAddressCode(), getAddressDetail(), getOperatingTime(), getCafeInfo(),
                 getSocialMedia(), getRegistrationDate(), getUpdateDate(), getWifi(),
                 getReservation(),
@@ -268,7 +269,7 @@ public class CafeDTO {
     @Override
     public String toString() {
         return "CafeDTO{" +
-            "id='" + id + '\'' +
+            "userId='" + userId + '\'' +
             ", cafeId='" + cafeId + '\'' +
             ", hashTageId='" + hashTageId + '\'' +
             ", cafeName='" + cafeName + '\'' +
@@ -291,4 +292,3 @@ public class CafeDTO {
             '}';
     }
 }
-

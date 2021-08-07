@@ -25,44 +25,44 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 class UserControllerTest {
 
-  private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-  @Autowired
-  private ObjectMapper objectMapper;
+    @Autowired
+    private ObjectMapper objectMapper;
 
-  @Autowired
-  private WebApplicationContext webApplicationContext;
+    @Autowired
+    private WebApplicationContext webApplicationContext;
 
-  @BeforeEach
-  public void init() {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-  }
+    @BeforeEach
+    public void init() {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    }
 
-  @Test
-  @DisplayName("회원가입 컨트롤러 진입 테스트")
-  void signUpSuccess(User testUser) throws Exception {
-    String content = objectMapper.writeValueAsString(testUser);
+    @Test
+    @DisplayName("회원가입 컨트롤러 진입 테스트")
+    void signUpSuccess(User testUser) throws Exception {
+        String content = objectMapper.writeValueAsString(testUser);
 
-    mockMvc.perform(post("/users/signUp")
-        .content(content)
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andDo(print());
-  }
+        mockMvc.perform(post("/users/signUp")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andDo(print());
+    }
 
-  @Test
-  @DisplayName("회원가입 컨트롤러 진입 실패 테스트(입력값 누락)")
-  void signUpFailWithMissingParam() throws Exception {
-    MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-    map.add("email", "yssj2049@gmail.com");
-    map.add("password", "Cafe1234!");
-    map.add("phone", "010-8358-2049");
-    map.add("address", "경기도 화성시 호수공원");
-    map.add("type", "0");
+    @Test
+    @DisplayName("회원가입 컨트롤러 진입 실패 테스트(입력값 누락)")
+    void signUpFailWithMissingParam() throws Exception {
+        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+        map.add("email", "yssj2049@gmail.com");
+        map.add("password", "Cafe1234!");
+        map.add("phone", "010-8358-2049");
+        map.add("address", "경기도 화성시 호수공원");
+        map.add("type", "0");
 
-    mockMvc.perform(post("/users/signUp")
-        .params(map))
-        .andExpect(status().isBadRequest());
-  }
+        mockMvc.perform(post("/users/signUp")
+            .params(map))
+            .andExpect(status().isBadRequest());
+    }
 }

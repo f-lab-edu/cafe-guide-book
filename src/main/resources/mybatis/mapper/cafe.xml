@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.cafeguidebook.mapper.CafeMapper">
-  <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.cafe.CafeDTO">
+  <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
     INSERT INTO CAFE(cafe_id,
-                     id,
+                     user_id,
                      cafe_name,
                      biz_number,
                      tel,
@@ -23,7 +23,7 @@
                      cafe_condition,
                      cafe_registration)
     VALUES (#{cafeId},
-            #{id},
+            #{userId},
             #{cafeName},
             #{bizNumber},
             #{tel},
@@ -44,8 +44,8 @@
   </insert>
 
   <select id="selectMyAllCafe" parameterType="String"
-    resultType="com.flab.cafeguidebook.dto.cafe.CafeDTO">
-    SELECT id,
+    resultType="com.flab.cafeguidebook.dto.CafeDTO">
+    SELECT user_id,
            cafe_id,
            hashtag_id,
            cafe_name,
@@ -67,17 +67,17 @@
            cafe_condition,
            cafe_registration
     FROM cafe
-    WHERE id = #{id}
+    WHERE user_id = #{userId}
   </select>
 
   <select id="isMyCafe" resultType="boolean" parameterType="map">
     SELECT EXISTS
-             (SELECT cafe_name FROM cafe WHERE cafe_id = #{cafeId} AND id = #{id})
+             (SELECT cafe_name FROM cafe WHERE cafe_id = #{cafeId} AND user_id = #{userId})
   </select>
 
-  <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.cafe.CafeDTO"
+  <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
-    SELECT id,
+    SELECT user_id,
            cafe_id,
            hashtag_id,
            cafe_name,
@@ -100,8 +100,9 @@
            cafe_registration
     FROM cafe
     WHERE cafe_id = #{cafeId}
-      AND id = #{id}
+      AND user_id = #{userId}
   </select>
+
   <delete id="deleteAllCafe">
     DELETE
     FROM CAFE;

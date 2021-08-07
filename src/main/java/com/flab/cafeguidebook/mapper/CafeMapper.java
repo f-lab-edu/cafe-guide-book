@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.mapper;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
@@ -18,4 +18,3 @@ public interface CafeMapper {
 
     public void deleteAllCafe();
 }
-

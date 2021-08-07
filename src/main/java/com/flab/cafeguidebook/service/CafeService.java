@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.service;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +14,9 @@ public class CafeService {
     @Autowired
     private CafeMapper cafeMapper;
 
-    public void addCafe(CafeDTO cafeDTO) {
+    public boolean addCafe(CafeDTO cafeDTO) {
         int insertCafe = cafeMapper.insertCafe(cafeDTO);
+        return insertCafe == 1;
     }
 
     public List<CafeDTO> getMyAllCafe(String id) {

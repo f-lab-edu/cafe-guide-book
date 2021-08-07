@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.controller;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -31,19 +31,20 @@ public class CafeController {
     public ResponseEntity addCafe(HttpSession httpSession,
         @RequestBody @Validated CafeDTO cafeDTO,
         BindingResult bindingResult) {
-        String id = (String) httpSession.getAttribute("id");
-        cafeDTO.setId(id);
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeDTO.setUserId(userId);
+
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> {
                 LOGGER.info(error);
             });
             return ResponseEntity.badRequest().build();
         }
-        //cafeService.addCafe(cafeDTO);
+        cafeService.addCafe(cafeDTO);
         return ResponseEntity.ok(cafeDTO);
     }
 
-    @GetMapping
+    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getMyAllCafe(HttpSession httpSession) {
         String id = (String) httpSession.getAttribute("id");
         List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(id);
@@ -55,14 +56,14 @@ public class CafeController {
         }
     }
 
-    @GetMapping("/{cafeId}")
+    @GetMapping(value = "/{cafeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getMyCafe(@PathVariable String cafeId,
         HttpSession httpSession) {
-        String id = (String) httpSession.getAttribute("id");
+        String id = (String) httpSession.getAttribute("userId");
         cafeService.validateMyCafe(cafeId, id);
         CafeDTO myCafe = cafeService.getMyCafe(cafeId, id);
         if (myCafe == null) {
-            LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
+            LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, id);
             return ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.ok(myCafe);
@@ -70,4 +71,3 @@ public class CafeController {
     }
 
 }
-
