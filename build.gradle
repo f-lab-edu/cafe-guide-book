@@ -4,10 +4,12 @@ plugins {
     id 'java'
 }
 
-ext{
+ext {
     springBootVersion = "2.5.2"
     springBootMybatisVersion = "2.2.0"
     springBootMysqlVersion = "8.0.25"
+    springGuavaVersion = "30.1.1-jre"
+    springMokitoVersion = "3.11.2"
 }
 
 group = 'com.flab'
@@ -31,6 +33,8 @@ dependencies {
     implementation "mysql:mysql-connector-java:$springBootMysqlVersion"
     implementation "org.springframework.boot:spring-boot-starter-log4j2:$springBootVersion"
     implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
+    implementation "com.google.guava:guava:$springGuavaVersion"
+    implementation "org.mockito:mockito-core:$springMokitoVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
 }
 
