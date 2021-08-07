@@ -1,6 +1,6 @@
-package com.flab.cafeguidebook.Fixture;
+package com.flab.cafeguidebook.fixture;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 
 public class CafeFixture {
 

@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.mapper;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import org.springframework.stereotype.Repository;
 
 @Repository

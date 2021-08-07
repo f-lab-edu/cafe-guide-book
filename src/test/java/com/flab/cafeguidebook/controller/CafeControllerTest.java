@@ -7,8 +7,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.cafeguidebook.Fixture.CafeFixture;
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.fixture.CafeFixture;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
@@ -52,9 +52,10 @@ public class CafeControllerTest {
         given(cafeService.addCafe(cafeDTO)).willReturn(true);
 
         mockMvc.perform(post("/owner/cafe/")
-            .contentType(MediaType.APPLICATION_JSON)
+            .sessionAttr("userId", cafeDTO.getUserId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
             .content(mapper.writeValueAsString(cafeDTO))
-            .accept(MediaType.APPLICATION_JSON))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
             .andDo(print())
             .andExpect(status().isOk())
             .andExpect(jsonPath("userId").value(cafeDTO.getUserId()))

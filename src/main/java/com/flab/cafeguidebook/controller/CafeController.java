@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.controller;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -28,6 +28,9 @@ public class CafeController {
     public ResponseEntity addCafe(HttpSession httpSession,
         @RequestBody @Validated CafeDTO cafeDTO,
         BindingResult bindingResult) {
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeDTO.setUserId(userId);
+
         if (bindingResult.hasErrors()) {
             bindingResult.getAllErrors().forEach(error -> {
                 LOGGER.info(error);

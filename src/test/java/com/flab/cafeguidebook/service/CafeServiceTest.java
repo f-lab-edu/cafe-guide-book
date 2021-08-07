@@ -3,8 +3,8 @@ package com.flab.cafeguidebook.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import com.flab.cafeguidebook.Fixture.CafeFixture;
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.fixture.CafeFixture;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;

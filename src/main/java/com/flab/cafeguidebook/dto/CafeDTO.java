@@ -1,4 +1,4 @@
-package com.flab.cafeguidebook.dto.cafe;
+package com.flab.cafeguidebook.dto;
 
 import java.time.LocalDateTime;
 import java.util.Objects;

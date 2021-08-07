@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.service;
 
-import com.flab.cafeguidebook.dto.cafe.CafeDTO;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
