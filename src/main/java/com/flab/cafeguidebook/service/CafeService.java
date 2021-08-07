@@ -11,8 +11,9 @@ public class CafeService {
     @Autowired
     private CafeMapper cafeMapper;
 
-    public void addCafe(CafeDTO cafeDTO) {
+    public boolean addCafe(CafeDTO cafeDTO) {
         int insertCafe = cafeMapper.insertCafe(cafeDTO);
+        return insertCafe == 1;
     }
 }
 

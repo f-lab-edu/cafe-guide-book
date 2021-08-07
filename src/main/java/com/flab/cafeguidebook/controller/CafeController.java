@@ -34,7 +34,7 @@ public class CafeController {
             });
             return ResponseEntity.badRequest().build();
         }
-        //cafeService.addCafe(cafeDTO);
+        cafeService.addCafe(cafeDTO);
         return ResponseEntity.ok(cafeDTO);
     }
 
