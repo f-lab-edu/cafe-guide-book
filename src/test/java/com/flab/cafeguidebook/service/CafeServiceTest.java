@@ -29,4 +29,3 @@ public class CafeServiceTest {
         assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
     }
 }
-
