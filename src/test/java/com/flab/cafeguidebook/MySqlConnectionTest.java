@@ -15,30 +15,29 @@ import org.springframework.boot.test.context.SpringBootTest;
 public class MySqlConnectionTest {
 
 
-  @Value("${spring.datasource.driver-class-name}")
-  private String DRIVER;
+    @Value("${spring.datasource.driver-class-name}")
+    private String DRIVER;
 
-  @Value("${spring.datasource.url}")
-  private String URL;
+    @Value("${spring.datasource.url}")
+    private String URL;
 
-  @Value("${spring.datasource.username}")
-  private String USER;
+    @Value("${spring.datasource.username}")
+    private String USER;
 
-  @Value("${spring.datasource.password}")
-  private String PW;
+    @Value("${spring.datasource.password}")
+    private String PW;
 
-  @Test
-  public void testConnection() throws Exception {
+    @Test
+    public void testConnection() throws Exception {
 
-    final Logger LOG = Logger.getGlobal();
-    Class.forName(DRIVER);
+        final Logger LOG = Logger.getGlobal();
+        Class.forName(DRIVER);
 
-    try (Connection con = DriverManager.getConnection(URL, USER, PW)) {
-      System.out.println(con);
-      LOG.info(con.toString());
-    } catch (Exception e) {
-      fail(e);
+        try (Connection con = DriverManager.getConnection(URL, USER, PW)) {
+            System.out.println(con);
+            LOG.info(con.toString());
+        } catch (Exception e) {
+            fail(e);
+        }
     }
-  }
 }
-

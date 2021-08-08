@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.Cafe;
-import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.extension.CafeFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,4 +52,3 @@ public class CafeControllerTest {
             .andExpect(jsonPath("tel").value(testCafe.getTel()));
     }
 }
-

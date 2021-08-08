@@ -14,19 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
 
-  private UserService userService;
+    private UserService userService;
 
-  @Autowired
-  public UserController(UserService userService) {
-    this.userService = userService;
-  }
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
-  public UserController() {
-  }
+    public UserController() {
+    }
 
-  @PostMapping(value = "/signUp")
-  @ResponseStatus(HttpStatus.CREATED)
-  public void signUp(@RequestBody UserDTO userDTO) {
-    userService.signUp(userDTO);
-  }
+    @PostMapping(value = "/signUp")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void signUp(@RequestBody UserDTO userDTO) {
+        userService.signUp(userDTO);
+    }
 }

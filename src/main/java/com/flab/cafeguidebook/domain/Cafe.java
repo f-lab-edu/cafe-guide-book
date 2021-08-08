@@ -372,7 +372,11 @@ public class Cafe {
         }
 
         public Cafe build() {
-            return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName, this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime, this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi, this.reservation, this.parkingSpace, this.noKidsZone, this.withPet, this.cafeCondition, this.cafeRegistration);
+            return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName,
+                this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
+                this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
+                this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,
+                this.cafeCondition, this.cafeRegistration);
         }
     }
 }
