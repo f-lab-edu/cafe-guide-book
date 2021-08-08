@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.service;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.dto.UpdateCafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,19 +20,24 @@ public class CafeService {
         return insertCafe == 1;
     }
 
-    public List<CafeDTO> getMyAllCafe(String id) {
-        return cafeMapper.selectMyAllCafe(id);
+    public List<CafeDTO> getMyAllCafe(String userId) {
+        return cafeMapper.selectMyAllCafe(userId);
     }
 
-    public void validateMyCafe(String cafeId, String id) throws HttpClientErrorException{
-        boolean isMyCafe = cafeMapper.isMyCafe(cafeId, id);
+    public void validateMyCafe(String cafeId, String userId) throws HttpClientErrorException{
+        boolean isMyCafe = cafeMapper.isMyCafe(cafeId, userId);
         if (!isMyCafe) {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
         }
     }
 
-    public CafeDTO getMyCafe(String cafeId, String id) {
-        return cafeMapper.selectMyCafe(cafeId, id);
+    public CafeDTO getMyCafe(String cafeId, String userId) {
+        return cafeMapper.selectMyCafe(cafeId, userId);
+    }
+
+    public boolean updateCafe(UpdateCafeDTO updateCafeDTO) {
+        int updateCafe = cafeMapper.updateCafe(updateCafeDTO);
+        return updateCafe == 1;
     }
 }
 
