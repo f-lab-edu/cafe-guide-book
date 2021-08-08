@@ -3,18 +3,18 @@ package com.flab.cafeguidebook.service;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
-import com.flab.cafeguidebook.fixture.CafeFixture;
+import com.flab.cafeguidebook.extension.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.mapper.CafeMapper;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-@ExtendWith(MockitoExtension.class)
+@ExtendWith({SpringExtension.class, CafeDTOFixtureProvider.class})
+@SpringBootTest
 public class CafeServiceTest {
 
     @Mock
@@ -23,24 +23,10 @@ public class CafeServiceTest {
     @InjectMocks
     private CafeService cafeService;
 
-    private static CafeFixture cafeFixture;
-
-    @BeforeAll
-    public static void setUp() {
-        cafeFixture = new CafeFixture();
-    }
-
-    @AfterAll
-    public static void tearDown() {
-        cafeFixture = null;
-    }
-
     @Test
-    public void addCafe() {
-        CafeDTO cafeDTO = cafeFixture.getCafeFixture1();
-
-        given(cafeMapper.insertCafe(cafeDTO)).willReturn(1);
-        assertThat(cafeService.addCafe(cafeDTO)).isEqualTo(true);
+    public void addCafe(CafeDTO testCafeDTO) {
+        given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
+        assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
     }
 }
 

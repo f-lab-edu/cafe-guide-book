@@ -1,9 +1,9 @@
 package com.flab.cafeguidebook.mapper;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface CafeMapper {
 
     public int insertCafe(CafeDTO cafeDTO);
