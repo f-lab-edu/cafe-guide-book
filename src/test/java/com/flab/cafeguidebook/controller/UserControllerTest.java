@@ -3,20 +3,14 @@ package com.flab.cafeguidebook.controller;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
-import com.flab.cafeguidebook.fixture.UserFixtureProvider;
-import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
-import com.flab.cafeguidebook.extension.UserFixtureProvider;
+import com.flab.cafeguidebook.fixture.UserFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -107,7 +101,6 @@ class UserControllerTest {
   }
 
 
-
   @Test
   @DisplayName("회원정보 조회 통합 테스트")
   void getUserSuccess(User testUser) throws Exception {
@@ -144,20 +137,14 @@ class UserControllerTest {
         });
     assertEquals(UserNotFoundException.class, e.getCause().getClass());
   }
-    mockMvc.perform(get("/users/logout"))
-        .andDo(print())
-        .andExpect(status().isOk());
+
   @Test
   @DisplayName("로그아웃 성공시 200을 리턴함")
   public void logoutTestWithSuccess(User testUser) throws Exception {
 
-    verify(userService).logout();
-  }
     mockMvc.perform(
         get("/users/logout"))
         .andDo(print())
         .andExpect(status().isOk());
-
-    verify(userService).logout();
   }
 }

@@ -13,6 +13,4 @@ public interface UserService {
   UserDTO getUserInfo(String email);
 
   public void logout();
-
-  public void logout();
 }
