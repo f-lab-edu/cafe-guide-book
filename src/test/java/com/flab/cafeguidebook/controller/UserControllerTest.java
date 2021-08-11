@@ -140,10 +140,10 @@ class UserControllerTest {
 
   @Test
   @DisplayName("로그아웃 성공시 200을 리턴함")
-  public void logoutTestWithSuccess(User testUser) throws Exception {
+  public void signOutTestWithSuccess(User testUser) throws Exception {
 
     mockMvc.perform(
-        get("/users/logout"))
+        get("/users/signOut"))
         .andDo(print())
         .andExpect(status().isOk());
   }
