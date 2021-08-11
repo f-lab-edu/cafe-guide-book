@@ -39,7 +39,7 @@ public class UserController {
   }
 
   @PostMapping(value = "/signIn")
-  public void signUp(String email, String password) {
+  public void signIn(String email, String password) {
     userService.signIn(email, password);
   }
 
