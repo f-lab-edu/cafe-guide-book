@@ -1,9 +1,9 @@
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.flab.cafeguidebook.dto.UserDTO;
@@ -11,17 +11,15 @@ import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.impl.UserServiceImpl;
-import com.flab.cafeguidebook.util.SessionKeys;
 import com.flab.cafeguidebook.util.HashingUtil;
+import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mock.web.MockHttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class, UserDTOFixtureProvider.class})
@@ -92,11 +90,12 @@ class UserServiceTest {
       });
     }
 
+
     @Test
     @DisplayName("로그아웃 성공")
-    public void logoutUserTestWithSuccess(UserDTO user) {
+    public void signOutUserTestWithSuccess(UserDTO user) {
       mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
-      userService.logout();
+      userService.signOut();
       assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
     }
 }
