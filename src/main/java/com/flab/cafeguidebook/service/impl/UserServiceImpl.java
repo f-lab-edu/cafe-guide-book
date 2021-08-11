@@ -50,6 +50,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signOut() {
-      httpSession.removeAttribute(SessionKeys.USER_EMAIL);
+      if (httpSession.getAttribute(SessionKeys.USER_EMAIL) != null) {
+        httpSession.removeAttribute(SessionKeys.USER_EMAIL);
+      }
     }
 }
