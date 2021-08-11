@@ -102,7 +102,7 @@ class UserControllerTest {
               .content(content)
               .contentType(MediaType.APPLICATION_JSON)
               .accept(MediaType.APPLICATION_JSON))
-              .andExpect(status().isOk())
+              .andExpect(status().isNotFound())
               .andDo(print());
         });
     assertEquals(UserNotFoundException.class, e.getCause().getClass());

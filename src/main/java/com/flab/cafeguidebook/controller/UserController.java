@@ -34,7 +34,6 @@ public class UserController {
 
   @GetMapping("{email}")
   public UserDTO userInfo(@PathVariable String email) {
-
     return userService.getUserInfo(email);
   }
 }
