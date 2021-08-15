@@ -4,6 +4,8 @@ import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,4 +31,10 @@ public class UserController {
     public void signUp(@RequestBody UserDTO userDTO) {
         userService.signUp(userDTO);
     }
+
+    @GetMapping("{email}")
+    public UserDTO userInfo(@PathVariable String email) {
+        return userService.getUserInfo(email);
+    }
+
 }

@@ -31,7 +31,6 @@ public class MySqlConnectionTest {
 
         final Logger LOG = Logger.getGlobal();
         Class.forName(DRIVER);
-
         try (Connection con = DriverManager.getConnection(URL, USER, PW)) {
             System.out.println(con);
             LOG.info(con.toString());

@@ -147,5 +147,7 @@ public class UserDTO {
         public UserDTO build() {
             return new UserDTO(this);
         }
+
     }
+
 }

@@ -1,11 +1,15 @@
 package com.flab.cafeguidebook.controller;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
+import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.extension.UserFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +24,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.util.NestedServletException;
 
 @ExtendWith({SpringExtension.class, UserFixtureProvider.class})
 @SpringBootTest
@@ -65,4 +70,42 @@ class UserControllerTest {
             .params(map))
             .andExpect(status().isBadRequest());
     }
+
+    @Test
+    @DisplayName("회원정보 조회 통합 테스트")
+    void getUserSuccess(User testUser) throws Exception {
+        String content = objectMapper.writeValueAsString(testUser);
+
+        mockMvc.perform(post("/users/signUp")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andDo(print());
+
+        mockMvc.perform(get("/users/" + testUser.getEmail())
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isOk())
+            .andDo(print());
+    }
+
+    @Test
+    @DisplayName("존재하지 않는 회원정보 조회 통합 테스트")
+    void getUserFailWithNoUserExist(User testUser) throws Exception {
+        String content = objectMapper.writeValueAsString(testUser);
+
+        Exception e = assertThrows(NestedServletException.class,
+            () -> {
+                mockMvc.perform(get("/users/" + "NO_EXISTED_EMAIL")
+                    .content(content)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .accept(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNotFound())
+                    .andDo(print());
+            });
+        assertEquals(UserNotFoundException.class, e.getCause().getClass());
+    }
+
 }
