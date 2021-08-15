@@ -67,8 +67,22 @@ public class CafeServiceTest {
 
     @Test
     public void deleteCafe(CafeDTO testCafeDTO) {
-        given(cafeMapper.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId())).willReturn(1);
-        assertThat(cafeService.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId())).isEqualTo(true);
+        given(cafeMapper.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId()))
+            .willReturn(1);
+        assertThat(cafeService.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId()))
+            .isEqualTo(true);
+    }
+
+    @Test
+    public void openCafe(CafeDTO testCafeDTO) {
+        given(cafeMapper.openCafe(testCafeDTO.getCafeId())).willReturn(1);
+        assertThat(cafeService.openCafe(testCafeDTO.getCafeId())).isEqualTo(true);
+    }
+
+    @Test
+    public void closeCafe(CafeDTO testCafeDTO) {
+        given(cafeMapper.closeCafe(testCafeDTO.getCafeId())).willReturn(1);
+        assertThat(cafeService.closeCafe(testCafeDTO.getCafeId())).isEqualTo(true);
     }
 
 }

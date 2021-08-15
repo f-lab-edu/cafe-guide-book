@@ -92,5 +92,17 @@
     WHERE cafe_id = #{cafeId}
       AND user_id = #{userId}
   </delete>
+
+  <update id="openCafe">
+    UPDATE cafe
+    SET cafe_condition = 'OPEN'
+    WHERE cafe_id = #{cafeId}
+  </update>
+
+  <update id="closeCafe">
+    UPDATE cafe
+    SET cafe_condition = 'CLOSE'
+    WHERE cafe_id = #{cafeId}
+  </update>
 </mapper>
 

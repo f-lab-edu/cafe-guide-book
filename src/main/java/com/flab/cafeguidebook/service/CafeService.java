@@ -45,4 +45,14 @@ public class CafeService {
         int deleteCafe = cafeMapper.deleteCafe(cafeId, userId);
         return deleteCafe == 1;
     }
+
+    public boolean openCafe(String cafeId) {
+        int openCafe = cafeMapper.openCafe(cafeId);
+        return openCafe == 1;
+    }
+
+    public boolean closeCafe(String cafeId) {
+        int closeCafe = cafeMapper.closeCafe(cafeId);
+        return closeCafe == 1;
+    }
 }

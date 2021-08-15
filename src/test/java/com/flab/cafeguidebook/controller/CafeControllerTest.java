@@ -130,4 +130,28 @@ public class CafeControllerTest {
             .andExpect(status().isOk());
     }
 
+    @Test
+    public void openCafe(Cafe testCafe) throws Exception {
+        addCafe(testCafe);
+
+        mockMvc.perform(patch("/owner/cafe/testCafeId1/open")
+            .sessionAttr("userId", testCafe.getUserId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    public void closeCafe(Cafe testCafe) throws Exception {
+        addCafe(testCafe);
+
+        mockMvc.perform(patch("/owner/cafe/testCafeId1/close")
+            .sessionAttr("userId", testCafe.getUserId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andDo(print())
+            .andExpect(status().isOk());
+    }
+
 }

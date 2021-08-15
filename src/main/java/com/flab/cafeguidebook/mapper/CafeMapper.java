@@ -22,4 +22,8 @@ public interface CafeMapper {
     public int updateCafe(UpdateCafeDTO updateCafeDTO);
 
     public int deleteCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
+
+    public int openCafe(@Param("cafeId") String cafeId);
+
+    public int closeCafe(@Param("cafeId") String cafeId);
 }

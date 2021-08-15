@@ -93,11 +93,39 @@ public class CafeController {
         String userId = (String) httpSession.getAttribute("userId");
         cafeService.validateMyCafe(cafeId, userId);
         boolean deleteCafe = cafeService.deleteCafe(cafeId, userId);
-        if(!deleteCafe) {
+        if (!deleteCafe) {
             LOGGER.info("카페를 삭제할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
             return ResponseEntity.badRequest().build();
-        }else {
+        } else {
             return ResponseEntity.ok().build();
         }
+    }
+
+    @PatchMapping("/{cafeId}/open")
+    public ResponseEntity openCafe(@PathVariable String cafeId, HttpSession httpSession) {
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeService.validateMyCafe(cafeId, userId);
+        boolean closeCafe = cafeService.closeCafe(cafeId);
+        if (!closeCafe) {
+            LOGGER.info("카페를 마감할 수 없습니다. cafeId ={}", cafeId);
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.ok().build();
+        }
+
+    }
+
+    @PatchMapping("/{cafeId}/close")
+    public ResponseEntity closeCafe(@PathVariable String cafeId, HttpSession httpSession) {
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeService.validateMyCafe(cafeId, userId);
+        boolean openCafe = cafeService.openCafe(cafeId);
+        if (!openCafe) {
+            LOGGER.info("카페를 오픈할 수 없습니다. cafeId ={}", cafeId);
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.ok().build();
+        }
+
     }
 }
