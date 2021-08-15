@@ -42,5 +42,48 @@
             #{cafeCondition},
             #{cafeRegistration})
   </insert>
+
+  <select id="selectMyAllCafe" parameterType="String"
+    resultType="com.flab.cafeguidebook.dto.CafeDTO">
+    SELECT *
+    FROM cafe
+    WHERE user_id = #{userId}
+  </select>
+
+  <select id="isMyCafe" resultType="boolean" parameterType="map">
+    SELECT EXISTS
+             (SELECT cafe_name FROM cafe WHERE cafe_id = #{cafeId} AND user_id = #{userId})
+  </select>
+
+  <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
+    parameterType="map">
+    SELECT *
+    FROM cafe
+    WHERE cafe_id = #{cafeId}
+      AND user_id = #{userId}
+  </select>
+
+  <delete id="deleteAllCafe">
+    DELETE
+    FROM CAFE;
+  </delete>
+
+  <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.UpdateCafeDTO">
+    UPDATE cafe
+    SET cafe_name      = #{cafeName},
+        tel            = #{tel},
+        address_code   = #{addressCode},
+        address_detail = #{addressDetail},
+        operating_time = #{operatingTime},
+        cafe_info      = #{cafeInfo},
+        social_media   = #{socialMedia},
+        update_date    = now(),
+        wifi           = #{wifi},
+        reservation    = #{reservation},
+        parking_space  = #{parkingSpace},
+        no_kids_zone   = #{noKidsZone},
+        with_pet       = #{withPet}
+    WHERE cafe_id = #{cafeId}
+  </update>
 </mapper>
 
