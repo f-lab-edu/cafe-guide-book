@@ -115,7 +115,7 @@ public class CafeControllerTest {
             .andExpect(jsonPath("userId").value(updateTestCafe.getUserId()))
             .andExpect(jsonPath("cafeId").value(updateTestCafe.getCafeId()))
             .andExpect(jsonPath("cafeName").value(updateTestCafe.getCafeName()))
-            .andExpect(jsonPath("tel").value(updateTestCafe.getTel()));
+            .andExpect(jsonPath("tel").value(testCafe.getTel()));
     }
 
     @Test

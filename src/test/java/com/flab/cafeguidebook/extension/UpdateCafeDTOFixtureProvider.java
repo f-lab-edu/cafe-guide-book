@@ -21,7 +21,6 @@ public class UpdateCafeDTOFixtureProvider implements ParameterResolver {
             .userId("testId")
             .cafeId("testCafeId1")
             .cafeName("testId 카페 이름 변경")
-            .tel("010-3333-3333")
             .build();
     }
 }

@@ -70,19 +70,20 @@
 
   <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.UpdateCafeDTO">
     UPDATE cafe
-    SET cafe_name      = #{cafeName},
-        tel            = #{tel},
-        address_code   = #{addressCode},
-        address_detail = #{addressDetail},
-        operating_time = #{operatingTime},
-        cafe_info      = #{cafeInfo},
-        social_media   = #{socialMedia},
-        update_date    = now(),
-        wifi           = #{wifi},
-        reservation    = #{reservation},
-        parking_space  = #{parkingSpace},
-        no_kids_zone   = #{noKidsZone},
-        with_pet       = #{withPet}
+    SET
+    <if test="cafeName != null">cafe_name = #{cafeName},</if>
+    <if test="tel != null">tel = #{tel},</if>
+    <if test="addressCode != null">address_code = #{addressCode},</if>
+    <if test="addressDetail != null">address_detail = #{addressDetail},</if>
+    <if test="operatingTime != null">operating_time = #{operatingTime},</if>
+    <if test="cafeInfo != null">cafe_info = #{cafeInfo},</if>
+    <if test="socialMedia != null">social_media = #{socialMedia},</if>
+    <if test="wifi != null">wifi = #{wifi},</if>
+    <if test="reservation != null">reservation = #{reservation},</if>
+    <if test="parkingSpace != null">parking_space = #{parkingSpace},</if>
+    <if test="noKidsZone != null">no_kids_zone = #{noKidsZone},</if>
+    <if test="withPet != null">with_pet = #{withPet},</if>
+    update_date = now()
     WHERE cafe_id = #{cafeId}
   </update>
 
