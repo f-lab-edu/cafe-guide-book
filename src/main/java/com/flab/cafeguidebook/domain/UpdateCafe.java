@@ -191,17 +191,17 @@ public class UpdateCafe {
             return this;
         }
 
-        public UpdateCafe.Builder userId(String userId) {
+        public UpdateCafe.Builder userId(final String userId) {
             this.userId = userId;
             return this;
         }
 
-        public UpdateCafe.Builder cafeId(String cafeId) {
+        public UpdateCafe.Builder cafeId(final String cafeId) {
             this.cafeId = cafeId;
             return this;
         }
 
-        public UpdateCafe.Builder cafeName(String cafeName) {
+        public UpdateCafe.Builder cafeName(final String cafeName) {
             this.cafeName = cafeName;
             return this;
         }
