@@ -19,19 +19,19 @@ public class CafeService {
         return insertCafe == 1;
     }
 
-    public List<CafeDTO> getMyAllCafe(String id) {
-        return cafeMapper.selectMyAllCafe(id);
+    public List<CafeDTO> getMyAllCafe(String userId) {
+        return cafeMapper.selectMyAllCafe(userId);
     }
 
-    public void validateMyCafe(String cafeId, String id) throws HttpClientErrorException{
-        boolean isMyCafe = cafeMapper.isMyCafe(cafeId, id);
+    public boolean validateMyCafe(String cafeId, String userId) throws HttpClientErrorException{
+        boolean isMyCafe = cafeMapper.isMyCafe(cafeId, userId);
         if (!isMyCafe) {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
         }
+        return true;
     }
 
-    public CafeDTO getMyCafe(String cafeId, String id) {
-        return cafeMapper.selectMyCafe(cafeId, id);
+    public CafeDTO getMyCafe(String cafeId, String userId) {
+        return cafeMapper.selectMyCafe(cafeId, userId);
     }
 }
-

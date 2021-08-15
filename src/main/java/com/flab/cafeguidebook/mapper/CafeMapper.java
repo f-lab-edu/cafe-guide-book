@@ -3,18 +3,18 @@ package com.flab.cafeguidebook.mapper;
 import com.flab.cafeguidebook.dto.CafeDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
-@Repository
+@Mapper
 public interface CafeMapper {
 
     public int insertCafe(CafeDTO cafeDTO);
 
-    public List<CafeDTO> selectMyAllCafe(String id);
+    public List<CafeDTO> selectMyAllCafe(String userId);
 
-    public boolean isMyCafe(@Param("cafeId") String cafeId, @Param("id") String id);
+    public boolean isMyCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
 
-    public CafeDTO selectMyCafe(@Param("cafeId") String cafeId, @Param("id") String id);
+    public CafeDTO selectMyCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
 
     public void deleteAllCafe();
 }
