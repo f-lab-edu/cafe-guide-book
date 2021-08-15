@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -115,6 +116,18 @@ public class CafeControllerTest {
             .andExpect(jsonPath("cafeId").value(updateTestCafe.getCafeId()))
             .andExpect(jsonPath("cafeName").value(updateTestCafe.getCafeName()))
             .andExpect(jsonPath("tel").value(updateTestCafe.getTel()));
+    }
+
+    @Test
+    public void deleteCafe(Cafe testCafe) throws Exception {
+        addCafe(testCafe);
+
+        mockMvc.perform(delete("/owner/cafe/testCafeId1")
+            .sessionAttr("userId", testCafe.getUserId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+            .andDo(print())
+            .andExpect(status().isOk());
     }
 
 }

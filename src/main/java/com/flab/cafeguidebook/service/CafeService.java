@@ -40,4 +40,9 @@ public class CafeService {
         int updateCafe = cafeMapper.updateCafe(updateCafeDTO);
         return updateCafe == 1;
     }
+
+    public boolean deleteCafe(String cafeId, String userId) {
+        int deleteCafe = cafeMapper.deleteCafe(cafeId, userId);
+        return deleteCafe == 1;
+    }
 }

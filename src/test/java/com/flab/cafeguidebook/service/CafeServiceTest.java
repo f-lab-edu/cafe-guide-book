@@ -65,4 +65,10 @@ public class CafeServiceTest {
         assertThat(cafeService.updateCafe(updateTestCafeDTO)).isEqualTo(true);
     }
 
+    @Test
+    public void deleteCafe(CafeDTO testCafeDTO) {
+        given(cafeMapper.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId())).willReturn(1);
+        assertThat(cafeService.deleteCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId())).isEqualTo(true);
+    }
+
 }

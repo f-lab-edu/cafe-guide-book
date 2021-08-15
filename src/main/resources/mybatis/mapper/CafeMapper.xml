@@ -85,5 +85,12 @@
         with_pet       = #{withPet}
     WHERE cafe_id = #{cafeId}
   </update>
+
+  <delete id="deleteCafe">
+    DELETE
+    FROM cafe
+    WHERE cafe_id = #{cafeId}
+      AND user_id = #{userId}
+  </delete>
 </mapper>
 

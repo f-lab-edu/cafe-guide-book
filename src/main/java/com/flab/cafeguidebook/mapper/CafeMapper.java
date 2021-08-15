@@ -20,4 +20,6 @@ public interface CafeMapper {
     public void deleteAllCafe();
 
     public int updateCafe(UpdateCafeDTO updateCafeDTO);
+
+    public int deleteCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
 }

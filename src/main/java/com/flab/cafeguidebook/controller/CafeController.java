@@ -8,10 +8,12 @@ import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,7 +53,7 @@ public class CafeController {
         String userId = (String) httpSession.getAttribute("userId");
         List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
         if (myAllCafe.size() > 0) {
-            return ResponseEntity.ok().body(myAllCafe);
+            return ResponseEntity.ok(myAllCafe);
         } else {
             LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
             return ResponseEntity.badRequest().build();
@@ -83,6 +85,19 @@ public class CafeController {
             return ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.ok(copyData);
+        }
+    }
+
+    @DeleteMapping("/{cafeId}")
+    public ResponseEntity deleteCafe(@PathVariable String cafeId, HttpSession httpSession) {
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeService.validateMyCafe(cafeId, userId);
+        boolean deleteCafe = cafeService.deleteCafe(cafeId, userId);
+        if(!deleteCafe) {
+            LOGGER.info("카페를 삭제할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
+            return ResponseEntity.badRequest().build();
+        }else {
+            return ResponseEntity.ok().build();
         }
     }
 }
