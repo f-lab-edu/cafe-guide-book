@@ -3,7 +3,6 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
-import org.springframework.lang.NonNull;
 
 public class Cafe {
 
@@ -271,12 +270,12 @@ public class Cafe {
             return this;
         }
 
-        public Cafe.Builder userId(@NonNull final String userId) {
+        public Cafe.Builder userId(final String userId) {
             this.userId = userId;
             return this;
         }
 
-        public Cafe.Builder cafeId(@NonNull final String cafeId) {
+        public Cafe.Builder cafeId(final String cafeId) {
             this.cafeId = cafeId;
             return this;
         }
@@ -286,7 +285,7 @@ public class Cafe {
             return this;
         }
 
-        public Cafe.Builder cafeName(@NonNull final String cafeName) {
+        public Cafe.Builder cafeName(final String cafeName) {
             this.cafeName = cafeName;
             return this;
         }
