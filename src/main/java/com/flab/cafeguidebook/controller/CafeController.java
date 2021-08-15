@@ -82,7 +82,8 @@ public class CafeController {
             LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}", updateCafeDTO);
             return ResponseEntity.badRequest().build();
         } else {
-            return ResponseEntity.ok(copyData);
+            CafeDTO updatedCafe = cafeService.getMyCafe(cafeId, userId);
+            return ResponseEntity.ok(updatedCafe);
         }
     }
 }
