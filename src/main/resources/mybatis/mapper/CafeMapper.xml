@@ -45,27 +45,7 @@
 
   <select id="selectMyAllCafe" parameterType="String"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
-    SELECT user_id,
-           cafe_id,
-           hashtag_id,
-           cafe_name,
-           biz_number,
-           tel,
-           address_code,
-           address_detail,
-           operating_time,
-           cafe_info,
-           social_media,
-           cafe_registration,
-           registration_date,
-           update_date,
-           wifi,
-           reservation,
-           parking_space,
-           no_kids_zone,
-           with_pet,
-           cafe_condition,
-           cafe_registration
+    SELECT *
     FROM cafe
     WHERE user_id = #{userId}
   </select>
@@ -77,27 +57,7 @@
 
   <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
-    SELECT user_id,
-           cafe_id,
-           hashtag_id,
-           cafe_name,
-           biz_number,
-           tel,
-           address_code,
-           address_detail,
-           operating_time,
-           cafe_info,
-           social_media,
-           cafe_registration,
-           registration_date,
-           update_date,
-           wifi,
-           reservation,
-           parking_space,
-           no_kids_zone,
-           with_pet,
-           cafe_condition,
-           cafe_registration
+    SELECT *
     FROM cafe
     WHERE cafe_id = #{cafeId}
       AND user_id = #{userId}
@@ -107,5 +67,23 @@
     DELETE
     FROM CAFE;
   </delete>
+
+  <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.UpdateCafeDTO">
+    UPDATE cafe
+    SET cafe_name      = #{cafeName},
+        tel            = #{tel},
+        address_code   = #{addressCode},
+        address_detail = #{addressDetail},
+        operating_time = #{operatingTime},
+        cafe_info      = #{cafeInfo},
+        social_media   = #{socialMedia},
+        update_date    = now(),
+        wifi           = #{wifi},
+        reservation    = #{reservation},
+        parking_space  = #{parkingSpace},
+        no_kids_zone   = #{noKidsZone},
+        with_pet       = #{withPet}
+    WHERE cafe_id = #{cafeId}
+  </update>
 </mapper>
 

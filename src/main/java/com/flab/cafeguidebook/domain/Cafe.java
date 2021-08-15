@@ -1,63 +1,33 @@
-package com.flab.cafeguidebook.dto;
+package com.flab.cafeguidebook.domain;
 
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
-import org.springframework.lang.NonNull;
 
-public class CafeDTO {
+public class Cafe {
 
-    @NonNull
-    @NotBlank
     private String userId;
-
-    @NonNull
-    @NotBlank
     private String cafeId;
-
     private String hashTageId;
-
-    @NonNull
-    @NotBlank
     private String cafeName;
-
     private String bizNumber;
-
     private String tel;
-
     private String addressCode;
-
     private String addressDetail;
-
     private String operatingTime;
-
     private String cafeInfo;
-
     private String socialMedia;
-
     private LocalDateTime registrationDate;
-
     private LocalDateTime updateDate;
-
     private Boolean wifi;
-
     private Boolean reservation;
-
     private Boolean parkingSpace;
-
     private Boolean noKidsZone;
-
     private Boolean withPet;
-
     private CafeCondition cafeCondition;
-
     private CafeRegistration cafeRegistration;
 
-    public CafeDTO() {
-    }
-
-    public CafeDTO(Builder builder) {
+    public Cafe(Builder builder) {
         this.userId = builder.userId;
         this.cafeId = builder.cafeId;
         this.hashTageId = builder.hashTageId;
@@ -80,9 +50,9 @@ public class CafeDTO {
         this.cafeRegistration = builder.cafeRegistration;
     }
 
-    public CafeDTO(@NonNull String userId, @NonNull String cafeId, String hashTageId,
-        @NonNull String cafeName, String bizNumber, String tel, String addressCode,
-        String addressDetail, String operatingTime, String cafeInfo, String socialMedia,
+    public Cafe(String userId, String cafeId, String hashTageId, String cafeName,
+        String bizNumber, String tel, String addressCode, String addressDetail,
+        String operatingTime, String cafeInfo, String socialMedia,
         LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
         Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet,
         CafeCondition cafeCondition,
@@ -113,21 +83,19 @@ public class CafeDTO {
         return new Builder();
     }
 
-    @NonNull
     public String getUserId() {
         return userId;
     }
 
-    public void setUserId(@NonNull String userId) {
+    public void setUserId(String userId) {
         this.userId = userId;
     }
 
-    @NonNull
     public String getCafeId() {
         return cafeId;
     }
 
-    public void setCafeId(@NonNull String cafeId) {
+    public void setCafeId(String cafeId) {
         this.cafeId = cafeId;
     }
 
@@ -139,12 +107,11 @@ public class CafeDTO {
         this.hashTageId = hashTageId;
     }
 
-    @NonNull
     public String getCafeName() {
         return cafeName;
     }
 
-    public void setCafeName(@NonNull String cafeName) {
+    public void setCafeName(String cafeName) {
         this.cafeName = cafeName;
     }
 
@@ -299,112 +266,112 @@ public class CafeDTO {
         private CafeCondition cafeCondition;
         private CafeRegistration cafeRegistration;
 
-        public Builder Builder() {
+        public Cafe.Builder Builder() {
             return this;
         }
 
-        public CafeDTO.Builder userId(@NonNull final String userId) {
+        public Cafe.Builder userId(String userId) {
             this.userId = userId;
             return this;
         }
 
-        public CafeDTO.Builder cafeId(@NonNull final String cafeId) {
+        public Cafe.Builder cafeId(String cafeId) {
             this.cafeId = cafeId;
             return this;
         }
 
-        public CafeDTO.Builder hashTageId(final String hashTageId) {
+        public Cafe.Builder hashTageId(final String hashTageId) {
             this.hashTageId = hashTageId;
             return this;
         }
 
-        public CafeDTO.Builder cafeName(@NonNull final String cafeName) {
+        public Cafe.Builder cafeName(final String cafeName) {
             this.cafeName = cafeName;
             return this;
         }
 
-        public CafeDTO.Builder bizNumber(final String bizNumber) {
+        public Cafe.Builder bizNumber(final String bizNumber) {
             this.bizNumber = bizNumber;
             return this;
         }
 
-        public CafeDTO.Builder tel(final String tel) {
+        public Cafe.Builder tel(final String tel) {
             this.tel = tel;
             return this;
         }
 
-        public CafeDTO.Builder addressCode(final String addressCode) {
+        public Cafe.Builder addressCode(final String addressCode) {
             this.addressCode = addressCode;
             return this;
         }
 
-        public CafeDTO.Builder addressDetail(final String addressDetail) {
+        public Cafe.Builder addressDetail(final String addressDetail) {
             this.addressDetail = addressDetail;
             return this;
         }
 
-        public CafeDTO.Builder operatingTime(final String operatingTime) {
+        public Cafe.Builder operatingTime(final String operatingTime) {
             this.operatingTime = operatingTime;
             return this;
         }
 
-        public CafeDTO.Builder cafeInfo(final String cafeInfo) {
+        public Cafe.Builder cafeInfo(final String cafeInfo) {
             this.cafeInfo = cafeInfo;
             return this;
         }
 
-        public CafeDTO.Builder socialMedia(final String socialMedia) {
+        public Cafe.Builder socialMedia(final String socialMedia) {
             this.socialMedia = socialMedia;
             return this;
         }
 
-        public CafeDTO.Builder registrationDate(final LocalDateTime registrationDate) {
+        public Cafe.Builder registrationDate(final LocalDateTime registrationDate) {
             this.registrationDate = registrationDate;
             return this;
         }
 
-        public CafeDTO.Builder updateDate(final LocalDateTime updateDate) {
+        public Cafe.Builder updateDate(final LocalDateTime updateDate) {
             this.updateDate = updateDate;
             return this;
         }
 
-        public CafeDTO.Builder wifi(final Boolean wifi) {
+        public Cafe.Builder wifi(final Boolean wifi) {
             this.wifi = wifi;
             return this;
         }
 
-        public CafeDTO.Builder reservation(final Boolean reservation) {
+        public Cafe.Builder reservation(final Boolean reservation) {
             this.reservation = reservation;
             return this;
         }
 
-        public CafeDTO.Builder parkingSpace(final Boolean parkingSpace) {
+        public Cafe.Builder parkingSpace(final Boolean parkingSpace) {
             this.parkingSpace = parkingSpace;
             return this;
         }
 
-        public CafeDTO.Builder noKidsZone(final Boolean noKidsZone) {
+        public Cafe.Builder noKidsZone(final Boolean noKidsZone) {
             this.noKidsZone = noKidsZone;
             return this;
         }
 
-        public CafeDTO.Builder withPet(final Boolean withPet) {
+        public Cafe.Builder withPet(final Boolean withPet) {
             this.withPet = withPet;
             return this;
         }
 
-        public CafeDTO.Builder cafeCondition(final CafeCondition cafeCondition) {
+        public Cafe.Builder cafeCondition(final CafeCondition cafeCondition) {
             this.cafeCondition = cafeCondition;
             return this;
         }
 
-        public CafeDTO.Builder cafeRegistration(final CafeRegistration cafeRegistration) {
+        public Cafe.Builder cafeRegistration(final CafeRegistration cafeRegistration) {
             this.cafeRegistration = cafeRegistration;
             return this;
         }
 
-        public CafeDTO build() {
-            return new CafeDTO(this.userId, this.cafeId, this.hashTageId, this.cafeName,
+        public Cafe build() {
+            return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName,
                 this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
                 this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
                 this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,

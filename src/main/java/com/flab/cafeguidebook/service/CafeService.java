@@ -24,11 +24,12 @@ public class CafeService {
         return cafeMapper.selectMyAllCafe(userId);
     }
 
-    public void validateMyCafe(String cafeId, String userId) throws HttpClientErrorException{
+    public boolean validateMyCafe(String cafeId, String userId) throws HttpClientErrorException{
         boolean isMyCafe = cafeMapper.isMyCafe(cafeId, userId);
         if (!isMyCafe) {
             throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
         }
+        return true;
     }
 
     public CafeDTO getMyCafe(String cafeId, String userId) {
@@ -40,4 +41,3 @@ public class CafeService {
         return updateCafe == 1;
     }
 }
-

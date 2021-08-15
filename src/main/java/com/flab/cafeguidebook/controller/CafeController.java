@@ -48,7 +48,7 @@ public class CafeController {
 
     @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getMyAllCafe(HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("id");
+        String userId = (String) httpSession.getAttribute("userId");
         List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
         if (myAllCafe.size() > 0) {
             return ResponseEntity.ok().body(myAllCafe);
@@ -61,11 +61,11 @@ public class CafeController {
     @GetMapping(value = "/{cafeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity getMyCafe(@PathVariable String cafeId,
         HttpSession httpSession) {
-        String id = (String) httpSession.getAttribute("userId");
-        cafeService.validateMyCafe(cafeId, id);
-        CafeDTO myCafe = cafeService.getMyCafe(cafeId, id);
+        String userId = (String) httpSession.getAttribute("userId");
+        cafeService.validateMyCafe(cafeId, userId);
+        CafeDTO myCafe = cafeService.getMyCafe(cafeId, userId);
         if (myCafe == null) {
-            LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, id);
+            LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
             return ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.ok(myCafe);
@@ -79,11 +79,10 @@ public class CafeController {
         final UpdateCafeDTO copyData = UpdateCafeDTO.copyWithId(updateCafeDTO, cafeId, userId);
         boolean updateCafe = cafeService.updateCafe(copyData);
         if (!updateCafe) {
-            LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}, ={}", updateCafeDTO);
+            LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}", updateCafeDTO);
             return ResponseEntity.badRequest().build();
         } else {
             return ResponseEntity.ok(copyData);
         }
     }
-
 }
