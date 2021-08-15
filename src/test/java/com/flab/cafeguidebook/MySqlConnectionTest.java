@@ -14,7 +14,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class MySqlConnectionTest {
 
-
     @Value("${spring.datasource.driver-class-name}")
     private String DRIVER;
 
