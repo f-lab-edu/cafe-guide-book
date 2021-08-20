@@ -14,16 +14,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class MySqlConnectionTest {
 
-    @Value("${spring.datasource.driver-class-name}")
+    @Value("${spring.datasource.hikari.driver-class-name}")
     private String DRIVER;
 
-    @Value("${spring.datasource.url}")
+    @Value("${spring.datasource.hikari.jdbc-url}")
     private String URL;
 
-    @Value("${spring.datasource.username}")
+    @Value("${spring.datasource.hikari.username}")
     private String USER;
 
-    @Value("${spring.datasource.password}")
+    @Value("${spring.datasource.hikari.password}")
     private String PW;
 
     @Test
