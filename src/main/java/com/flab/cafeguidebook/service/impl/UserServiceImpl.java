@@ -13,13 +13,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
-    private final UserMapper userMapper;
     private final HttpSession httpSession;
 
-    public UserServiceImpl(UserMapper userMapper) {
-        this.userMapper = userMapper;
-    }
-    
     public UserServiceImpl(UserMapper userMapper, HttpSession httpSession) {
       this.userMapper = userMapper;
       this.httpSession = httpSession;
