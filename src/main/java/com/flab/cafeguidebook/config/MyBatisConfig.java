@@ -19,34 +19,34 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement
 public class MyBatisConfig {
 
-    @Autowired
-    private ApplicationContext applicationContext;
+  @Autowired
+  private ApplicationContext applicationContext;
 
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource.hikari")
-    public HikariConfig hikariConfig() {
-        return new HikariConfig();
-    }
+  @Bean
+  @ConfigurationProperties(prefix = "spring.datasource.hikari")
+  public HikariConfig hikariConfig() {
+    return new HikariConfig();
+  }
 
-    @Bean
-    public DataSource dataSource() {
-        return new HikariDataSource(hikariConfig());
-    }
+  @Bean
+  public DataSource dataSource() {
+    return new HikariDataSource(hikariConfig());
+  }
 
-    @Bean
-    public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
-        final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
-        sessionFactory.setDataSource(dataSource);
-        sessionFactory
-            .setMapperLocations(applicationContext.getResources("classpath:/mybatis/mapper/*.xml"));
-        return sessionFactory.getObject();
-    }
+  @Bean
+  public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
+    final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
+    sessionFactory.setDataSource(dataSource);
+    sessionFactory
+        .setMapperLocations(applicationContext.getResources("classpath:/mybatis/mapper/*.xml"));
+    return sessionFactory.getObject();
+  }
 
-    @Bean
-    public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
-        throws Exception {
-        final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
-        return sqlSessionTemplate;
-    }
+  @Bean
+  public SqlSessionTemplate sqlSessionTemplate(SqlSessionFactory sqlSessionFactory)
+      throws Exception {
+    final SqlSessionTemplate sqlSessionTemplate = new SqlSessionTemplate(sqlSessionFactory);
+    return sqlSessionTemplate;
+  }
 
 }

@@ -14,28 +14,28 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class MySqlConnectionTest {
 
-    @Value("${spring.datasource.hikari.driver-class-name}")
-    private String DRIVER;
+  @Value("${spring.datasource.hikari.driver-class-name}")
+  private String DRIVER;
 
-    @Value("${spring.datasource.hikari.jdbc-url}")
-    private String URL;
+  @Value("${spring.datasource.hikari.jdbc-url}")
+  private String URL;
 
-    @Value("${spring.datasource.hikari.username}")
-    private String USER;
+  @Value("${spring.datasource.hikari.username}")
+  private String USER;
 
-    @Value("${spring.datasource.hikari.password}")
-    private String PW;
+  @Value("${spring.datasource.hikari.password}")
+  private String PW;
 
-    @Test
-    public void testConnection() throws Exception {
+  @Test
+  public void testConnection() throws Exception {
 
-        final Logger LOG = Logger.getGlobal();
-        Class.forName(DRIVER);
-        try (Connection con = DriverManager.getConnection(URL, USER, PW)) {
-            System.out.println(con);
-            LOG.info(con.toString());
-        } catch (Exception e) {
-            fail(e);
-        }
+    final Logger LOG = Logger.getGlobal();
+    Class.forName(DRIVER);
+    try (Connection con = DriverManager.getConnection(URL, USER, PW)) {
+      System.out.println(con);
+      LOG.info(con.toString());
+    } catch (Exception e) {
+      fail(e);
     }
+  }
 }
