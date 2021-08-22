@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
         throw new UserNotFoundException("이메일 혹은 비밀번호가 잘못되었습니다.");
       }
 
-        httpSession.setAttribute(SessionKeys.USER_EMAIL, loginedUser.getEmail());
+        httpSession.setAttribute(SessionKeys.USER_EMAIL, signInUser.getEmail());
     }
 
     @Override
