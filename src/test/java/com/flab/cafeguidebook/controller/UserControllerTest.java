@@ -10,7 +10,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
-import com.flab.cafeguidebook.extension.UserFixtureProvider;
+import com.flab.cafeguidebook.fixture.UserFixtureProvider;
+import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,6 +38,9 @@ class UserControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+
+    @Autowired
+    private UserServiceImpl userService;
 
     @BeforeEach
     public void init() {
@@ -69,6 +73,42 @@ class UserControllerTest {
         mockMvc.perform(post("/users/signUp")
             .params(map))
             .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
+    public void signInUserTestWithSuccess(User testUser) throws Exception {
+
+        insertTestUser(testUser);
+
+        MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+        paramMap.add("email", testUser.getEmail());
+        paramMap.add("password", testUser.getPassword());
+
+        mockMvc.perform(
+            post("/users/signIn")
+                .contentType(MediaType.APPLICATION_JSON)
+                .params(paramMap))
+            .andDo(print())
+            .andExpect(status().isOk());
+
+        deleteTestUser(testUser);
+    }
+
+    void insertTestUser(User testUser) throws Exception {
+        String content = objectMapper.writeValueAsString(testUser);
+
+        mockMvc.perform(post("/users/signUp")
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON)
+            .accept(MediaType.APPLICATION_JSON))
+            .andExpect(status().isCreated())
+            .andDo(print());
+    }
+
+    void deleteTestUser(User testUser) throws Exception {
+        String content = objectMapper.writeValueAsString(testUser);
+        userService.deleteUser(testUser.getEmail());
     }
 
     @Test

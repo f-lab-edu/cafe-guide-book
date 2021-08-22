@@ -14,4 +14,6 @@ public interface UserMapper {
 
     UserDTO selectUserByEmailAndPassword(String email, String password);
 
+    int deleteUser(String email);
+
 }

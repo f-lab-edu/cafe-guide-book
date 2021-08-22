@@ -47,4 +47,9 @@ public class UserServiceImpl implements UserService {
 
     httpSession.setAttribute(SessionKeys.USER_EMAIL, loginedUser.getEmail());
   }
+
+    @Override
+    public boolean deleteUser(String email) {
+        return userMapper.deleteUser(email) == 1;
+    }
 }
