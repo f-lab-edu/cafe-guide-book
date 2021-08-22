@@ -2,20 +2,22 @@ package com.flab.cafeguidebook.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import com.flab.cafeguidebook.dto.UserDTO;
-import com.flab.cafeguidebook.extension.UserDTOFixtureProvider;
+import com.flab.cafeguidebook.exception.UserNotFoundException;
+import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.UserMapper;
 import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import com.flab.cafeguidebook.util.HashingUtil;
+import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class, UserDTOFixtureProvider.class})
@@ -24,6 +26,8 @@ class UserServiceTest {
 
     @Autowired
     private UserMapper userMapper;
+
+    private MockHttpSession mockHttpSession;
 
     @Autowired
     private UserServiceImpl userService;
@@ -42,12 +46,6 @@ class UserServiceTest {
         );
         assertTrue(isSuccess);
     }
-    assertEquals(
-        HashingUtil.sha256Hashing(originalPassword),
-        userMapper.selectUserByEmail(user.getEmail()).getPassword()
-    );
-    assertTrue(isSuccess);
-  }
 
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
