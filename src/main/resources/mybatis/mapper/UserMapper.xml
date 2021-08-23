@@ -10,6 +10,13 @@
     VALUES (#{email}, #{password}, #{name}, #{phone}, #{address}, #{userType})
   </insert>
 
+  <select id="selectUserByEmailAndPassword" resultType="com.flab.cafeguidebook.dto.UserDTO">
+    SELECT email, name, phone, address, type
+    FROM user
+    WHERE email = #{email}
+      AND password = #{password}
+  </select>
+
   <select id="selectUserByEmail" parameterType="String"
     resultType="com.flab.cafeguidebook.dto.UserDTO">
     SELECT *
@@ -26,4 +33,10 @@
     FROM user
     WHERE email = #{email}
   </select>
+
+  <delete id="deleteUser" parameterType="String">
+    DELETE
+    FROM user
+    WHERE email = #{email}
+  </delete>
 </mapper>
