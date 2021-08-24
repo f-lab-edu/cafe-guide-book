@@ -17,15 +17,15 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class CafeServiceTest {
 
-    @Mock
-    private CafeMapper cafeMapper;
+  @Mock
+  private CafeMapper cafeMapper;
 
-    @InjectMocks
-    private CafeService cafeService;
+  @InjectMocks
+  private CafeService cafeService;
 
-    @Test
-    public void addCafe(CafeDTO testCafeDTO) {
-        given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
-        assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
-    }
+  @Test
+  public void addCafe(CafeDTO testCafeDTO) {
+    given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
+    assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
+  }
 }

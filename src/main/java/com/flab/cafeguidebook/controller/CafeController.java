@@ -19,26 +19,26 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class CafeController {
 
-    private static final Logger LOGGER = LogManager.getLogger(CafeController.class);
+  private static final Logger LOGGER = LogManager.getLogger(CafeController.class);
 
-    @Autowired
-    private CafeService cafeService;
+  @Autowired
+  private CafeService cafeService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity addCafe(HttpSession httpSession,
-        @RequestBody @Validated CafeDTO cafeDTO,
-        BindingResult bindingResult) {
-        String userEmail = (String) httpSession.getAttribute("userEmail");
-        cafeDTO.setUserEmail(userEmail);
+  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity addCafe(HttpSession httpSession,
+      @RequestBody @Validated CafeDTO cafeDTO,
+      BindingResult bindingResult) {
+    String userEmail = (String) httpSession.getAttribute("userEmail");
+    cafeDTO.setUserEmail(userEmail);
 
-        if (bindingResult.hasErrors()) {
-            bindingResult.getAllErrors().forEach(error -> {
-                LOGGER.info(error);
-            });
-            return ResponseEntity.badRequest().build();
-        }
-        cafeService.addCafe(cafeDTO);
-        return ResponseEntity.ok(cafeDTO);
+    if (bindingResult.hasErrors()) {
+      bindingResult.getAllErrors().forEach(error -> {
+        LOGGER.info(error);
+      });
+      return ResponseEntity.badRequest().build();
     }
+    cafeService.addCafe(cafeDTO);
+    return ResponseEntity.ok(cafeDTO);
+  }
 
 }
