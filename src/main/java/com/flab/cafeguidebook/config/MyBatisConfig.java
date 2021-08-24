@@ -22,6 +22,9 @@ public class MyBatisConfig {
   @Autowired
   private ApplicationContext applicationContext;
 
+  @Autowired
+  private HikariConfig hikariConfig;
+
   @Bean
   @ConfigurationProperties(prefix = "spring.datasource.hikari")
   public HikariConfig hikariConfig() {
@@ -29,8 +32,8 @@ public class MyBatisConfig {
   }
 
   @Bean
-  public DataSource dataSource() {
-    return new HikariDataSource(hikariConfig());
+  public DataSource dataSource(HikariConfig hikariConfig) {
+    return new HikariDataSource(hikariConfig);
   }
 
   @Bean
