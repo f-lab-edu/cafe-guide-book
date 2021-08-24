@@ -4,7 +4,7 @@
 <mapper namespace="com.flab.cafeguidebook.mapper.CafeMapper">
   <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
     INSERT INTO CAFE(cafe_id,
-                     user_id,
+                     user_email,
                      cafe_name,
                      biz_number,
                      tel,
@@ -23,7 +23,7 @@
                      cafe_condition,
                      cafe_registration)
     VALUES (#{cafeId},
-            #{userId},
+            #{userEmail},
             #{cafeName},
             #{bizNumber},
             #{tel},

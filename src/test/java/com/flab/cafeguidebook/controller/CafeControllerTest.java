@@ -40,13 +40,13 @@ public class CafeControllerTest {
     public void addCafe(Cafe testCafe) throws Exception {
 
         mockMvc.perform(post("/owner/cafe/")
-            .sessionAttr("userId", testCafe.getUserId())
+            .sessionAttr("userEmail", testCafe.getUserEmail())
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .content(objectMapper.writeValueAsString(testCafe))
             .accept(MediaType.APPLICATION_JSON_UTF8))
             .andDo(print())
             .andExpect(status().isOk())
-            .andExpect(jsonPath("userId").value(testCafe.getUserId()))
+            .andExpect(jsonPath("userEmail").value(testCafe.getUserEmail()))
             .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
             .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
             .andExpect(jsonPath("tel").value(testCafe.getTel()));

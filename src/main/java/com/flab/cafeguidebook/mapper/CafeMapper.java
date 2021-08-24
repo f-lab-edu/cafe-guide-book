@@ -8,4 +8,3 @@ public interface CafeMapper {
 
     public int insertCafe(CafeDTO cafeDTO);
 }
-
