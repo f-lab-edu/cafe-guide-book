@@ -23,32 +23,32 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class CafeControllerTest {
 
-    private MockMvc mockMvc;
+  private MockMvc mockMvc;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+  @Autowired
+  private ObjectMapper objectMapper;
 
-    @Autowired
-    private WebApplicationContext webApplicationContext;
+  @Autowired
+  private WebApplicationContext webApplicationContext;
 
-    @BeforeEach
-    public void init() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+  @BeforeEach
+  public void init() {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
 
-    @Test
-    public void addCafe(Cafe testCafe) throws Exception {
+  @Test
+  public void addCafe(Cafe testCafe) throws Exception {
 
-        mockMvc.perform(post("/owner/cafe/")
-            .sessionAttr("userId", testCafe.getUserId())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(objectMapper.writeValueAsString(testCafe))
-            .accept(MediaType.APPLICATION_JSON_UTF8))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("userId").value(testCafe.getUserId()))
-            .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
-            .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
-            .andExpect(jsonPath("tel").value(testCafe.getTel()));
-    }
+    mockMvc.perform(post("/owner/cafe/")
+        .sessionAttr("userId", testCafe.getUserId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testCafe))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("userId").value(testCafe.getUserId()))
+        .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
+        .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
+        .andExpect(jsonPath("tel").value(testCafe.getTel()));
+  }
 }

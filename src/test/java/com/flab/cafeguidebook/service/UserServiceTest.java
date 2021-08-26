@@ -1,7 +1,7 @@
 package com.flab.cafeguidebook.service;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -24,28 +24,28 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class UserServiceTest {
 
-    @Autowired
-    private UserMapper userMapper;
+  @Autowired
+  private UserMapper userMapper;
 
-    private MockHttpSession mockHttpSession;
+  private MockHttpSession mockHttpSession;
 
-    @Autowired
-    private UserServiceImpl userService;
+  @Autowired
+  private UserServiceImpl userService;
 
-    @Test
-    @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
-    public void signUpTestSuccess(UserDTO user) {
+  @Test
+  @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
+  public void signUpTestSuccess(UserDTO user) {
 
-        String originalPassword = user.getPassword();
+    String originalPassword = user.getPassword();
 
-        boolean isSuccess = userService.signUp(user);
+    boolean isSuccess = userService.signUp(user);
 
-        assertEquals(
-            HashingUtil.sha256Hashing(originalPassword),
-            userMapper.selectUserByEmail(user.getEmail()).getPassword()
-        );
-        assertTrue(isSuccess);
-    }
+    assertEquals(
+        HashingUtil.sha256Hashing(originalPassword),
+        userMapper.selectUserByEmail(user.getEmail()).getPassword()
+    );
+    assertTrue(isSuccess);
+  }
 
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
