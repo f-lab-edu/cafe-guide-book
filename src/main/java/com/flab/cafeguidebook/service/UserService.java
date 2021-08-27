@@ -6,8 +6,13 @@ import org.springframework.stereotype.Service;
 @Service
 public interface UserService {
 
-    public boolean signUp(UserDTO userDTO);
-    UserDTO getUserInfo(String email);
-    public void signIn(String email, String password);
-    public boolean deleteUser(String email);
+  public boolean signUp(UserDTO userDTO);
+
+  UserDTO getUserInfo(String email);
+
+  public void signIn(String email, String password);
+
+  public boolean deleteUser(String email);
+
+  public void signOut();
 }
