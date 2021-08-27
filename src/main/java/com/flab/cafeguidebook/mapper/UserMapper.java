@@ -6,14 +6,15 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface UserMapper {
 
-    int insertUser(UserDTO userDTO);
+  int insertUser(UserDTO userDTO);
 
-    UserDTO selectUserByEmail(String email);
+  int isEmailDuplicated(String id);
 
-    UserDTO getUserInfo(String email);
+  UserDTO selectUserByEmail(String email);
 
-    UserDTO selectUserByEmailAndPassword(String email, String password);
+  UserDTO getUserInfo(String email);
 
-    int deleteUser(String email);
+  UserDTO selectUserByEmailAndPassword(String email, String password);
 
+  int deleteUser(String email);
 }
