@@ -52,4 +52,11 @@ public class UserServiceImpl implements UserService {
   public boolean deleteUser(String email) {
     return userMapper.deleteUser(email) == 1;
   }
+
+  @Override
+  public void signOut() {
+    if (httpSession.getAttribute(SessionKeys.USER_EMAIL) != null) {
+      httpSession.removeAttribute(SessionKeys.USER_EMAIL);
+    }
+  }
 }

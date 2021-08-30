@@ -13,4 +13,6 @@ public interface UserService {
   public void signIn(String email, String password);
 
   public boolean deleteUser(String email);
+
+  public void signOut();
 }
