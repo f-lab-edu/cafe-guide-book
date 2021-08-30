@@ -12,32 +12,32 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
-    private final HttpSession httpSession;
+  private final UserMapper userMapper;
+  private final HttpSession httpSession;
 
-    public UserServiceImpl(UserMapper userMapper, HttpSession httpSession) {
-      this.userMapper = userMapper;
-      this.httpSession = httpSession;
+  public UserServiceImpl(UserMapper userMapper, HttpSession httpSession) {
+    this.userMapper = userMapper;
+    this.httpSession = httpSession;
+  }
+
+  // TODO : 이메일 중복체크 기능 추가 예정
+  @Override
+  public boolean signUp(UserDTO userDTO) {
+    userDTO.setPassword(HashingUtil.sha256Hashing(userDTO.getPassword()));
+    return (userMapper.insertUser(userDTO) == 1);
+  }
+
+  @Override
+  public UserDTO getUserInfo(String email) {
+    UserDTO foundedUser = userMapper.getUserInfo(email);
+    if (foundedUser == null) {
+      throw new UserNotFoundException("존재하지 않는 회원입니다.");
     }
+    return foundedUser;
+  }
 
-    // TODO : 이메일 중복체크 기능 추가 예정
-    @Override
-    public boolean signUp(UserDTO userDTO) {
-        userDTO.setPassword(HashingUtil.sha256Hashing(userDTO.getPassword()));
-        return (userMapper.insertUser(userDTO) == 1);
-    }
-
-    @Override
-    public UserDTO getUserInfo(String email) {
-        UserDTO foundedUser = userMapper.getUserInfo(email);
-        if (foundedUser == null) {
-            throw new UserNotFoundException("존재하지 않는 회원입니다.");
-        }
-        return foundedUser;
-    }
-
-    @Override
-    public void signIn(String email, String password) {
+  @Override
+  public void signIn(String email, String password) {
     UserDTO loginedUser = userMapper
         .selectUserByEmailAndPassword(email, HashingUtil.sha256Hashing(password));
 
@@ -48,8 +48,15 @@ public class UserServiceImpl implements UserService {
     httpSession.setAttribute(SessionKeys.USER_EMAIL, loginedUser.getEmail());
   }
 
-    @Override
-    public boolean deleteUser(String email) {
-        return userMapper.deleteUser(email) == 1;
+  @Override
+  public boolean deleteUser(String email) {
+    return userMapper.deleteUser(email) == 1;
+  }
+
+  @Override
+  public void signOut() {
+    if (httpSession.getAttribute(SessionKeys.USER_EMAIL) != null) {
+      httpSession.removeAttribute(SessionKeys.USER_EMAIL);
     }
+  }
 }
