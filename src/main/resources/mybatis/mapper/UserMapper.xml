@@ -39,10 +39,4 @@
     FROM user
     WHERE email = #{email}
   </select>
-
-  <select id="isEmailDuplicated" resultType="int">
-    SELECT COUNT(email)
-    FROM USER
-    WHERE email = #{email}
-  </select>
 </mapper>

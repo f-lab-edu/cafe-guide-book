@@ -8,8 +8,6 @@ public interface UserMapper {
 
   int insertUser(UserDTO userDTO);
 
-  int isEmailDuplicated(String id);
-
   UserDTO selectUserByEmail(String email);
 
   UserDTO getUserInfo(String email);

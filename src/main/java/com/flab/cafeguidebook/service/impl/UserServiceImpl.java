@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public boolean isDuplicatedEmail(String email) {
-    return (userMapper.isEmailDuplicated(email) != 0);
+    return userMapper.selectUserByEmail(email) != null;
   }
 
   @Override

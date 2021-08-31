@@ -76,12 +76,12 @@ class UserServiceTest {
   @Test
   @DisplayName("이메일")
   public void isDuplicatedEmailTrue(UserDTO user) {
-    when(userMapper.isEmailDuplicated(user.getEmail())).thenReturn(1);
-    when(userMapper.isEmailDuplicated(user.getEmail() + "no-duplicated")).thenReturn(0);
+    when(userMapper.selectUserByEmail(user.getEmail())).thenReturn(user);
+    when(userMapper.selectUserByEmail(user.getEmail() + "no-duplicated")).thenReturn(null);
 
     assertTrue(userService.isDuplicatedEmail(user.getEmail()));
     assertFalse(userService.isDuplicatedEmail(user.getEmail() + "no-duplicated"));
 
-    verify(userMapper).isEmailDuplicated(user.getEmail());
+    verify(userMapper).selectUserByEmail(user.getEmail());
   }
 }
