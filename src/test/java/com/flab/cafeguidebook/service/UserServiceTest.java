@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.service;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
@@ -37,6 +38,7 @@ class UserServiceTest {
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
   public void signUpTestSuccess(UserDTO user) {
+
     String originalPassword = user.getPassword();
 
     boolean isSuccess = userService.signUp(user);
@@ -83,5 +85,13 @@ class UserServiceTest {
     assertFalse(userService.isDuplicatedEmail(user.getEmail() + "no-duplicated"));
 
     verify(userMapper).selectUserByEmail(user.getEmail());
+  }
+
+  @Test
+  @DisplayName("로그아웃 성공")
+  public void signOutUserTestWithSuccess(UserDTO user) {
+    mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
+    userService.signOut();
+    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
   }
 }

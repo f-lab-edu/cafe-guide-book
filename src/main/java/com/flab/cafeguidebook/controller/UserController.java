@@ -46,9 +46,15 @@ public class UserController {
     userService.signIn(email, password);
   }
 
+
   @GetMapping("/duplicated/{email}")
   public boolean isEmailDuplicated(@PathVariable String email) {
     boolean isEmailDuplicated = userService.isDuplicatedEmail(email);
     return isEmailDuplicated;
+  }
+  
+  @GetMapping(value = "/signOut")
+  public void signOut() {
+    userService.signOut();
   }
 }

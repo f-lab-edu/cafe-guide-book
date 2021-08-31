@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -13,6 +14,7 @@ import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserFixtureProvider;
 import com.flab.cafeguidebook.service.UserService;
+import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -20,6 +22,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -32,6 +35,7 @@ import org.springframework.web.util.NestedServletException;
 @SpringBootTest
 class UserControllerTest {
 
+  MockHttpSession httpSession;
   private MockMvc mockMvc;
 
   @Autowired
@@ -46,6 +50,7 @@ class UserControllerTest {
   @BeforeEach
   public void init() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    httpSession = new MockHttpSession();
   }
 
   @Test
@@ -122,6 +127,7 @@ class UserControllerTest {
         .content(content)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isCreated())
         .andDo(print());
   }
 
@@ -167,4 +173,15 @@ class UserControllerTest {
     assertEquals(UserNotFoundException.class, e.getCause().getClass());
   }
 
+  @Test
+  @DisplayName("로그아웃 성공시 200을 리턴함")
+  public void signOutTestWithSuccess(User testUser) throws Exception {
+    mockMvc.perform(
+        get("/users/signOut"))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andDo(print());
+
+    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
 }
