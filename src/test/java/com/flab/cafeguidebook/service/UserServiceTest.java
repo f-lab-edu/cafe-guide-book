@@ -27,7 +27,7 @@ class UserServiceTest {
 
   @Autowired
   private UserMapper userMapper;
-
+  
   @Mock
   private MockHttpSession mockHttpSession;
 
