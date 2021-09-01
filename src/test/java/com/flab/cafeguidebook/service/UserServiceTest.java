@@ -30,6 +30,7 @@ class UserServiceTest {
   @Mock
   private UserMapper userMapper;
 
+  @Mock
   private MockHttpSession mockHttpSession;
 
   @Mock

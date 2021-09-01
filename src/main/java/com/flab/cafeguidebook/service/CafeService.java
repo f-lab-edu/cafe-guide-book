@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 @Service
 public class CafeService {
 
-    @Autowired
-    private CafeMapper cafeMapper;
+  @Autowired
+  private CafeMapper cafeMapper;
 
-    public boolean addCafe(CafeDTO cafeDTO) {
-        int insertCafe = cafeMapper.insertCafe(cafeDTO);
-        return insertCafe == 1;
-    }
+  public boolean addCafe(CafeDTO cafeDTO) {
+    int insertCafe = cafeMapper.insertCafe(cafeDTO);
+    return insertCafe == 1;
+  }
 }

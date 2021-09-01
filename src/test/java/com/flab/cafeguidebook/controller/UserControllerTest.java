@@ -44,7 +44,6 @@ class UserControllerTest {
   @Autowired
   private WebApplicationContext webApplicationContext;
 
-  @Autowired
   private UserService userService;
 
   @BeforeEach
@@ -172,7 +171,7 @@ class UserControllerTest {
         });
     assertEquals(UserNotFoundException.class, e.getCause().getClass());
   }
-
+  
   @Test
   @DisplayName("로그아웃 성공시 200을 리턴함")
   public void signOutTestWithSuccess(User testUser) throws Exception {
