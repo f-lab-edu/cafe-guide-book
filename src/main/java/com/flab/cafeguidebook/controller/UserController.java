@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.UserDTO;
+import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,9 @@ public class UserController {
   @PostMapping(value = "/signUp")
   @ResponseStatus(HttpStatus.CREATED)
   public void signUp(@RequestBody UserDTO userDTO) {
+    if (userService.isDuplicatedEmail(userDTO.getEmail())) {
+      throw new DuplicatedEmailException();
+    }
     userService.signUp(userDTO);
   }
 
@@ -40,6 +44,11 @@ public class UserController {
   @PostMapping(value = "/signIn")
   public void signIn(String email, String password) {
     userService.signIn(email, password);
+  }
+
+  @GetMapping(value = "/emails/{email}")
+  public String getRegisteredEmail(@PathVariable String email) {
+    return userService.getUserInfo(email).getEmail();
   }
 
   @GetMapping(value = "/signOut")

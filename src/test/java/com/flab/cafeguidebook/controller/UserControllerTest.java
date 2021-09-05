@@ -10,6 +10,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
+import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserFixtureProvider;
 import com.flab.cafeguidebook.service.UserService;
@@ -80,9 +81,28 @@ class UserControllerTest {
   }
 
   @Test
+  @DisplayName("이메일 중복시 회원가입 실패(422리턴 및 DuplicatedEmailException throw)")
+  void signUpFailWithDuplicatedEmail(User testUser) throws Exception {
+    insertTestUser(testUser);
+    String content = objectMapper.writeValueAsString(testUser);
+
+    Exception e = assertThrows(NestedServletException.class,
+        () -> {
+          mockMvc.perform(post("/users/signUp")
+              .content(content)
+              .contentType(MediaType.APPLICATION_JSON)
+              .accept(MediaType.APPLICATION_JSON))
+              .andExpect(status().isUnprocessableEntity())
+              .andDo(print());
+        });
+
+    assertEquals(DuplicatedEmailException.class, e.getCause().getClass());
+    deleteTestUser(testUser);
+  }
+
+  @Test
   @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
   public void signInUserTestWithSuccess(User testUser) throws Exception {
-
     insertTestUser(testUser);
 
     MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
