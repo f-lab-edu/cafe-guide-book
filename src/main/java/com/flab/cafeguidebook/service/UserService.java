@@ -17,4 +17,6 @@ public interface UserService {
   public boolean deleteUser(String email);
 
   public void signOut();
+
+  public String getCurrentUser();
 }
