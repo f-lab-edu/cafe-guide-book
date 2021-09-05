@@ -1,7 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.annotation.LoginCheck;
-import com.flab.cafeguidebook.domain.UserLoginRequest;
+import com.flab.cafeguidebook.domain.UserSignInRequest;
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.service.UserService;
@@ -50,7 +50,7 @@ public class UserController {
   }
 
   @PostMapping(value = "/signIn")
-  public void signIn(@RequestBody UserLoginRequest loginRequest) {
+  public void signIn(@RequestBody UserSignInRequest loginRequest) {
     userService.signIn(loginRequest.getEmail(), loginRequest.getPassword());
   }
 

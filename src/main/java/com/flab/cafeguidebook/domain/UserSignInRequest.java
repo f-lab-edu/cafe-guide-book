@@ -1,9 +1,14 @@
 package com.flab.cafeguidebook.domain;
 
-public class UserLoginRequest {
+public class UserSignInRequest {
 
   private String email;
   private String password;
+
+  public UserSignInRequest(String email, String password) {
+    this.email = email;
+    this.password = password;
+  }
 
   public String getEmail() {
     return email;
