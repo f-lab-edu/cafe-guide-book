@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.cafeguidebook.mapper.MenuMapper">
+  <insert id="insertMenu" parameterType="com.flab.cafeguidebook.dto.MenuDTO">
+    INSERT INTO MENU(cafe_id,
+                     menu_name,
+                     menu_price,
+                     menu_photo,
+                     menu_priority,
+                     menu_info,
+                     create_menu_date,
+                     update_menu_date,
+                     menu_group,
+                     menu_status)
+    VALUES (#{cafeId},
+            #{menuName},
+            #{menuPrice},
+            #{menuPhoto},
+            #{menuPriority},
+            (select max(menu_priority) + 1 as priority
+             from (select menu_priority from menu WHERE cafe_id = 1) all_menu),
+            #{menuInfo},
+            now(),
+            now(),
+            #{menuGroup},
+            #{menuStatus})
+  </insert>
+</mapper>
