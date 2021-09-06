@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 public class Menu {
 
   private long menuId;
-  private String cafeId;
+  private long cafeId;
   private String menuName;
   private int menuPrice;
   private String menuPhoto;
@@ -32,7 +32,7 @@ public class Menu {
     this.menuStatus = menuStatus;
   }
 
-  public Menu(long menuId, String cafeId, String menuName, int menuPrice, String menuPhoto,
+  public Menu(long menuId, long cafeId, String menuName, int menuPrice, String menuPhoto,
       String menuInfo, int menuPriority, LocalDateTime createMenuDate, LocalDateTime updateMenuDate,
       MenuGroup menuGroup, MenuStatus menuStatus) {
     this.menuId = menuId;
@@ -60,11 +60,11 @@ public class Menu {
     this.menuId = menuId;
   }
 
-  public String getCafeId() {
+  public long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(String cafeId) {
+  public void setCafeId(long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -143,7 +143,7 @@ public class Menu {
   public static class Builder {
 
     private long menuId;
-    private String cafeId;
+    private long cafeId;
     private String menuName;
     private int menuPrice;
     private String menuPhoto;
@@ -163,7 +163,7 @@ public class Menu {
       return this;
     }
 
-    public Menu.Builder cafeId(final String cafeId) {
+    public Menu.Builder cafeId(final long cafeId) {
       this.cafeId = cafeId;
       return this;
     }

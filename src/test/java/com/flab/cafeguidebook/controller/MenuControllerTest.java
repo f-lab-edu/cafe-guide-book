@@ -6,8 +6,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.flab.cafeguidebook.domain.Cafe;
+import com.flab.cafeguidebook.domain.Menu;
+import com.flab.cafeguidebook.domain.Option;
 import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
+import com.flab.cafeguidebook.fixture.MenuFixtureProvider;
+import com.flab.cafeguidebook.fixture.OptionFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,9 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ExtendWith({SpringExtension.class, CafeFixtureProvider.class})
+@ExtendWith({SpringExtension.class, CafeFixtureProvider.class, MenuFixtureProvider.class, OptionFixtureProvider.class})
 @SpringBootTest
-public class CafeControllerTest {
+public class MenuControllerTest {
 
   private MockMvc mockMvc;
 
@@ -37,18 +40,32 @@ public class CafeControllerTest {
   }
 
   @Test
-  public void addCafe(Cafe testCafe) throws Exception {
+  public void addMenu(Menu testMenu) throws Exception {
 
-    mockMvc.perform(post("/owner/cafe/")
-        .sessionAttr("userId", testCafe.getUserId())
+    mockMvc.perform(post("/owner/cafe/" + testMenu.getCafeId() + "/menu")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(testCafe))
+        .content(objectMapper.writeValueAsString(testMenu))
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("userId").value(testCafe.getUserId()))
-        .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
-        .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
-        .andExpect(jsonPath("tel").value(testCafe.getTel()));
+        .andExpect(jsonPath("cafeId").value(testMenu.getCafeId()))
+        .andExpect(jsonPath("menuName").value(testMenu.getMenuName()))
+        .andExpect(jsonPath("menuPrice").value(testMenu.getMenuPrice()));
+  }
+
+  @Test
+  public void addOption(Option testOption) throws Exception {
+
+    final long CAFEID = 1;
+
+    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOption.getMenuId() + "/options/")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testOption))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("optionName").value(testOption.getOptionName()))
+        .andExpect(jsonPath("menuId").value(testOption.getMenuId()))
+        .andExpect(jsonPath("optionPrice").value(testOption.getOptionPrice()));
   }
 }

@@ -30,7 +30,7 @@ public class MenuController {
   private OptionService optionService;
 
   @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity addMenu(@PathVariable String cafeId,
+  public ResponseEntity addMenu(@PathVariable long cafeId,
       @RequestBody @Validated MenuDTO menuDTO,
       BindingResult bindingResult) {
     menuDTO.setCafeId(cafeId);

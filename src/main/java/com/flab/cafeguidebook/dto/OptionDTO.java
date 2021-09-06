@@ -6,8 +6,6 @@ import org.springframework.lang.NonNull;
 
 public class OptionDTO {
 
-  @NonNull
-  @NotBlank
   private long optionId;
 
   @NonNull
@@ -15,11 +13,9 @@ public class OptionDTO {
   private String optionName;
 
   @NonNull
-  @NotBlank
   private long menuId;
 
   @NonNull
-  @NotBlank
   private int optionPrice;
 
   private OptionStatus optionStatus;

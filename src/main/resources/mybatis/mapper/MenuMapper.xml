@@ -17,7 +17,6 @@
             #{menuName},
             #{menuPrice},
             #{menuPhoto},
-            #{menuPriority},
             (select max(menu_priority) + 1 as priority
              from (select menu_priority from menu WHERE cafe_id = 1) all_menu),
             #{menuInfo},
@@ -25,5 +24,8 @@
             now(),
             #{menuGroup},
             #{menuStatus})
+    <selectKey resultType="long" keyProperty="menuId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
 </mapper>
