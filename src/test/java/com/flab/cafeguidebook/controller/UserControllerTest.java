@@ -162,9 +162,7 @@ class UserControllerTest {
                 parameterWithName("email").description("이메일 (필수)"),
                 parameterWithName("password").description("패스워드 (필수)")
             )
-        ));
-//    deleteTestUser(testUser);
-        .andExpect(status().isOk());
+        )).andExpect(status().isOk());
 
     withdrawTestUser(testUser);
   }
