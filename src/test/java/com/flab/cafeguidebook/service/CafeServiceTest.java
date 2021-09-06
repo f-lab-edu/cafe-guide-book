@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.extension.CafeDTOFixtureProvider;
+import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

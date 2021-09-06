@@ -27,7 +27,6 @@ import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -103,7 +102,6 @@ class UserControllerTest {
         ));
   }
 
-  @Disabled
   @Test
   @DisplayName("회원가입 컨트롤러 진입 실패 테스트(입력값 누락)")
   void signUpFailWithMissingParam() throws Exception {
@@ -119,7 +117,6 @@ class UserControllerTest {
         .andExpect(status().isBadRequest());
   }
 
-  @Disabled
   @Test
   @DisplayName("이메일 중복시 회원가입 실패(422리턴 및 DuplicatedEmailException throw)")
   void signUpFailWithDuplicatedEmail(User testUser) throws Exception {
@@ -208,7 +205,6 @@ class UserControllerTest {
         ));
   }
 
-  @Disabled
   @Test
   @DisplayName("존재하지 않는 회원정보 조회 통합 테스트")
   void getUserFailWithNoUserExist(User testUser) throws Exception {
