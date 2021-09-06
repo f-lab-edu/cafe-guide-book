@@ -46,6 +46,10 @@ public class Option {
     this.optionName = optionName;
   }
 
+  public long getMenuId() {
+    return menuId;
+  }
+
   public void setMenuId(long menuId) {
     this.menuId = menuId;
   }
@@ -88,7 +92,7 @@ public class Option {
       return this;
     }
 
-    public Option.Builder menuName(final long menuId) {
+    public Option.Builder menuId(final long menuId) {
       this.menuId = menuId;
       return this;
     }

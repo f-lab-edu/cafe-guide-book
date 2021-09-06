@@ -8,20 +8,16 @@ import org.springframework.lang.NonNull;
 
 public class MenuDTO {
 
-  @NonNull
-  @NotBlank
   private long menuId;
 
   @NonNull
-  @NotBlank
-  private String cafeId;
+  private long cafeId;
 
   @NonNull
   @NotBlank
   private String menuName;
 
   @NonNull
-  @NotBlank
   private int menuPrice;
 
   private String menuPhoto;
@@ -56,7 +52,7 @@ public class MenuDTO {
     this.menuStatus = menuStatus;
   }
 
-  public MenuDTO(@NonNull long menuId, @NonNull String cafeId, @NonNull String menuName,
+  public MenuDTO(@NonNull long menuId, @NonNull long cafeId, @NonNull String menuName,
       int menuPrice, String menuPhoto, String menuInfo, int menuPriority,
       LocalDateTime createMenuDate, LocalDateTime updateMenuDate, MenuGroup menuGroup,
       MenuStatus menuStatus) {
@@ -86,11 +82,11 @@ public class MenuDTO {
   }
 
   @NonNull
-  public String getCafeId() {
+  public long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(@NonNull String cafeId) {
+  public void setCafeId(@NonNull long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -170,7 +166,7 @@ public class MenuDTO {
   public static class Builder {
 
     private long menuId;
-    private String cafeId;
+    private long cafeId;
     private String menuName;
     private int menuPrice;
     private String menuPhoto;
@@ -190,7 +186,7 @@ public class MenuDTO {
       return this;
     }
 
-    public MenuDTO.Builder cafeId(final String cafeId) {
+    public MenuDTO.Builder cafeId(final long cafeId) {
       this.cafeId = cafeId;
       return this;
     }
