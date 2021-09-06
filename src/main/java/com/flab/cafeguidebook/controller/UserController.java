@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.controller;
 
-import com.flab.cafeguidebook.annotation.LoginCheck;
+import com.flab.cafeguidebook.annotation.SignInCheck;
 import com.flab.cafeguidebook.domain.UserSignInRequest;
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.DuplicatedEmailException;
@@ -44,7 +44,7 @@ public class UserController {
   }
 
   @GetMapping("{email}")
-  @LoginCheck
+  @SignInCheck
   public UserDTO userInfo(@PathVariable String email) {
     return userService.getUserInfo(email);
   }
@@ -60,7 +60,7 @@ public class UserController {
   }
 
   @GetMapping(value = "/signOut")
-  @LoginCheck
+  @SignInCheck
   public void signOut() {
     userService.signOut();
   }

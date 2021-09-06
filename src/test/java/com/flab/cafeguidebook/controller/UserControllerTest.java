@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
-import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.domain.UserSignInRequest;
+import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserFixtureProvider;
 import com.flab.cafeguidebook.service.UserService;
@@ -44,7 +44,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
@@ -206,8 +205,9 @@ class UserControllerTest {
   @DisplayName("회원정보 조회 통합 테스트")
   void getUserSuccess(User testUser) throws Exception {
     signUpTestUser(testUser);
-    signInTestUser(testUser);
     String content = objectMapper.writeValueAsString(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
 
     mockMvc.perform(RestDocumentationRequestBuilders.get("/users/{email}", testUser.getEmail())
         .contentType(MediaType.APPLICATION_JSON)
@@ -233,29 +233,25 @@ class UserControllerTest {
     mockMvc.perform(get("/users/" + testUser.getEmail())
         .content(content)
         .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
+        .accept(MediaType.APPLICATION_JSON)
+        .session(session))
         .andExpect(status().isOk())
         .andDo(print());
 
-    signOutTestUser();
     withdrawTestUser(testUser);
   }
 
   @Test
-  @DisplayName("로그인이 안되어 있는 경우 회원정보 조회 실패 통합 테스트, 401 리턴 및 HttpClientErrorException throw")
-  void getUserFailWithNotLogined(User testUser) throws Exception {
+  @DisplayName("로그인이 안되어 있는 경우 회원정보 조회 실패 통합 테스트, 401 리턴")
+  void getUserFailWithNotSignIn(User testUser) throws Exception {
     String content = objectMapper.writeValueAsString(testUser);
 
-    Exception e = assertThrows(NestedServletException.class,
-        () -> {
-          mockMvc.perform(get("/users/" + testUser.getEmail())
-              .content(content)
-              .contentType(MediaType.APPLICATION_JSON)
-              .accept(MediaType.APPLICATION_JSON))
-              .andExpect(status().isUnauthorized())
-              .andDo(print());
-        });
-    assertEquals(HttpClientErrorException.class, e.getCause().getClass());
+    mockMvc.perform(get("/users/" + testUser.getEmail())
+        .content(content)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andDo(print());
   }
 
   @Test
@@ -283,10 +279,13 @@ class UserControllerTest {
   @DisplayName("로그아웃 성공시 200을 리턴함")
   public void signOutTestWithSuccess(User testUser) throws Exception {
     signUpTestUser(testUser);
-    signInTestUser(testUser);
+    String content = objectMapper.writeValueAsString(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
 
     mockMvc.perform(
-        get("/users/signOut"))
+        get("/users/signOut")
+            .session(session))
         .andDo(print())
         .andExpect(status().isOk())
         .andDo(print())
@@ -296,21 +295,15 @@ class UserControllerTest {
         ));
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
-    signOutTestUser();
     withdrawTestUser(testUser);
   }
 
   @Test
-  @DisplayName("로그아웃 성공시 200을 리턴함")
-  public void signOutTestFailWithNotLogined(User testUser) throws Exception {
-    Exception e = assertThrows(NestedServletException.class,
-        () -> {
-          mockMvc.perform(
-              get("/users/signOut"))
-              .andDo(print())
-              .andExpect(status().isOk())
-              .andDo(print());
-        });
-    assertEquals(HttpClientErrorException.class, e.getCause().getClass());
+  @DisplayName("로그아웃 실패시 200을 리턴함")
+  public void signOutTestFailWithNotSignIn(User testUser) throws Exception {
+    mockMvc.perform(
+        get("/users/signOut"))
+        .andExpect(status().isUnauthorized())
+        .andDo(print());
   }
 }
