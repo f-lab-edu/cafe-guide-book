@@ -17,7 +17,7 @@ public enum UserType {
   }
 
   @MappedTypes(UserType.class)
-  public static class TypeHandler extends UserTypeHandler<UserType> {
+  public static class TypeHandler extends UserTypeHandler {
 
     public TypeHandler() {
       super(UserType.class);

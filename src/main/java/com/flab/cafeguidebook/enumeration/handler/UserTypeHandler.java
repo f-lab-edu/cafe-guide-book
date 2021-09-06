@@ -9,11 +9,11 @@ import org.apache.ibatis.type.JdbcType;
 import org.apache.ibatis.type.TypeException;
 import org.apache.ibatis.type.TypeHandler;
 
-public class UserTypeHandler<E extends Enum<E>> implements TypeHandler<UserType> {
+public class UserTypeHandler implements TypeHandler<UserType> {
 
-  private Class<E> type;
+  private Class<UserType> type;
 
-  public UserTypeHandler(Class<E> type) {
+  public UserTypeHandler(Class<UserType> type) {
     this.type = type;
   }
 
