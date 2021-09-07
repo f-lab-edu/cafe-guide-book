@@ -68,4 +68,9 @@ public class UserServiceImpl implements UserService {
   public String getCurrentUser() {
     return (String) httpSession.getAttribute(SessionKeys.USER_EMAIL);
   }
+
+  @Override
+  public boolean updatePassword(String email, String newPassword) {
+    return userMapper.updatePassword(email, HashingUtil.sha256Hashing(newPassword)) == 1;
+  }
 }

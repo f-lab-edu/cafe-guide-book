@@ -649,7 +649,7 @@ email=yssj2049%40gmail.com&amp;password=Cafe1234%21</code></pre>
 <pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /users/signUp HTTP/1.1
 Content-Type: application/json
 Accept: application/json
-Content-Length: 188
+Content-Length: 190
 Host: docs.api.com
 
 {
@@ -658,7 +658,7 @@ Host: docs.api.com
   "name" : "김민성",
   "phone" : "010-8358-2049",
   "address" : "경기도 화성시 호수공원",
-  "userType" : null
+  "userType" : "USER"
 }</code></pre>
 </div>
 </div>
@@ -743,6 +743,48 @@ Host: docs.api.com</code></pre>
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_회원탈퇴">회원탈퇴</h4>
+<div class="sect4">
+<h5 id="_path_parameters_2">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /users/withdrawal/{email}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원탈퇴할 계정의 이메일</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_5">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /users/withdrawal/yssj2049@gmail.com HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_5">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -750,7 +792,7 @@ Host: docs.api.com</code></pre>
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-09-06 21:12:57 +0900
+Last updated 2021-09-13 17:21:22 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
