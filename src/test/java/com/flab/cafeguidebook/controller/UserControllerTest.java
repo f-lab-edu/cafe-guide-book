@@ -13,6 +13,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -350,5 +351,17 @@ class UserControllerTest {
         .andDo(print());
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
+
+  @Test
+  @DisplayName("회원탈퇴 성공시 200리턴")
+  public void withdrawalTestWithSuccess(User testUser) throws Exception {
+    signUpTestUser(testUser);
+
+    mockMvc.perform(
+        delete("/users/withdrawal/" + testUser.getEmail()))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andDo(print());
   }
 }
