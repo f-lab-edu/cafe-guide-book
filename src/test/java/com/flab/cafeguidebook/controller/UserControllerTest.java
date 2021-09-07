@@ -14,6 +14,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -281,10 +282,7 @@ class UserControllerTest {
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
 
-    mockMvc.perform(
-        get("/users/signOut")
-            .session(session))
-        .andDo(print())
+    mockMvc.perform(get("/users/signOut"))
         .andExpect(status().isOk())
         .andDo(print())
         .andDo(document("sign-out",
@@ -303,5 +301,26 @@ class UserControllerTest {
         get("/users/signOut"))
         .andExpect(status().isUnauthorized())
         .andDo(print());
+
+    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
+
+  @Test
+  @DisplayName("비밀번호 업데이트 성공시 204를 리턴함")
+  public void updatePasswordTestWithSuccess(User testUser) throws Exception {
+    signUpTestUser(testUser);
+
+    MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+    paramMap.add("email", testUser.getEmail());
+    paramMap.add("newPassword", testUser.getPassword() + "newPassword");
+
+    mockMvc.perform(
+        patch("/users/password")
+            .contentType(MediaType.APPLICATION_JSON)
+            .params(paramMap))
+        .andExpect(status().isNoContent())
+        .andDo(print());
+
+    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
   }
 }
