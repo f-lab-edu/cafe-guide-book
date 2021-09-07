@@ -10,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -71,5 +72,10 @@ public class UserController {
   @SignInCheck
   public void updatePassword(String email, String newPassword) {
     userService.updatePassword(email, newPassword);
+  }
+
+  @DeleteMapping(value = "/withdrawal/{email}")
+  public void withdrawal(@PathVariable String email) {
+    userService.deleteUser(email);
   }
 }
