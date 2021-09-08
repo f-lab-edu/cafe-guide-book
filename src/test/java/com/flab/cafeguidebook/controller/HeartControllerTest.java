@@ -2,6 +2,7 @@ package com.flab.cafeguidebook.controller;
 
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentRequest;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentResponse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -104,7 +105,7 @@ public class HeartControllerTest {
             )
         ));
 
-//    assertNotNull(heartService.getHeart(user.getId(), cafe.getCafeId()));
+    assertNotNull(heartService.getHeart(user.getId(), cafe.getCafeId()));
   }
 
   @Test
