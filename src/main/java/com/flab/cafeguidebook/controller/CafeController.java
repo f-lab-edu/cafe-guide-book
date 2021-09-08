@@ -28,7 +28,6 @@ public class CafeController {
   public ResponseEntity addCafe(HttpSession httpSession,
       @RequestBody @Validated CafeDTO cafeDTO,
       BindingResult bindingResult) {
-
     Long userId = (Long) httpSession.getAttribute("userId");
     cafeDTO.setUserId(userId);
 
@@ -41,5 +40,4 @@ public class CafeController {
     cafeService.addCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
   }
-
 }
