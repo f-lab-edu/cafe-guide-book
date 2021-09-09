@@ -43,7 +43,7 @@ public class ReviewController {
     return ResponseEntity.ok(reviewDTO);
   }
 
-  @GetMapping(value = "/{userId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/users/{userId}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<ReviewDTO> getReviews(@PathVariable Long userId) {
     return reviewService.getUsersReviews(userId);
   }
