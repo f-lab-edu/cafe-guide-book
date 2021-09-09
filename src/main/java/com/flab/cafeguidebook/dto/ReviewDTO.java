@@ -12,7 +12,7 @@ public class ReviewDTO {
   private Long userId;
   private Date createAt;
   @NonNull
-  private float score;
+  private int score;
   @NonNull
   private String content;
 
@@ -24,11 +24,11 @@ public class ReviewDTO {
     this.cafeId = builder.cafeId;
     this.userId = builder.userId;
     this.createAt = builder.createAt;
-    this.score = builder.id;
+    this.score = builder.score;
     this.content = builder.content;
   }
 
-  public ReviewDTO(Long id, Long cafeId, Long userId, Date createAt, float score,
+  public ReviewDTO(Long id, Long cafeId, Long userId, Date createAt, int score,
       String content) {
     this.id = id;
     this.cafeId = cafeId;
@@ -74,11 +74,11 @@ public class ReviewDTO {
     this.createAt = createAt;
   }
 
-  public float getScore() {
+  public int getScore() {
     return score;
   }
 
-  public void setScore(float score) {
+  public void setScore(int score) {
     this.score = score;
   }
 
@@ -96,7 +96,7 @@ public class ReviewDTO {
     private Long cafeId;
     private Long userId;
     private Date createAt;
-    private float score;
+    private int score;
     private String content;
 
     public ReviewDTO.Builder Builder() {
@@ -123,7 +123,7 @@ public class ReviewDTO {
       return this;
     }
 
-    public ReviewDTO.Builder score(float score) {
+    public ReviewDTO.Builder score(int score) {
       this.score = score;
       return this;
     }

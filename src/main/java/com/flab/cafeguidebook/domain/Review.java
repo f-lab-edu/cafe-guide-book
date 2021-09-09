@@ -8,13 +8,22 @@ public class Review {
   private Long cafeId;
   private Long userId;
   private Date createAt;
-  private float score;
+  private int score;
   private String content;
 
   public Review() {
   }
 
-  public Review(Long id, Long cafeId, Long userId, Date createAt, float score,
+  public Review(Review.Builder builder) {
+    this.id = builder.id;
+    this.cafeId = builder.cafeId;
+    this.userId = builder.userId;
+    this.createAt = builder.createAt;
+    this.score = builder.score;
+    this.content = builder.content;
+  }
+
+  public Review(Long id, Long cafeId, Long userId, Date createAt, int score,
       String content) {
     this.id = id;
     this.cafeId = cafeId;
@@ -22,6 +31,11 @@ public class Review {
     this.createAt = createAt;
     this.score = score;
     this.content = content;
+  }
+
+
+  public static Review.Builder builder() {
+    return new Review.Builder();
   }
 
   public Long getId() {
@@ -56,11 +70,11 @@ public class Review {
     this.createAt = createAt;
   }
 
-  public float getScore() {
+  public int getScore() {
     return score;
   }
 
-  public void setScore(float score) {
+  public void setScore(int score) {
     this.score = score;
   }
 
@@ -78,7 +92,7 @@ public class Review {
     private Long cafeId;
     private Long userId;
     private Date createAt;
-    private float score;
+    private int score;
     private String content;
 
     public Review.Builder Builder() {
@@ -105,7 +119,7 @@ public class Review {
       return this;
     }
 
-    public Review.Builder score(float score) {
+    public Review.Builder score(int score) {
       this.score = score;
       return this;
     }
@@ -115,5 +129,8 @@ public class Review {
       return this;
     }
 
+    public Review build() {
+      return new Review(this);
+    }
   }
 }
