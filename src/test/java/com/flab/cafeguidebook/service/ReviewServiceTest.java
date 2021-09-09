@@ -53,4 +53,17 @@ public class ReviewServiceTest {
 
     verify(reviewMapper).selectReviews(review.getUserId());
   }
+
+  @Test
+  public void getUsersReviewSuccess(ReviewDTO review) {
+    final List<ReviewDTO> reviewList = new ArrayList<>();
+    reviewList.add(review);
+    reviewList.add(review);
+    reviewList.add(review);
+    when(reviewMapper.selectReviews(review.getUserId())).thenReturn(reviewList);
+
+    assertEquals(reviewService.getUsersReviews(review.getUserId()).size(), 3);
+
+    verify(reviewMapper).selectReviews(review.getUserId());
+  }
 }
