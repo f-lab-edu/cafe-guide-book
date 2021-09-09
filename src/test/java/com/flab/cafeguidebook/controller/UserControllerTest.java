@@ -395,5 +395,6 @@ class UserControllerTest {
         .andExpect(status().isUnauthorized())
         .andDo(print());
     assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
   }
 }
