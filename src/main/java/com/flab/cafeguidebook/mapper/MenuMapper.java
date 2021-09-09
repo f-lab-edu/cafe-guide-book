@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface MenuMapper {
 
   public int insertMenu(MenuDTO menuDTO);
+
+  public int updateMenu(MenuDTO menuDTO);
 }

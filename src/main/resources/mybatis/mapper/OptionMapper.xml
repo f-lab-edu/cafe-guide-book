@@ -12,4 +12,12 @@
             #{optionPrice},
             #{optionStatus})
   </insert>
+  <update id="updateOption" parameterType="com.flab.cafeguidebook.dto.OptionDTO">
+    UPDATE MENUOPTION
+    SET
+    <if test="optionName != null">option_name = #{optionName},</if>
+    <if test="optionPrice != null">option_price = #{optionPrice},</if>
+    <if test="optionStatus != null">option_status = #{optionStatus}</if>
+    WHERE option_id = #{optionId}
+  </update>
 </mapper>

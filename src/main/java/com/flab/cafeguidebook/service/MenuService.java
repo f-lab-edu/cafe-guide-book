@@ -15,4 +15,9 @@ public class MenuService {
     int insertMenu = menuMapper.insertMenu(menuDTO);
     return insertMenu == 1;
   }
+
+  public boolean updateMenu(MenuDTO menuDTO) {
+    int updateMenu = menuMapper.updateMenu(menuDTO);
+    return updateMenu == 1;
+  }
 }

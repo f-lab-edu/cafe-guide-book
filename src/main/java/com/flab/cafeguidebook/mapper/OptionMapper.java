@@ -7,4 +7,6 @@ import org.apache.ibatis.annotations.Mapper;
 public interface OptionMapper {
 
   public int insertOption(OptionDTO optionDTO);
+
+  public int updateOption(OptionDTO optionDTO);
 }

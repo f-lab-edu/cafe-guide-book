@@ -62,4 +62,33 @@ public class MenuController {
     optionService.addOption(optionDTO);
     return ResponseEntity.ok(optionDTO);
   }
+
+  @PostMapping(value = "/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity updateMenu(@PathVariable long cafeId, @PathVariable long menuId,
+      @RequestBody @Validated MenuDTO menuDTO, BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      bindingResult.getAllErrors().forEach(error -> {
+        LOGGER.info("메뉴를 수정할 수 없습니다. cafeId = {}, menuId = {}", cafeId, menuId);
+      });
+      return ResponseEntity.badRequest().build();
+    }
+    menuService.updateMenu(menuDTO);
+    return ResponseEntity.ok(menuDTO);
+  }
+
+  @PostMapping(value = "/{menuId}/options/{optionId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity updateOption(@PathVariable long menuId, @PathVariable long optionId,
+      @RequestBody @Validated OptionDTO optionDTO, BindingResult bindingResult) {
+
+    if (bindingResult.hasErrors()) {
+      bindingResult.getAllErrors().forEach(error -> {
+        LOGGER.info("옵션을 수정할 수 없습니다. menuId = {}, optionId = {}", menuId, optionId);
+      });
+      return ResponseEntity.badRequest().build();
+    }
+    optionService.updateOption(optionDTO);
+    return ResponseEntity.ok(optionDTO);
+  }
+
 }

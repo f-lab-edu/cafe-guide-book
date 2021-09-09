@@ -15,4 +15,9 @@ public class OptionService {
     int insertOption = optionMapper.insertOption(optionDTO);
     return insertOption == 1;
   }
+
+  public boolean updateOption(OptionDTO optionDTO) {
+    int updateOption = optionMapper.updateOption(optionDTO);
+    return updateOption == 1;
+  }
 }
