@@ -20,7 +20,7 @@ public class MenuFixtureProvider implements ParameterResolver {
     return Menu.builder()
         .cafeId(1)
         .menuName("아메리카노")
-        .menuPrice(2500)
+        .menuPrice(3000)
         .menuPriority(1)
         .build();
   }

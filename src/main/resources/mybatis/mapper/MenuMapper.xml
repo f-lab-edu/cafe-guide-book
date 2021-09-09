@@ -34,8 +34,10 @@
     <if test="menuName != null">menu_name = #{menuName},</if>
     <if test="menuPrice != null">menu_price = #{menuPrice},</if>
     <if test="menuPhoto != null">menu_photo = #{menuPhoto},</if>
+    <if test="menuPriority != null">menu_priority = #{menuPriority},</if>
     <if test="menuInfo != null">menu_info = #{menuInfo},</if>
-    <if test="menuPriority != null">menu_priority = #{menuPriority}</if>
+    <if test="menuStatus != null">menu_status = #{menuStatus},</if>
+    update_menu_date = now()
     WHERE menu_id = #{menuId}
   </update>
 </mapper>
