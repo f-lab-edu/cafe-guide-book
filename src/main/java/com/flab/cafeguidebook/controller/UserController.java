@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.controller;
 import com.flab.cafeguidebook.annotation.SignInCheck;
 import com.flab.cafeguidebook.domain.UserSignInRequest;
 import com.flab.cafeguidebook.dto.HeartDTO;
+import com.flab.cafeguidebook.dto.HeartDTO;
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.service.HeartService;
@@ -11,6 +12,7 @@ import java.util.List;
 import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -86,6 +88,11 @@ public class UserController {
   }
 
   @GetMapping("/{userId}/hearts")
+  public List<HeartDTO> getHearts(@PathVariable Long userId) {
+    return heartService.getUsersHearts(userId);
+  }
+
+  @GetMapping("/hearts/{userId}")
   public List<HeartDTO> getHearts(@PathVariable Long userId) {
     return heartService.getUsersHearts(userId);
   }
