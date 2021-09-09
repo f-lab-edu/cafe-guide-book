@@ -2,9 +2,12 @@ package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.annotation.SignInCheck;
 import com.flab.cafeguidebook.domain.UserSignInRequest;
+import com.flab.cafeguidebook.dto.HeartDTO;
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.DuplicatedEmailException;
+import com.flab.cafeguidebook.service.HeartService;
 import com.flab.cafeguidebook.service.UserService;
+import java.util.List;
 import javax.validation.Valid;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,10 +30,12 @@ public class UserController {
   private static final Logger LOGGER = LogManager.getLogger(UserController.class);
 
   private UserService userService;
+  private HeartService heartService;
 
   @Autowired
-  public UserController(UserService userService) {
+  public UserController(UserService userService, HeartService heartService) {
     this.userService = userService;
+    this.heartService = heartService;
   }
 
   public UserController() {
@@ -78,5 +83,10 @@ public class UserController {
   @SignInCheck
   public void withdrawal(@PathVariable String email) {
     userService.deleteUser(email);
+  }
+
+  @GetMapping("/{userId}/hearts/")
+  public List<HeartDTO> getHearts(@PathVariable Long userId) {
+    return heartService.getUsersHearts(userId);
   }
 }
