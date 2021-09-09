@@ -85,7 +85,7 @@ public class UserController {
     userService.deleteUser(email);
   }
 
-  @GetMapping("/{userId}/hearts/")
+  @GetMapping("/{userId}/hearts")
   public List<HeartDTO> getHearts(@PathVariable Long userId) {
     return heartService.getUsersHearts(userId);
   }

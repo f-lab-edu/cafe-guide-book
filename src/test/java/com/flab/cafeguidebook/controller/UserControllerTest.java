@@ -359,7 +359,7 @@ class UserControllerTest {
   public void withdrawalTestWithSuccess(User testUser) throws Exception {
     signUpTestUser(testUser);
     MockHttpSession session = new MockHttpSession();
-    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+    session.setAttribute(SessionKeys.USER_ID, testUser.getEmail());
 
     mockMvc.perform(
         RestDocumentationRequestBuilders.delete("/users/withdrawal/{email}", testUser.getEmail())
@@ -386,5 +386,6 @@ class UserControllerTest {
         .andDo(print())
         .andExpect(status().isUnauthorized())
         .andDo(print());
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
   }
 }

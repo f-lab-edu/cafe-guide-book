@@ -2,6 +2,7 @@ package com.flab.cafeguidebook.controller;
 
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentRequest;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentResponse;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -9,8 +10,10 @@ import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.docu
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -70,7 +73,7 @@ public class HeartControllerTest {
     MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     map.add("userId", user.getId().toString());
 
-    mockMvc.perform(post("/heart/" + cafe.getCafeId())
+    mockMvc.perform(post("/cafes/" + cafe.getCafeId() + "/hearts")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8)
         .params(map))
@@ -94,7 +97,7 @@ public class HeartControllerTest {
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(SessionKeys.USER_ID, user.getId());
 
-    mockMvc.perform(RestDocumentationRequestBuilders.post("/heart/{cafeId}", cafe.getCafeId())
+    mockMvc.perform(RestDocumentationRequestBuilders.post("cafes/{cafeId}/hearts", cafe.getCafeId())
         .session(session))
         .andDo(print())
         .andDo(document("add-heart",
@@ -110,7 +113,7 @@ public class HeartControllerTest {
 
   @Test
   public void addHeartFailWithSignOut(UserDTO user, CafeDTO cafe) throws Exception {
-    mockMvc.perform(post("/heart/" + cafe.getCafeId()))
+    mockMvc.perform(post("/cafes/" + cafe.getCafeId() + "/hearts"))
         .andExpect(status().isUnauthorized())
         .andDo(print());
   }
@@ -120,8 +123,9 @@ public class HeartControllerTest {
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(SessionKeys.USER_ID, user.getId());
 
-    mockMvc.perform(RestDocumentationRequestBuilders.delete("/heart/{cafeId}", cafe.getCafeId())
-        .session(session))
+    mockMvc
+        .perform(RestDocumentationRequestBuilders.delete("/cafes/{cafeId}/hearts", cafe.getCafeId())
+            .session(session))
         .andDo(print())
         .andDo(document("remove-heart",
             getDocumentRequest(),
@@ -136,8 +140,33 @@ public class HeartControllerTest {
 
   @Test
   public void removeHeartFailWithSignOut(UserDTO user, CafeDTO cafe) throws Exception {
-    mockMvc.perform(post("/heart/" + cafe.getCafeId()))
+    mockMvc.perform(post("/cafes/" + cafe.getCafeId() + "/hearts"))
         .andExpect(status().isUnauthorized())
         .andDo(print());
+  }
+
+  @Test
+  public void getUsersHeartsSuccess(UserDTO user, CafeDTO cafe) throws Exception {
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+
+    mockMvc.perform(get("/users/" + user.getId() + "hearts")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(4)));
+  }
+
+  @Test
+  public void getUsersHeartsSuccessWithNull(UserDTO user, CafeDTO cafe) throws Exception {
+    mockMvc.perform(get("/users/" + user.getId() + "hearts")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(0)));
   }
 }
