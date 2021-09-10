@@ -2,10 +2,11 @@ package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.dto.HeartDTO;
+import com.flab.cafeguidebook.dto.RegistrationDTO;
 import com.flab.cafeguidebook.service.CafeService;
+import com.flab.cafeguidebook.service.HeartService;
 import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
-import com.flab.cafeguidebook.service.HeartService;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -50,14 +51,14 @@ public class CafeController {
     return ResponseEntity.ok(cafeDTO);
   }
 
-  @PatchMapping("/registeration/approve/{cafeId}/")
-  public void resolveRegistration(@PathVariable Long cafeId) {
-    cafeService.approveRegistration(cafeId);
-  }
-
-  @PatchMapping("/registeration/deny/{cafeId}")
-  public void denyRegistration(@PathVariable Long cafeId) {
-    cafeService.denyRegistration(cafeId);
+  @PatchMapping("/{cafeId}/registration/{approveYn}")
+  public void resolveRegistration(@PathVariable Long cafeId,
+      @RequestBody RegistrationDTO registrationDTO) {
+    if (registrationDTO.getApproveYn()) {
+      cafeService.approveRegistration(cafeId);
+    } else {
+      cafeService.denyRegistration(cafeId);
+    }
   }
 
   @GetMapping
@@ -99,7 +100,8 @@ public class CafeController {
     cafeService.updateCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
   }
-  @GetMapping("/hearts/{cafeId}")
+
+  @GetMapping("/{cafeId}/hearts")
   public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
     return heartService.getCafesHearts(cafeId);
   }
