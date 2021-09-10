@@ -1,9 +1,11 @@
 package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.dto.HeartDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
+import com.flab.cafeguidebook.service.HeartService;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -27,6 +29,9 @@ public class CafeController {
 
   @Autowired
   private CafeService cafeService;
+
+  @Autowired
+  private HeartService heartService;
 
   @PostMapping
   public ResponseEntity addCafe(HttpSession httpSession,
@@ -93,5 +98,9 @@ public class CafeController {
     }
     cafeService.updateCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
+  }
+  @GetMapping("/hearts/{cafeId}")
+  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
+    return heartService.getCafesHearts(cafeId);
   }
 }
