@@ -172,4 +172,19 @@ public class HeartControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(0)));
   }
+
+  @Test
+  public void getCafesHeartsSuccess(UserDTO user, CafeDTO cafe) throws Exception {
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+
+    mockMvc.perform(get("/owner/cafe/hearts/" + cafe.getCafeId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(4)));
+  }
 }
