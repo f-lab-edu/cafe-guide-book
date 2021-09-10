@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.Cafe;
-import com.flab.cafeguidebook.extension.CafeFixtureProvider;
+import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

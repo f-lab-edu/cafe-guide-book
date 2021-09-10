@@ -1,8 +1,18 @@
 package com.flab.cafeguidebook.controller;
 
+import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentRequest;
+import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentResponse;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.payload.PayloadDocumentation.fieldWithPath;
+import static org.springframework.restdocs.payload.PayloadDocumentation.requestFields;
+import static org.springframework.restdocs.payload.PayloadDocumentation.responseFields;
+import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
+import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
+import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -15,6 +25,7 @@ import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserFixtureProvider;
 import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.util.SessionKeys;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,6 +34,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
+import org.springframework.restdocs.payload.JsonFieldType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -31,7 +46,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.util.NestedServletException;
 
-@ExtendWith({SpringExtension.class, UserFixtureProvider.class})
+@ExtendWith({SpringExtension.class, UserFixtureProvider.class, RestDocumentationExtension.class})
 @SpringBootTest
 class UserControllerTest {
 
@@ -44,12 +59,20 @@ class UserControllerTest {
   @Autowired
   private WebApplicationContext webApplicationContext;
 
+  @Autowired
   private UserService userService;
 
   @BeforeEach
-  public void init() {
-    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  public void init(RestDocumentationContextProvider restDocumentation) {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+        .apply(documentationConfiguration(restDocumentation))
+        .build();
     httpSession = new MockHttpSession();
+  }
+
+  @AfterEach
+  void tearDown(User testUser) throws Exception {
+    deleteTestUser(testUser);
   }
 
   @Test
@@ -57,12 +80,26 @@ class UserControllerTest {
   void signUpSuccess(User testUser) throws Exception {
     String content = objectMapper.writeValueAsString(testUser);
 
-    mockMvc.perform(post("/users/signUp")
+    mockMvc.perform(RestDocumentationRequestBuilders.post("/users/signUp")
         .content(content)
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isCreated())
-        .andDo(print());
+        .andDo(print())
+        .andDo(document("sign-up",
+            getDocumentRequest(),
+            getDocumentResponse(),
+            requestFields(
+                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일 (필수)"),
+                fieldWithPath("password").type(JsonFieldType.STRING)
+                    .description("패스워드 (필수. 영문, 숫자, 특수문자를 반드시 포함 8~20자리)"),
+                fieldWithPath("name").type(JsonFieldType.STRING).description("이름 (필수)"),
+                fieldWithPath("phone").type(JsonFieldType.STRING).description("휴대폰 번호 (필수)"),
+                fieldWithPath("address").type(JsonFieldType.STRING).description("주소 (필수)"),
+                fieldWithPath("userType").type(JsonFieldType.STRING)
+                    .description("유저타입 (필수, 일반회원 : 1, 카페사장님 : 2, 어드민 : 3)").optional()
+            )
+        ));
   }
 
   @Test
@@ -97,7 +134,6 @@ class UserControllerTest {
         });
 
     assertEquals(DuplicatedEmailException.class, e.getCause().getClass());
-    deleteTestUser(testUser);
   }
 
   @Test
@@ -114,9 +150,15 @@ class UserControllerTest {
             .contentType(MediaType.APPLICATION_JSON)
             .params(paramMap))
         .andDo(print())
-        .andExpect(status().isOk());
-
-    deleteTestUser(testUser);
+        .andDo(document("sign-in",
+            getDocumentRequest(),
+            getDocumentResponse(),
+            requestParameters(
+                parameterWithName("email").description("이메일 (필수)"),
+                parameterWithName("password").description("패스워드 (필수)")
+            )
+        ));
+//    deleteTestUser(testUser);
   }
 
   void insertTestUser(User testUser) throws Exception {
@@ -138,21 +180,29 @@ class UserControllerTest {
   @Test
   @DisplayName("회원정보 조회 통합 테스트")
   void getUserSuccess(User testUser) throws Exception {
-    String content = objectMapper.writeValueAsString(testUser);
+    insertTestUser(testUser);
 
-    mockMvc.perform(post("/users/signUp")
-        .content(content)
-        .contentType(MediaType.APPLICATION_JSON)
-        .accept(MediaType.APPLICATION_JSON))
-        .andExpect(status().isCreated())
-        .andDo(print());
-
-    mockMvc.perform(get("/users/" + testUser.getEmail())
-        .content(content)
+    mockMvc.perform(RestDocumentationRequestBuilders.get("/users/{email}", testUser.getEmail())
         .contentType(MediaType.APPLICATION_JSON)
         .accept(MediaType.APPLICATION_JSON))
         .andExpect(status().isOk())
-        .andDo(print());
+        .andDo(print())
+        .andDo(document("get-user",
+            getDocumentRequest(),
+            getDocumentResponse(),
+            pathParameters(
+                parameterWithName("email").description("이메일")
+            ),
+            responseFields(
+                fieldWithPath("email").type(JsonFieldType.STRING).description("이메일"),
+                fieldWithPath("password").type(JsonFieldType.STRING).description("비밀번호").optional(),
+                fieldWithPath("name").type(JsonFieldType.STRING).description("이름"),
+                fieldWithPath("phone").type(JsonFieldType.STRING).description("휴대폰 번호"),
+                fieldWithPath("address").type(JsonFieldType.STRING).description("주소"),
+                fieldWithPath("userType").type(JsonFieldType.STRING)
+                    .description("유저타입 (필수, 일반회원 : 1, 카페사장님 : 2, 어드민 : 3)").optional()
+            )
+        ));
   }
 
   @Test
@@ -171,7 +221,7 @@ class UserControllerTest {
         });
     assertEquals(UserNotFoundException.class, e.getCause().getClass());
   }
-  
+
   @Test
   @DisplayName("로그아웃 성공시 200을 리턴함")
   public void signOutTestWithSuccess(User testUser) throws Exception {
@@ -179,7 +229,11 @@ class UserControllerTest {
         get("/users/signOut"))
         .andDo(print())
         .andExpect(status().isOk())
-        .andDo(print());
+        .andDo(print())
+        .andDo(document("sign-out",
+            getDocumentRequest(),
+            getDocumentResponse()
+        ));
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
   }
