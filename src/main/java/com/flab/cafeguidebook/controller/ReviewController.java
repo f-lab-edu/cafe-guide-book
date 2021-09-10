@@ -77,4 +77,9 @@ public class ReviewController {
       throw new UnautorizedException();
     }
   }
+
+  @DeleteMapping(value = "/{reviewId}")
+  public void deleteReviews(@PathVariable Long reviewId) {
+    reviewService.deleteReview(reviewId);
+  }
 }

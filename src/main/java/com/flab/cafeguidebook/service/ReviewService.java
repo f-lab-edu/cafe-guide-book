@@ -46,4 +46,8 @@ public class ReviewService {
     }
     return reviewMapper.updateReview(reviewId, userId, newContent) == 1;
   }
+
+  public boolean deleteReview(Long reviewId) {
+    return reviewMapper.deleteReview(reviewId) == 1;
+  }
 }
