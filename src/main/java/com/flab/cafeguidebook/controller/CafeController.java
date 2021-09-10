@@ -1,8 +1,11 @@
 package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.dto.HeartDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import com.flab.cafeguidebook.util.SessionKeys;
+import java.util.List;
+import com.flab.cafeguidebook.service.HeartService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
@@ -13,6 +16,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +32,10 @@ public class CafeController {
 
   @Autowired
   private CafeService cafeService;
+
+  @PostMapping
+  @Autowired
+  private HeartService heartService;
 
   @PostMapping
   public ResponseEntity addCafe(HttpSession httpSession,
@@ -93,5 +102,9 @@ public class CafeController {
     }
     cafeService.updateCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
+  }
+  @GetMapping("/hearts/{cafeId}")
+  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
+    return heartService.getCafesHearts(cafeId);
   }
 }

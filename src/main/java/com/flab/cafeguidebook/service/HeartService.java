@@ -27,4 +27,8 @@ public class HeartService {
   public List<HeartDTO> getUsersHearts(Long userId) {
     return heartMapper.selectUsersHearts(userId);
   }
+
+  public List<HeartDTO> getCafesHearts(Long cafeId) {
+    return heartMapper.selectCafesHearts(cafeId);
+  }
 }
