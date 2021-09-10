@@ -13,8 +13,7 @@ public class CafeDTO {
   private String userEmail;
 
   @NonNull
-  @NotBlank
-  private String cafeId;
+  private long cafeId;
 
   private String hashTageId;
 
@@ -80,7 +79,7 @@ public class CafeDTO {
     this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public CafeDTO(@NonNull String userEmail, @NonNull String cafeId, String hashTageId,
+  public CafeDTO(@NonNull String userEmail, @NonNull long cafeId, String hashTageId,
       @NonNull String cafeName, String bizNumber, String tel, String addressCode,
       String addressDetail, String operatingTime, String cafeInfo, String socialMedia,
       LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
@@ -123,11 +122,11 @@ public class CafeDTO {
   }
 
   @NonNull
-  public String getCafeId() {
+  public long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(@NonNull String cafeId) {
+  public void setCafeId(@NonNull long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -279,7 +278,7 @@ public class CafeDTO {
   public static class Builder {
 
     private String userEmail;
-    private String cafeId;
+    private long cafeId;
     private String hashTageId;
     private String cafeName;
     private String bizNumber;
@@ -308,7 +307,7 @@ public class CafeDTO {
       return this;
     }
 
-    public CafeDTO.Builder cafeId(@NonNull final String cafeId) {
+    public CafeDTO.Builder cafeId(@NonNull final long cafeId) {
       this.cafeId = cafeId;
       return this;
     }

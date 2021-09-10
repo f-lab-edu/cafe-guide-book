@@ -19,7 +19,6 @@ public class CafeFixtureProvider implements ParameterResolver {
       ExtensionContext extensionContext) throws ParameterResolutionException {
     return Cafe.builder()
         .userEmail("testId@gmail.com")
-        .cafeId("testCafeId1")
         .cafeName("testId의 첫번째 카페")
         .tel("010-1234-5678")
         .build();
