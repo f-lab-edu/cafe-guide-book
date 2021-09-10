@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,5 +41,15 @@ public class CafeController {
     }
     cafeService.addCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
+  }
+
+  @PatchMapping("/registeration/approve/{cafeId}/")
+  public void resolveRegistration(@PathVariable Long cafeId) {
+    cafeService.approveRegistration(cafeId);
+  }
+
+  @PatchMapping("/registeration/deny/{cafeId}")
+  public void denyRegistration(@PathVariable Long cafeId) {
+    cafeService.denyRegistration(cafeId);
   }
 }
