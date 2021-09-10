@@ -44,29 +44,14 @@ public class ReviewServiceTest {
   }
 
   @Test
-  public void getUsersReviewSuccess(ReviewDTO review) {
-    final List<ReviewDTO> reviewList = new ArrayList<>();
-    reviewList.add(review);
-    reviewList.add(review);
-    reviewList.add(review);
-    when(reviewMapper.selectReviews(review.getUserId())).thenReturn(reviewList);
+  public void updateReviewSuccess(ReviewDTO review) {
+    when(reviewMapper.updateReview(review.getId(), review.getContent() + "Modifying Contents"))
+        .thenReturn(1);
 
-    assertEquals(reviewService.getUsersReviews(review.getUserId()).size(), 3);
+    assertTrue(
+        reviewService.updateReview(review.getId(), review.getContent() + "Modifying Contents"));
 
-    verify(reviewMapper).selectReviews(review.getUserId());
-  }
-
-  @Test
-  public void getCafesReviewSuccess(ReviewDTO review) {
-    final List<ReviewDTO> reviewList = new ArrayList<>();
-    reviewList.add(review);
-    reviewList.add(review);
-    reviewList.add(review);
-    when(reviewMapper.selectCafesReviews(review.getCafeId())).thenReturn(reviewList);
-
-    assertEquals(reviewService.getCafesReviews(review.getCafeId()).size(), 3);
-
-    verify(reviewMapper).selectCafesReviews(review.getCafeId());
+    verify(reviewMapper).updateReview(review.getId(), review.getContent() + "Modifying Contents");
   }
 
   @Test
