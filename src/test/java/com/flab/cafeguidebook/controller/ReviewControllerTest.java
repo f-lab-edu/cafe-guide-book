@@ -19,6 +19,7 @@ import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,12 +122,17 @@ public class ReviewControllerTest {
   }
 
   @Test
+  @Disabled
   public void updateReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, review.getUserId());
     MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     final String newContent = "I want to modify my review.";
 
     mockMvc.perform(patch("/reviews/" + review.getId())
-        .param("newContent", newContent))
+        .param("newContent", newContent)
+        .session(session))
         .andExpect(status().isOk())
         .andDo(print());
   }

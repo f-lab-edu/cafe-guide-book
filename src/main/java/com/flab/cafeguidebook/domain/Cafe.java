@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
+import org.checkerframework.checker.nullness.qual.NonNull;
 
 public class Cafe {
 

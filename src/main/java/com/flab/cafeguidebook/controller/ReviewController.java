@@ -2,6 +2,7 @@ package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.annotation.SignInCheck;
 import com.flab.cafeguidebook.dto.ReviewDTO;
+import com.flab.cafeguidebook.exception.UnautorizedException;
 import com.flab.cafeguidebook.service.ReviewService;
 import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
@@ -66,9 +67,14 @@ public class ReviewController {
     reviewService.removeReview(userId, cafeId);
   }
 
-  @PatchMapping(value = "/{reviewId}")
+  @SignInCheck
+  @PatchMapping(value = "/reviews/{reviewId}")
   public void patchReviews(@PathVariable Long reviewId,
-      @RequestParam String newContent) {
-    reviewService.updateReview(reviewId, newContent);
+      @RequestParam String newContent, HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    boolean isUpdateReviewSuccess = reviewService.updateReview(reviewId, userId, newContent);
+    if (!isUpdateReviewSuccess) {
+      throw new UnautorizedException();
+    }
   }
 }

@@ -29,8 +29,16 @@
     WHERE user_id = #{userId}
   </select>
 
+  <select id="selectReviewOwnerId"
+    resultType="com.flab.cafeguidebook.dto.ReviewDTO">
+    SELECT user_id
+    FROM review
+    WHERE id = #{reviewId}
+  </select>
+
   <update id="updateReview">
-    UPDATE review SET content = #{newContent}
+    UPDATE review
+    SET content = #{newContent}
     WHERE id = #{reviewId}
   </update>
 </mapper>

@@ -1,9 +1,12 @@
 package com.flab.cafeguidebook.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.flab.cafeguidebook.domain.Review;
+import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.dto.ReviewDTO;
 import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.ReviewDTOFixtureProvider;
@@ -11,6 +14,7 @@ import com.flab.cafeguidebook.fixture.ReviewFixtureProvider;
 import com.flab.cafeguidebook.mapper.ReviewMapper;
 import java.util.ArrayList;
 import java.util.List;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,29 +34,13 @@ public class ReviewServiceTest {
   private ReviewService reviewService;
 
   @Test
-  public void getUsersReviewSuccess(ReviewDTO review) {
-    final List<ReviewDTO> reviewList = new ArrayList<>();
-    reviewList.add(review);
-    reviewList.add(review);
-    reviewList.add(review);
-    when(reviewMapper.selectReviews(review.getUserId())).thenReturn(reviewList);
+  @Disabled
+  public void addReviewSuccess(CafeDTO cafe, ReviewDTO reviewDTO, Review review) {
+    when(reviewMapper.insertReview(cafe.getCafeId(), review)).thenReturn(1);
 
-    assertEquals(reviewService.getUsersReviews(review.getUserId()).size(), 3);
+    assertTrue(reviewService.addReview(cafe.getCafeId(), reviewDTO));
 
-    verify(reviewMapper).selectReviews(review.getUserId());
-  }
-
-  @Test
-  public void getCafesReviewSuccess(ReviewDTO review) {
-    final List<ReviewDTO> reviewList = new ArrayList<>();
-    reviewList.add(review);
-    reviewList.add(review);
-    reviewList.add(review);
-    when(reviewMapper.selectCafesReviews(review.getCafeId())).thenReturn(reviewList);
-
-    assertEquals(reviewService.getCafesReviews(review.getCafeId()).size(), 3);
-
-    verify(reviewMapper).selectCafesReviews(review.getCafeId());
+    verify(reviewMapper).insertReview(cafe.getCafeId(), review);
   }
 
   @Test
@@ -79,5 +67,19 @@ public class ReviewServiceTest {
     assertEquals(reviewService.getCafesReviews(review.getCafeId()).size(), 3);
 
     verify(reviewMapper).selectCafesReviews(review.getCafeId());
+  }
+
+  @Test
+  public void updateReviewSuccess(ReviewDTO review) {
+    when(reviewMapper.updateReview(review.getId(), review.getUserId(),
+        review.getContent() + "Modifying Contents"))
+        .thenReturn(1);
+
+    assertTrue(
+        reviewService.updateReview(review.getId(), review.getUserId(),
+            review.getContent() + "Modifying Contents"));
+
+    verify(reviewMapper).updateReview(review.getId(), review.getUserId(),
+        review.getContent() + "Modifying Contents");
   }
 }
