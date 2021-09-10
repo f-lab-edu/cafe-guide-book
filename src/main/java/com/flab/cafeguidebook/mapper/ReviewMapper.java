@@ -16,5 +16,6 @@ public interface ReviewMapper {
   public List<ReviewDTO> selectCafesReviews(@Param("cafeId") Long cafeId);
 
   public int deleteReview(@Param("userId") Long userId, @Param("cafeId") Long cafeId);
+  public int updateReview(@Param("reviewId") Long reviewId, @Param("newContent") String newContent);
 }
 

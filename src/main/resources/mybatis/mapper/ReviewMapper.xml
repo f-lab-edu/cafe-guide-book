@@ -28,4 +28,9 @@
     FROM review
     WHERE user_id = #{userId}
   </select>
+
+  <update id="updateReview">
+    UPDATE review SET content = #{newContent}
+    WHERE id = #{reviewId}
+  </update>
 </mapper>

@@ -37,4 +37,8 @@ public class ReviewService {
     int deleteReviewResult = reviewMapper.deleteReview(userId, cafeId);
     return deleteReviewResult == 1;
   }
+
+  public boolean updateReview(Long reviewId, String newContent) {
+    return reviewMapper.updateReview(reviewId, newContent) == 1;
+  }
 }
