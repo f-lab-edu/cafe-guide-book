@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
+import org.springframework.lang.NonNull;
 
 public class Cafe {
 

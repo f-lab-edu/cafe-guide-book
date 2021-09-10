@@ -8,5 +8,13 @@ public interface UserService {
 
   public boolean signUp(UserDTO userDTO);
 
+  public boolean isDuplicatedEmail(String email);
+
   UserDTO getUserInfo(String email);
+
+  public void signIn(String email, String password);
+
+  public boolean deleteUser(String email);
+
+  public void signOut();
 }
