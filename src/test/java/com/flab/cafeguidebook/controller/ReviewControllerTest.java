@@ -55,7 +55,7 @@ public class ReviewControllerTest {
   }
 
   private void addReview(ReviewDTO review) throws Exception {
-    mockMvc.perform(post("/reviews")
+    mockMvc.perform(post("/cafes/" + review.getCafeId() + "/reviews")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(review))
         .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -90,7 +90,7 @@ public class ReviewControllerTest {
     addReview(review);
     addReview(review);
 
-    mockMvc.perform(get("/reviews/cafes/" + review.getCafeId())
+    mockMvc.perform(get("/cafes/" + review.getCafeId() + "/reviews")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(review))
         .accept(MediaType.APPLICATION_JSON_UTF8))

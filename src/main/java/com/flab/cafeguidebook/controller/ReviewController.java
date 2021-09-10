@@ -48,7 +48,7 @@ public class ReviewController {
     return reviewService.getUsersReviews(userId);
   }
 
-  @GetMapping(value = "/cafes/{cafeId}", produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping(value = "/cafes/{cafeId}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<ReviewDTO> getCafesReviews(@PathVariable Long cafeId) {
     return reviewService.getCafesReviews(cafeId);
   }
