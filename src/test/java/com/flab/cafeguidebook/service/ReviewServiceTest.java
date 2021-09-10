@@ -74,7 +74,7 @@ public class ReviewServiceTest {
         .thenReturn(1);
 
     assertTrue(
-        reviewService.deleteReview(review.getId()));
+        reviewService.deleteReview(review.getId(), review.getUserId()));
 
     verify(reviewMapper).deleteReview(review.getId());
   }

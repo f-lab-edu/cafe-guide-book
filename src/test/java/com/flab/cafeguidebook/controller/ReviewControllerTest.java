@@ -138,4 +138,13 @@ public class ReviewControllerTest {
         .andExpect(status().isOk())
         .andDo(print());
   }
+
+  @Test
+  public void deleteReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+
+    mockMvc.perform(delete("/reviews/" + review.getId()))
+        .andExpect(status().isOk())
+        .andDo(print());
+  }
 }
