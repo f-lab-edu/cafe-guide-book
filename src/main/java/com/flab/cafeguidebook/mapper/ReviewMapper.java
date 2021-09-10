@@ -12,5 +12,8 @@ public interface ReviewMapper {
   public int insertReview(@Param("cafeId") Long cafeId, @Param("review") Review review);
 
   public List<ReviewDTO> selectReviews(Long userId);
+
+  public List<ReviewDTO> selectCafesReviews(Long cafeId);
+
 }
 

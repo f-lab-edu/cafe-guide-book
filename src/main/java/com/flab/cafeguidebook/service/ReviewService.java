@@ -28,4 +28,8 @@ public class ReviewService {
   public List<ReviewDTO> getUsersReviews(Long userId) {
     return reviewMapper.selectReviews(userId);
   }
+
+  public List<ReviewDTO> getCafesReviews(Long cafeId) {
+    return reviewMapper.selectCafesReviews(cafeId);
+  }
 }
