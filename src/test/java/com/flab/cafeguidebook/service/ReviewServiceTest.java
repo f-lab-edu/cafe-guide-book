@@ -69,15 +69,13 @@ public class ReviewServiceTest {
   }
 
   @Test
-  public void getUsersReviewSuccess(ReviewDTO review) {
-    final List<ReviewDTO> reviewList = new ArrayList<>();
-    reviewList.add(review);
-    reviewList.add(review);
-    reviewList.add(review);
-    when(reviewMapper.selectReviews(review.getUserId())).thenReturn(reviewList);
+  public void deleteReviewSuccess(ReviewDTO review) {
+    when(reviewMapper.deleteReview(review.getId()))
+        .thenReturn(1);
 
-    assertEquals(reviewService.getUsersReviews(review.getUserId()).size(), 3);
+    assertTrue(
+        reviewService.deleteReview(review.getId()));
 
-    verify(reviewMapper).selectReviews(review.getUserId());
+    verify(reviewMapper).deleteReview(review.getId());
   }
 }
