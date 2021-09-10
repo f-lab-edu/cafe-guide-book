@@ -10,7 +10,7 @@ public class CafeDTO {
 
   @NonNull
   @NotBlank
-  private String userId;
+  private String userEmail;
 
   @NonNull
   @NotBlank
@@ -58,7 +58,7 @@ public class CafeDTO {
   }
 
   public CafeDTO(Builder builder) {
-    this.userId = builder.userId;
+    this.userEmail = builder.userEmail;
     this.cafeId = builder.cafeId;
     this.hashTageId = builder.hashTageId;
     this.cafeName = builder.cafeName;
@@ -80,14 +80,14 @@ public class CafeDTO {
     this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public CafeDTO(@NonNull String userId, @NonNull String cafeId, String hashTageId,
+  public CafeDTO(@NonNull String userEmail, @NonNull String cafeId, String hashTageId,
       @NonNull String cafeName, String bizNumber, String tel, String addressCode,
       String addressDetail, String operatingTime, String cafeInfo, String socialMedia,
       LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
       Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet,
       CafeCondition cafeCondition,
       CafeRegistration cafeRegistration) {
-    this.userId = userId;
+    this.userEmail = userEmail;
     this.cafeId = cafeId;
     this.hashTageId = hashTageId;
     this.cafeName = cafeName;
@@ -114,12 +114,12 @@ public class CafeDTO {
   }
 
   @NonNull
-  public String getUserId() {
-    return userId;
+  public String getUserEmail() {
+    return userEmail;
   }
 
-  public void setUserId(@NonNull String userId) {
-    this.userId = userId;
+  public void setUserEmail(@NonNull String userEmail) {
+    this.userEmail = userEmail;
   }
 
   @NonNull
@@ -278,7 +278,7 @@ public class CafeDTO {
 
   public static class Builder {
 
-    private String userId;
+    private String userEmail;
     private String cafeId;
     private String hashTageId;
     private String cafeName;
@@ -303,8 +303,8 @@ public class CafeDTO {
       return this;
     }
 
-    public CafeDTO.Builder userId(@NonNull final String userId) {
-      this.userId = userId;
+    public CafeDTO.Builder userEmail(@NonNull final String userEmail) {
+      this.userEmail = userEmail;
       return this;
     }
 
@@ -404,7 +404,7 @@ public class CafeDTO {
     }
 
     public CafeDTO build() {
-      return new CafeDTO(this.userId, this.cafeId, this.hashTageId, this.cafeName,
+      return new CafeDTO(this.userEmail, this.cafeId, this.hashTageId, this.cafeName,
           this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
           this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
           this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,

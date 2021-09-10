@@ -56,4 +56,5 @@ public class UserController {
   public void signOut() {
     userService.signOut();
   }
+
 }
