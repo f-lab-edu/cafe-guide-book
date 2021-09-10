@@ -82,4 +82,20 @@ public class ReviewControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(4)));
   }
+
+  @Test
+  public void getCafesReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+    addReview(review);
+    addReview(review);
+    addReview(review);
+
+    mockMvc.perform(get("/reviews/cafes/" + review.getCafeId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(review))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(4)));
+  }
 }
