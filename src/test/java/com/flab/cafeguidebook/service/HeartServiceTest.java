@@ -74,4 +74,20 @@ public class HeartServiceTest {
 
     assertNull(heartService.getUsersHearts(user.getId()));
   }
+
+  @Test
+  @DisplayName("카파에 좋아요를 누른 유저 리스트 가져오는 성공 케이스 단위테스트")
+  public void getCafesHeartsSuccess(UserDTO user, CafeDTO cafe) {
+    final List<HeartDTO> heartList = new ArrayList<>();
+    final HeartDTO heartDTO = new HeartDTO.Builder()
+        .userId(user.getId())
+        .cafeId(cafe.getCafeId())
+        .build();
+    heartList.add(heartDTO);
+    heartList.add(heartDTO);
+    heartList.add(heartDTO);
+    when((heartMapper.selectCafesHearts(cafe.getCafeId()))).thenReturn(heartList);
+
+    assertEquals(heartService.getCafesHearts(cafe.getCafeId()).size(), 3);
+  }
 }
