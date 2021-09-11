@@ -63,4 +63,9 @@ public class UserServiceImpl implements UserService {
       httpSession.removeAttribute(SessionKeys.USER_EMAIL);
     }
   }
+
+  @Override
+  public String getCurrentUser() {
+    return (String) httpSession.getAttribute(SessionKeys.USER_EMAIL);
+  }
 }

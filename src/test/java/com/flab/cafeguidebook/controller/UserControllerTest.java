@@ -20,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.User;
+import com.flab.cafeguidebook.domain.UserSignInRequest;
 import com.flab.cafeguidebook.exception.DuplicatedEmailException;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserFixtureProvider;
@@ -72,7 +73,7 @@ class UserControllerTest {
 
   @AfterEach
   void tearDown(User testUser) throws Exception {
-    deleteTestUser(testUser);
+    withdrawTestUser(testUser);
   }
 
   @Test
@@ -120,7 +121,7 @@ class UserControllerTest {
   @Test
   @DisplayName("이메일 중복시 회원가입 실패(422리턴 및 DuplicatedEmailException throw)")
   void signUpFailWithDuplicatedEmail(User testUser) throws Exception {
-    insertTestUser(testUser);
+    signUpTestUser(testUser);
     String content = objectMapper.writeValueAsString(testUser);
 
     Exception e = assertThrows(NestedServletException.class,
@@ -134,21 +135,25 @@ class UserControllerTest {
         });
 
     assertEquals(DuplicatedEmailException.class, e.getCause().getClass());
+    withdrawTestUser(testUser);
   }
 
   @Test
   @DisplayName("이메일, 패스워드가 DB에 등록된 정보와 일치하면 로그인에 성공하고 200을 리턴함")
   public void signInUserTestWithSuccess(User testUser) throws Exception {
-    insertTestUser(testUser);
+    signUpTestUser(testUser);
 
     MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
     paramMap.add("email", testUser.getEmail());
     paramMap.add("password", testUser.getPassword());
+    signUpTestUser(testUser);
+    String content = objectMapper
+        .writeValueAsString(new UserSignInRequest(testUser.getEmail(), testUser.getPassword()));
 
     mockMvc.perform(
         post("/users/signIn")
-            .contentType(MediaType.APPLICATION_JSON)
-            .params(paramMap))
+            .content(content)
+            .contentType(MediaType.APPLICATION_JSON))
         .andDo(print())
         .andDo(document("sign-in",
             getDocumentRequest(),
@@ -157,11 +162,12 @@ class UserControllerTest {
                 parameterWithName("email").description("이메일 (필수)"),
                 parameterWithName("password").description("패스워드 (필수)")
             )
-        ));
-//    deleteTestUser(testUser);
+        )).andExpect(status().isOk());
+
+    withdrawTestUser(testUser);
   }
 
-  void insertTestUser(User testUser) throws Exception {
+  void signUpTestUser(User testUser) throws Exception {
     String content = objectMapper.writeValueAsString(testUser);
 
     mockMvc.perform(post("/users/signUp")
@@ -172,15 +178,34 @@ class UserControllerTest {
         .andDo(print());
   }
 
-  void deleteTestUser(User testUser) throws Exception {
+  void withdrawTestUser(User testUser) throws Exception {
     String content = objectMapper.writeValueAsString(testUser);
     userService.deleteUser(testUser.getEmail());
+  }
+
+  void signInTestUser(User testUser) throws Exception {
+    String content = objectMapper
+        .writeValueAsString(new UserSignInRequest(testUser.getEmail(), testUser.getPassword()));
+
+    mockMvc.perform(post("/users/signIn")
+        .content(content)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isOk())
+        .andDo(print());
+  }
+
+  void signOutTestUser() throws Exception {
+    userService.signOut();
   }
 
   @Test
   @DisplayName("회원정보 조회 통합 테스트")
   void getUserSuccess(User testUser) throws Exception {
-    insertTestUser(testUser);
+    signUpTestUser(testUser);
+    String content = objectMapper.writeValueAsString(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
 
     mockMvc.perform(RestDocumentationRequestBuilders.get("/users/{email}", testUser.getEmail())
         .contentType(MediaType.APPLICATION_JSON)
@@ -203,11 +228,35 @@ class UserControllerTest {
                     .description("유저타입 (필수, 일반회원 : 1, 카페사장님 : 2, 어드민 : 3)").optional()
             )
         ));
+    mockMvc.perform(get("/users/" + testUser.getEmail())
+        .content(content)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON)
+        .session(session))
+        .andExpect(status().isOk())
+        .andDo(print());
+
+    withdrawTestUser(testUser);
+  }
+
+  @Test
+  @DisplayName("로그인이 안되어 있는 경우 회원정보 조회 실패 통합 테스트, 401 리턴")
+  void getUserFailWithNotSignIn(User testUser) throws Exception {
+    String content = objectMapper.writeValueAsString(testUser);
+
+    mockMvc.perform(get("/users/" + testUser.getEmail())
+        .content(content)
+        .contentType(MediaType.APPLICATION_JSON)
+        .accept(MediaType.APPLICATION_JSON))
+        .andExpect(status().isUnauthorized())
+        .andDo(print());
   }
 
   @Test
   @DisplayName("존재하지 않는 회원정보 조회 통합 테스트")
   void getUserFailWithNoUserExist(User testUser) throws Exception {
+    signUpTestUser(testUser);
+    signInTestUser(testUser);
     String content = objectMapper.writeValueAsString(testUser);
 
     Exception e = assertThrows(NestedServletException.class,
@@ -220,13 +269,21 @@ class UserControllerTest {
               .andDo(print());
         });
     assertEquals(UserNotFoundException.class, e.getCause().getClass());
+    signOutTestUser();
+    withdrawTestUser(testUser);
   }
 
   @Test
   @DisplayName("로그아웃 성공시 200을 리턴함")
   public void signOutTestWithSuccess(User testUser) throws Exception {
+    signUpTestUser(testUser);
+    String content = objectMapper.writeValueAsString(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+
     mockMvc.perform(
-        get("/users/signOut"))
+        get("/users/signOut")
+            .session(session))
         .andDo(print())
         .andExpect(status().isOk())
         .andDo(print())
@@ -236,5 +293,15 @@ class UserControllerTest {
         ));
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+    withdrawTestUser(testUser);
+  }
+
+  @Test
+  @DisplayName("로그아웃 실패시 200을 리턴함")
+  public void signOutTestFailWithNotSignIn(User testUser) throws Exception {
+    mockMvc.perform(
+        get("/users/signOut"))
+        .andExpect(status().isUnauthorized())
+        .andDo(print());
   }
 }
