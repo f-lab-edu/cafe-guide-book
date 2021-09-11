@@ -57,11 +57,21 @@ asciidoctor {
     dependsOn test
 }
 
-bootJar {
+jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
     dependsOn asciidoctor
     copy {
         from "${asciidoctor.outputDir}"
         into 'src/main/resources/static/docs'
     }
-}
 
+    manifest {
+        attributes 'Main-Class': 'com.flab.cafeguidebook.CafeguidebookApplication'
+    }
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}
