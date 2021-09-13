@@ -1,6 +1,6 @@
 package com.flab.cafeguidebook.util;
 
-import com.flab.cafeguidebook.annotation.CurrentUserEmail;
+import com.flab.cafeguidebook.annotation.CurrentUserId;
 import com.flab.cafeguidebook.service.UserService;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
@@ -10,24 +10,24 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
-public class CurrentUserEmailResolver implements HandlerMethodArgumentResolver {
+public class CurrentUserIdResolver implements HandlerMethodArgumentResolver {
 
   private final UserService userService;
 
-  public CurrentUserEmailResolver(UserService userService) {
+  public CurrentUserIdResolver(UserService userService) {
     this.userService = userService;
   }
 
   @Override
   public boolean supportsParameter(MethodParameter methodParameter) {
-    return methodParameter.hasParameterAnnotation(CurrentUserEmail.class);
+    return methodParameter.hasParameterAnnotation(CurrentUserId.class);
   }
 
   @Override
   public Object resolveArgument(MethodParameter methodParameter,
       ModelAndViewContainer modelAndViewContainer, NativeWebRequest nativeWebRequest,
       WebDataBinderFactory webDataBinderFactory) throws Exception {
-    String currentUserId = userService.getCurrentUser();
+    Long currentUserId = userService.getSignInUserId();
     return currentUserId;
   }
 }

@@ -9,7 +9,7 @@
     DELETE
     FROM heart
     WHERE user_id = #{userId}
-      AND cafe_id = ${cafeId}
+      AND cafe_id = #{cafeId}
   </delete>
 
   <insert id="insertHeart"
@@ -18,12 +18,10 @@
     VALUES (#{userId}, #{cafeId})
   </insert>
 
-  <select id="selectHeart"
-    parameterType="Long" resultType="com.flab.cafeguidebook.dto.HeartDTO">
-    SELECT user_id,
-           cafe_id
+  <select id="selectHeart" resultType="com.flab.cafeguidebook.dto.HeartDTO">
+    SELECT user_id, cafe_id
     FROM heart
     WHERE user_id = #{userId}
-      AND cafe_id = ${cafeId}
+      AND cafe_id = #{cafeId}
   </select>
 </mapper>

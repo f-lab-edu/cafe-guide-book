@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class HeartService {
 
   @Autowired
-  HeartMapper heartMapper;
+  private HeartMapper heartMapper;
 
   public boolean addHeart(Long userId, Long cafeId) {
     return heartMapper.insertHeart(userId, cafeId) == 1;

@@ -19,7 +19,6 @@ public class HeartDTO {
     this.cafeId = cafeId;
   }
 
-
   public Long getUserId() {
     return userId;
   }
@@ -27,7 +26,6 @@ public class HeartDTO {
   public void setUserId(Long userId) {
     this.userId = userId;
   }
-
 
   public Long getCafeId() {
     return cafeId;
