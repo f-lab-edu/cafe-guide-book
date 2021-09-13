@@ -116,6 +116,14 @@ class UserServiceTest {
     when(userMapper.deleteUser(user.getEmail())).thenReturn(1);
 
     assertEquals(userService.deleteUser(user.getEmail()), true);
+  }
+
+  @Test
+  @DisplayName("유저가 테이블에 없는 경우 회원탈퇴 실패 단위 테스트")
+  public void withdrawalTestFailWithUserNotFound(UserDTO user) {
+    when(userMapper.deleteUser(user.getEmail())).thenReturn(0);
+
+    assertEquals(userService.deleteUser(user.getEmail()), false);
     assertThrows(UserNotFoundException.class, () -> {
       userService.getUserInfo(user.getEmail());
     });

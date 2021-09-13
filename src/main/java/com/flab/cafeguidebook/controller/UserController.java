@@ -74,7 +74,8 @@ public class UserController {
     userService.updatePassword(email, newPassword);
   }
 
-  @DeleteMapping(value = "/withdrawal/{email}")
+  @DeleteMapping(value = "/{email}")
+  @SignInCheck
   public void withdrawal(@PathVariable String email) {
     userService.deleteUser(email);
   }
