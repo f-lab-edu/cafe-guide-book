@@ -1,4 +1,4 @@
-package com.flab.cafeguidebook.fixture;
+package com.flab.cafeguidebook.extension;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
 import org.junit.jupiter.api.extension.ExtensionContext;

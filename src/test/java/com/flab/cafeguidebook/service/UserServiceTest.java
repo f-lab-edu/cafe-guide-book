@@ -1,10 +1,14 @@
+
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
@@ -16,7 +20,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -25,13 +28,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 class UserServiceTest {
 
-  @Autowired
+  @Mock
   private UserMapper userMapper;
-  
+
   @Mock
   private MockHttpSession mockHttpSession;
 
-  @Autowired
+  @Mock
   private UserService userService;
 
   @Test
@@ -52,12 +55,10 @@ class UserServiceTest {
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
   public void signInTestSuccess(UserDTO user) {
-
     userService.signIn(user.getEmail(), user.getPassword());
 
     assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isNotNull();
     assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isEqualTo(user.getEmail());
-
   }
 
   @Test
@@ -74,6 +75,18 @@ class UserServiceTest {
     assertThrows(UserNotFoundException.class, () -> {
       userService.signIn(user.getEmail(), user.getPassword() + "Wrong Password");
     });
+  }
+
+  @Test
+  @DisplayName("이메일")
+  public void isDuplicatedEmailTrue(UserDTO user) {
+    when(userMapper.selectUserByEmail(user.getEmail())).thenReturn(user);
+    when(userMapper.selectUserByEmail(user.getEmail() + "no-duplicated")).thenReturn(null);
+
+    assertTrue(userService.isDuplicatedEmail(user.getEmail()));
+    assertFalse(userService.isDuplicatedEmail(user.getEmail() + "no-duplicated"));
+
+    verify(userMapper).selectUserByEmail(user.getEmail());
   }
 
   @Test

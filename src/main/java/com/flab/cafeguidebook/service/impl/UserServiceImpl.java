@@ -20,11 +20,15 @@ public class UserServiceImpl implements UserService {
     this.httpSession = httpSession;
   }
 
-  // TODO : 이메일 중복체크 기능 추가 예정
   @Override
   public boolean signUp(UserDTO userDTO) {
     userDTO.setPassword(HashingUtil.sha256Hashing(userDTO.getPassword()));
     return (userMapper.insertUser(userDTO) == 1);
+  }
+
+  @Override
+  public boolean isDuplicatedEmail(String email) {
+    return userMapper.selectUserByEmail(email) != null;
   }
 
   @Override

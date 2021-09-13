@@ -1,23 +1,23 @@
-package com.flab.cafeguidebook.fixture;
+package com.flab.cafeguidebook.extension;
 
-import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.domain.Cafe;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
 import org.junit.jupiter.api.extension.ParameterResolver;
 
-public class CafeDTOFixtureProvider implements ParameterResolver {
+public class CafeFixtureProvider implements ParameterResolver {
 
   @Override
   public boolean supportsParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
-    return (parameterContext.getParameter().getType() == CafeDTO.class);
+    return (parameterContext.getParameter().getType() == Cafe.class);
   }
 
   @Override
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
-    return CafeDTO.builder()
+    return Cafe.builder()
         .userEmail("testId@gmail.com")
         .cafeId("testCafeId1")
         .cafeName("testId의 첫번째 카페")

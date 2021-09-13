@@ -1,5 +1,7 @@
 package com.flab.cafeguidebook.config;
 
+import com.flab.cafeguidebook.enumeration.UserType;
+import com.flab.cafeguidebook.enumeration.UserType.TypeHandler;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javax.sql.DataSource;
@@ -40,9 +42,11 @@ public class MyBatisConfig {
   public SqlSessionFactory sqlSessionFactory(DataSource dataSource) throws Exception {
     final SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
     sessionFactory.setDataSource(dataSource);
-    sessionFactory.setConfigLocation(applicationContext.getResource("classpath:/mybatis/config/mybatis-config.xml"));
     sessionFactory
         .setMapperLocations(applicationContext.getResources("classpath:/mybatis/mapper/*.xml"));
+    sessionFactory.setTypeHandlers(new TypeHandler[]{
+        new UserType.TypeHandler()
+    });
     return sessionFactory.getObject();
   }
 
