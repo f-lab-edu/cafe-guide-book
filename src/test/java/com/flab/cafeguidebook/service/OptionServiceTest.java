@@ -37,4 +37,11 @@ public class OptionServiceTest {
     assertThat(optionService.addOption(testOptionDTO)).isEqualTo(true);
   }
 
+  @Test
+  public void updateOption(OptionDTO testOptionDTO, Option testOption) {
+    when(optionDTOToOptionConverter.convert(testOptionDTO)).thenReturn(testOption);
+    given(optionMapper.updateOption(testOption)).willReturn(1);
+    assertThat(optionService.updateOption(testOptionDTO)).isEqualTo(true);
+  }
+
 }

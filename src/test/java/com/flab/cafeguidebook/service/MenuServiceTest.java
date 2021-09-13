@@ -37,4 +37,10 @@ public class MenuServiceTest {
     assertThat(menuService.addMenu(testMenuDTO)).isEqualTo(true);
   }
 
+  @Test
+  public void updateMenu(MenuDTO testMenuDTO, Menu testMenu) {
+    when(menuDTOToMenuConverter.convert(testMenuDTO)).thenReturn(testMenu);
+    given(menuMapper.updateMenu(testMenu)).willReturn(1);
+    assertThat(menuService.updateMenu(testMenuDTO)).isEqualTo(true);
+  }
 }

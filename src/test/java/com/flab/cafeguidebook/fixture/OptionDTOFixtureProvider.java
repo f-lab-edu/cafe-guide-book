@@ -22,7 +22,7 @@ public class OptionDTOFixtureProvider implements ParameterResolver {
         .menuId(1)
         .optionName("아이스")
         .optionPrice(500)
-        .optionStatus(OptionStatus.HIDDEN)
+        .optionStatus(OptionStatus.SOLDOUT)
         .build();
   }
 }
