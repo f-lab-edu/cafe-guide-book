@@ -309,6 +309,34 @@ class UserControllerTest {
   @DisplayName("비밀번호 업데이트 성공시 204를 리턴함")
   public void updatePasswordTestWithSuccess(User testUser) throws Exception {
     signUpTestUser(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+    MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
+    paramMap.add("email", testUser.getEmail());
+    paramMap.add("newPassword", testUser.getPassword() + "newPassword");
+
+    mockMvc.perform(
+        RestDocumentationRequestBuilders.patch("/users/password")
+            .params(paramMap)
+            .session(session))
+        .andExpect(status().isNoContent())
+        .andDo(print())
+        .andDo(document("update-password",
+            getDocumentRequest(),
+            getDocumentResponse(),
+            requestParameters(
+                parameterWithName("email").description("비밀번호를 변경할 계정의 이메일"),
+                parameterWithName("newPassword").description("변경할 새로운 패스워드")
+            )
+        ));
+
+    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
+
+  @Test
+  @DisplayName("로그아웃일 경우 비밀번호 업데이트 성공시 204를 리턴함")
+  public void updatePasswordTestFailWithSignOut(User testUser) throws Exception {
+    signUpTestUser(testUser);
 
     MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
     paramMap.add("email", testUser.getEmail());
@@ -318,7 +346,7 @@ class UserControllerTest {
         patch("/users/password")
             .contentType(MediaType.APPLICATION_JSON)
             .params(paramMap))
-        .andExpect(status().isNoContent())
+        .andExpect(status().isUnauthorized())
         .andDo(print());
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));

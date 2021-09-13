@@ -98,6 +98,19 @@ include::{snippets}/sign-out/http-request.adoc[]
 
 include::{snippets}/sign-out/response-body.adoc[]
 
+==== 비밀번호 변경
+
+===== Path Parameters
+
+include::{snippets}/update-password/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/update-password/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/update-password/response-body.adoc[]
 
 
 

@@ -68,6 +68,7 @@ public class UserController {
 
   @PatchMapping("/password")
   @ResponseStatus(HttpStatus.NO_CONTENT)
+  @SignInCheck
   public void updatePassword(String email, String newPassword) {
     userService.updatePassword(email, newPassword);
   }
