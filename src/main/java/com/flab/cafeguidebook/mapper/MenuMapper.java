@@ -1,12 +1,12 @@
 package com.flab.cafeguidebook.mapper;
 
-import com.flab.cafeguidebook.dto.MenuDTO;
+import com.flab.cafeguidebook.domain.Menu;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface MenuMapper {
 
-  public int insertMenu(MenuDTO menuDTO);
+  public int insertMenu(Menu menu);
 
-  public int updateMenu(MenuDTO menuDTO);
+  public int updateMenu(Menu menu);
 }
