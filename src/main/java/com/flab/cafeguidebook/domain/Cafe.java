@@ -3,12 +3,11 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
-import org.springframework.lang.NonNull;
 
 public class Cafe {
 
   private String userEmail;
-  private String cafeId;
+  private long cafeId;
   private String hashTageId;
   private String cafeName;
   private String bizNumber;
@@ -51,7 +50,7 @@ public class Cafe {
     this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public Cafe(String userEmail, String cafeId, String hashTageId, String cafeName,
+  public Cafe(String userEmail, long cafeId, String hashTageId, String cafeName,
       String bizNumber, String tel, String addressCode, String addressDetail,
       String operatingTime, String cafeInfo, String socialMedia,
       LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
@@ -92,11 +91,11 @@ public class Cafe {
     this.userEmail = userEmail;
   }
 
-  public String getCafeId() {
+  public long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(String cafeId) {
+  public void setCafeId(long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -247,7 +246,7 @@ public class Cafe {
   public static class Builder {
 
     private String userEmail;
-    private String cafeId;
+    private long cafeId;
     private String hashTageId;
     private String cafeName;
     private String bizNumber;
@@ -276,7 +275,7 @@ public class Cafe {
       return this;
     }
 
-    public Cafe.Builder cafeId(final String cafeId) {
+    public Cafe.Builder cafeId(final long cafeId) {
       this.cafeId = cafeId;
       return this;
     }
