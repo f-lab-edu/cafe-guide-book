@@ -14,11 +14,13 @@ import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.UserMapper;
+import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import com.flab.cafeguidebook.util.HashingUtil;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
@@ -34,15 +36,13 @@ class UserServiceTest {
   @Mock
   private MockHttpSession mockHttpSession;
 
-  @Mock
-  private UserService userService;
+  @InjectMocks
+  private UserServiceImpl userService;
 
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
   public void signUpTestSuccess(UserDTO user) {
-
     String originalPassword = user.getPassword();
-
     boolean isSuccess = userService.signUp(user);
 
     assertEquals(
@@ -95,5 +95,19 @@ class UserServiceTest {
     mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
     userService.signOut();
     assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
+
+  @Test
+  @DisplayName("비밀번호 변경 성공 단위 테스트")
+  public void updatePasswordTestWithSuccess(UserDTO user) {
+    when(userMapper.updatePassword(user.getEmail(),
+        HashingUtil.sha256Hashing(user.getPassword() + "newPassword")))
+        .thenReturn(1);
+
+    assertTrue(userService.updatePassword(user.getEmail(), user.getPassword() + "newPassword"));
+
+    verify(userMapper)
+        .updatePassword(user.getEmail(),
+            HashingUtil.sha256Hashing(user.getPassword() + "newPassword"));
   }
 }

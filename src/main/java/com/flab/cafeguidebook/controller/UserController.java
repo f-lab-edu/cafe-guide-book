@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -65,4 +66,10 @@ public class UserController {
     userService.signOut();
   }
 
+  @PatchMapping("/password")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  @SignInCheck
+  public void updatePassword(String email, String newPassword) {
+    userService.updatePassword(email, newPassword);
+  }
 }

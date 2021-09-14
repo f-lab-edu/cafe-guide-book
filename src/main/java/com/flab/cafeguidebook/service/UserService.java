@@ -19,4 +19,6 @@ public interface UserService {
   public void signOut();
 
   public String getCurrentUser();
+
+  public boolean updatePassword(String email, String newPassword);
 }
