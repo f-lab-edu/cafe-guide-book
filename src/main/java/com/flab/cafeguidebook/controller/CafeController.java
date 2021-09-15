@@ -28,8 +28,9 @@ public class CafeController {
   public ResponseEntity addCafe(HttpSession httpSession,
       @RequestBody @Validated CafeDTO cafeDTO,
       BindingResult bindingResult) {
-    String userEmail = (String) httpSession.getAttribute("userEmail");
-    cafeDTO.setUserEmail(userEmail);
+
+    Long userId = (Long) httpSession.getAttribute("userId");
+    cafeDTO.setUserId(userId);
 
     if (bindingResult.hasErrors()) {
       bindingResult.getAllErrors().forEach(error -> {

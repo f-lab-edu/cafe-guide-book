@@ -206,7 +206,7 @@ class UserControllerTest {
     signUpTestUser(testUser);
     String content = objectMapper.writeValueAsString(testUser);
     MockHttpSession session = new MockHttpSession();
-    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+    session.setAttribute(SessionKeys.USER_ID, testUser.getEmail());
 
     mockMvc.perform(RestDocumentationRequestBuilders.get("/users/{email}", testUser.getEmail())
         .contentType(MediaType.APPLICATION_JSON)
@@ -280,7 +280,7 @@ class UserControllerTest {
     signUpTestUser(testUser);
     String content = objectMapper.writeValueAsString(testUser);
     MockHttpSession session = new MockHttpSession();
-    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+    session.setAttribute(SessionKeys.USER_ID, testUser.getEmail());
 
     mockMvc.perform(get("/users/signOut"))
         .andExpect(status().isOk())
@@ -290,7 +290,7 @@ class UserControllerTest {
             getDocumentResponse()
         ));
 
-    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
     withdrawTestUser(testUser);
   }
 

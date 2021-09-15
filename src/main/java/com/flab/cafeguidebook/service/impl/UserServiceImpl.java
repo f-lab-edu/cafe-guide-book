@@ -49,7 +49,7 @@ public class UserServiceImpl implements UserService {
       throw new UserNotFoundException("이메일 혹은 비밀번호가 잘못되었습니다.");
     }
 
-    httpSession.setAttribute(SessionKeys.USER_EMAIL, loginedUser.getEmail());
+    httpSession.setAttribute(SessionKeys.USER_ID, loginedUser.getEmail());
   }
 
   @Override
@@ -59,14 +59,14 @@ public class UserServiceImpl implements UserService {
 
   @Override
   public void signOut() {
-    if (httpSession.getAttribute(SessionKeys.USER_EMAIL) != null) {
-      httpSession.removeAttribute(SessionKeys.USER_EMAIL);
+    if (httpSession.getAttribute(SessionKeys.USER_ID) != null) {
+      httpSession.removeAttribute(SessionKeys.USER_ID);
     }
   }
 
   @Override
-  public String getCurrentUser() {
-    return (String) httpSession.getAttribute(SessionKeys.USER_EMAIL);
+  public Long getSignInUserId() {
+    return (Long) httpSession.getAttribute(SessionKeys.USER_ID);
   }
 
   @Override

@@ -19,6 +19,7 @@ public class UserFixtureProvider implements ParameterResolver {
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
     return User.builder()
+        .id(12445123L)
         .email("yssj2049@gmail.com")
         .password("Cafe1234!")
         .name("김민성")

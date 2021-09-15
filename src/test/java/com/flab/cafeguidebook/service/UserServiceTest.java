@@ -1,4 +1,3 @@
-
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -57,8 +56,8 @@ class UserServiceTest {
   public void signInTestSuccess(UserDTO user) {
     userService.signIn(user.getEmail(), user.getPassword());
 
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isNotNull();
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isEqualTo(user.getEmail());
+    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isNotNull();
+    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isEqualTo(user.getEmail());
   }
 
   @Test
@@ -92,9 +91,9 @@ class UserServiceTest {
   @Test
   @DisplayName("로그아웃 성공")
   public void signOutUserTestWithSuccess(UserDTO user) {
-    mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
+    mockHttpSession.setAttribute(SessionKeys.USER_ID, user.getId());
     userService.signOut();
-    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_ID));
   }
 
   @Test

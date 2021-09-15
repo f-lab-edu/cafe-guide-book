@@ -18,7 +18,8 @@ public class CafeFixtureProvider implements ParameterResolver {
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
     return Cafe.builder()
-        .userEmail("testId@gmail.com")
+        .userId(471009L)
+        .cafeId(38775L)
         .cafeName("testId의 첫번째 카페")
         .tel("010-1234-5678")
         .build();

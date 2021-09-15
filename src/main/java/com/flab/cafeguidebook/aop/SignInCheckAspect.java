@@ -20,8 +20,8 @@ public class SignInCheckAspect {
 
   @Before("@annotation(com.flab.cafeguidebook.annotation.SignInCheck)")
   public void signInCheck() throws HttpClientErrorException {
-    String userEmail = userService.getCurrentUser();
-    if (userEmail == null) {
+    Long userId = userService.getSignInUserId();
+    if (userId == null) {
       throw new ResponseStatusException(HttpStatus.UNAUTHORIZED);
     }
   }
