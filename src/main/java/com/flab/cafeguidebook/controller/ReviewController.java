@@ -1,8 +1,8 @@
 package com.flab.cafeguidebook.controller;
 
-
 import com.flab.cafeguidebook.dto.ReviewDTO;
 import com.flab.cafeguidebook.service.ReviewService;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,5 +41,10 @@ public class ReviewController {
     }
     reviewService.addReview(cafeId, reviewDTO);
     return ResponseEntity.ok(reviewDTO);
+  }
+
+  @GetMapping(value = "/users/{userId}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
+  public List<ReviewDTO> getReviews(@PathVariable Long userId) {
+    return reviewService.getUsersReviews(userId);
   }
 }

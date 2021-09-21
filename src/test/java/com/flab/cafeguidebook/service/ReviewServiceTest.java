@@ -1,5 +1,6 @@
 package com.flab.cafeguidebook.service;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -11,6 +12,8 @@ import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.ReviewDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.ReviewFixtureProvider;
 import com.flab.cafeguidebook.mapper.ReviewMapper;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -36,5 +39,18 @@ public class ReviewServiceTest {
     assertTrue(reviewService.addReview(cafe.getCafeId(), reviewDTO));
 
     verify(reviewMapper).insertReview(cafe.getCafeId(), review);
+  }
+
+  @Test
+  public void getUsersReviewSuccess(ReviewDTO review) {
+    final List<ReviewDTO> reviewList = new ArrayList<>();
+    reviewList.add(review);
+    reviewList.add(review);
+    reviewList.add(review);
+    when(reviewMapper.selectReviews(review.getUserId())).thenReturn(reviewList);
+
+    assertEquals(reviewService.getUsersReviews(review.getUserId()).size(), 3);
+
+    verify(reviewMapper).selectReviews(review.getUserId());
   }
 }

@@ -8,4 +8,11 @@
     INSERT INTO review (user_id, cafe_id, content, score)
     VALUES (#{reviewDTO.userId}, #{cafeId}, #{reviewDTO.content}, #{reviewDTO.score})
   </insert>
+
+  <select id="selectReviews" parameterType="Long"
+    resultType="com.flab.cafeguidebook.dto.ReviewDTO">
+    SELECT *
+    FROM review
+    WHERE user_id = #{userId}
+  </select>
 </mapper>
