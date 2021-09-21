@@ -1,43 +1,44 @@
 package com.flab.cafeguidebook.controller;
 
-import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.service.CafeService;
-import javax.servlet.http.HttpSession;
+
+import com.flab.cafeguidebook.dto.ReviewDTO;
+import com.flab.cafeguidebook.service.ReviewService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@RequestMapping("/owner/cafe")
 @RestController
-public class CafeController {
+@RequestMapping
+public class ReviewController {
 
-  private static final Logger LOGGER = LogManager.getLogger(CafeController.class);
+  private static final Logger LOGGER = LogManager.getLogger(ReviewController.class);
 
   @Autowired
-  private CafeService cafeService;
+  private ReviewService reviewService;
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-  public ResponseEntity addCafe(HttpSession httpSession,
-      @RequestBody @Validated CafeDTO cafeDTO,
+  @PostMapping(value = "cafes/{cafeId}/reviews", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @ResponseStatus(HttpStatus.CREATED)
+  public ResponseEntity addReivew(@RequestBody @Validated ReviewDTO reviewDTO,
+      @PathVariable Long cafeId,
       BindingResult bindingResult) {
-    Long userId = (Long) httpSession.getAttribute("userId");
-    cafeDTO.setUserId(userId);
-
     if (bindingResult.hasErrors()) {
       bindingResult.getAllErrors().forEach(error -> {
         LOGGER.info(error);
       });
       return ResponseEntity.badRequest().build();
     }
-    cafeService.addCafe(cafeDTO);
-    return ResponseEntity.ok(cafeDTO);
+    reviewService.addReview(cafeId, reviewDTO);
+    return ResponseEntity.ok(reviewDTO);
   }
 }

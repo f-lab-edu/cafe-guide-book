@@ -304,7 +304,7 @@ class UserControllerTest {
         .andExpect(status().isUnauthorized())
         .andDo(print());
 
-    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
   }
 
   @Test
@@ -312,7 +312,7 @@ class UserControllerTest {
   public void updatePasswordTestWithSuccess(User testUser) throws Exception {
     signUpTestUser(testUser);
     MockHttpSession session = new MockHttpSession();
-    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+    session.setAttribute(SessionKeys.USER_ID, testUser.getEmail());
     MultiValueMap<String, String> paramMap = new LinkedMultiValueMap<>();
     paramMap.add("email", testUser.getEmail());
     paramMap.add("newPassword", testUser.getPassword() + "newPassword");
@@ -332,7 +332,7 @@ class UserControllerTest {
             )
         ));
 
-    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
   }
 
   @Test
@@ -351,7 +351,7 @@ class UserControllerTest {
         .andExpect(status().isUnauthorized())
         .andDo(print());
 
-    assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(httpSession.getAttribute(SessionKeys.USER_ID));
   }
 
   @Test

@@ -141,6 +141,36 @@ include::{snippets}/remove-heart/http-request.adoc[]
 
 include::{snippets}/remove-heart/response-body.adoc[]
 
+=== 2-2. Cafe
+
+==== 좋아요 추가
+
+===== Path Parameters
+
+include::{snippets}/add-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/add-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/add-heart/response-body.adoc[]
+
+==== 좋아요 제거
+
+===== Path Parameters
+
+include::{snippets}/remove-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/remove-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/remove-heart/response-body.adoc[]
+
 
 ==== 회원탈퇴
 
