@@ -40,5 +40,10 @@
             #{cafeCondition},
             #{cafeRegistration})
   </insert>
+
+  <update id="updateRegistration">
+        UPDATE CAFE SET registration = #{registration}
+        WHERE id = #{id}
+    </update>
 </mapper>
 
