@@ -13,6 +13,7 @@ import static org.springframework.restdocs.payload.PayloadDocumentation.response
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.pathParameters;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -29,6 +30,7 @@ import com.flab.cafeguidebook.service.UserService;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -350,5 +352,39 @@ class UserControllerTest {
         .andDo(print());
 
     assertNull(httpSession.getAttribute(SessionKeys.USER_EMAIL));
+  }
+
+  @Test
+  @DisplayName("회원탈퇴 성공시 200을 리턴함")
+  public void withdrawalTestWithSuccess(User testUser) throws Exception {
+    signUpTestUser(testUser);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_EMAIL, testUser.getEmail());
+
+    mockMvc.perform(
+        RestDocumentationRequestBuilders.delete("/users/withdrawal/{email}", testUser.getEmail())
+            .session(session))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andDo(print())
+        .andDo(document("withdrawal",
+            getDocumentRequest(),
+            getDocumentResponse(),
+            pathParameters(
+                parameterWithName("email").description("회원탈퇴할 계정의 이메일")
+            )
+        ));
+  }
+
+  @Test
+  @DisplayName("로그아웃 상태시 회원탈퇴 실패 401 Unauthorized 리턴")
+  public void withdrawalTestFailWithSignOut(User testUser) throws Exception {
+    signUpTestUser(testUser);
+
+    mockMvc.perform(
+        delete("/users/withdrawal/" + testUser.getEmail()))
+        .andDo(print())
+        .andExpect(status().isUnauthorized())
+        .andDo(print());
   }
 }

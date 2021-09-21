@@ -142,5 +142,16 @@ include::{snippets}/remove-heart/http-request.adoc[]
 include::{snippets}/remove-heart/response-body.adoc[]
 
 
+==== 회원탈퇴
 
+===== Path Parameters
 
+include::{snippets}/withdrawal/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/withdrawal/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/withdrawal/response-body.adoc[]
