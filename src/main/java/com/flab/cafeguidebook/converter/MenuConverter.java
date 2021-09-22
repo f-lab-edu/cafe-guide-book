@@ -2,15 +2,13 @@ package com.flab.cafeguidebook.converter;
 
 import com.flab.cafeguidebook.domain.Menu;
 import com.flab.cafeguidebook.dto.MenuDTO;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
 public class MenuConverter {
 
   @Component
-  public static class MenuDTOToMenuConverter implements Converter<MenuDTO, Menu> {
+  public static class MenuDTOToMenuConverter {
 
-    @Override
     public Menu convert(MenuDTO menuDTO) {
       Menu menu = new Menu(menuDTO.getMenuId(), menuDTO.getCafeId(), menuDTO.getMenuName(),
           menuDTO.getMenuPrice(), menuDTO.getMenuPhoto(), menuDTO.getMenuInfo(),
@@ -21,9 +19,8 @@ public class MenuConverter {
   }
 
   @Component
-  public static class MenuToMenuDTOConverter implements Converter<Menu, MenuDTO> {
+  public static class MenuToMenuDTOConverter {
 
-    @Override
     public MenuDTO convert(Menu menu) {
       MenuDTO menuDTO = new MenuDTO(menu.getMenuId(), menu.getCafeId(), menu.getMenuName(),
           menu.getMenuPrice(), menu.getMenuPhoto(), menu.getMenuInfo(),
