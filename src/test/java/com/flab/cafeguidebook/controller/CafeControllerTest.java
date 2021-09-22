@@ -7,7 +7,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.domain.Cafe;
-import com.flab.cafeguidebook.extension.CafeFixtureProvider;
+import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -40,14 +40,13 @@ public class CafeControllerTest {
   public void addCafe(Cafe testCafe) throws Exception {
 
     mockMvc.perform(post("/owner/cafe/")
-
-        .sessionAttr("userEmail", testCafe.getUserEmail())
+        .sessionAttr("userEmail", testCafe.getUserId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testCafe))
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("userEmail").value(testCafe.getUserEmail()))
+        .andExpect(jsonPath("userEmail").value(testCafe.getUserId()))
         .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
         .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
         .andExpect(jsonPath("tel").value(testCafe.getTel()));

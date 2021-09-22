@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,8 +30,8 @@ public class CafeController {
   public ResponseEntity addCafe(HttpSession httpSession,
       @RequestBody @Validated CafeDTO cafeDTO,
       BindingResult bindingResult) {
-    String userEmail = (String) httpSession.getAttribute("userEmail");
-    cafeDTO.setUserEmail(userEmail);
+    Long userId = (Long) httpSession.getAttribute("userId");
+    cafeDTO.setUserId(userId);
 
     if (bindingResult.hasErrors()) {
       bindingResult.getAllErrors().forEach(error -> {
@@ -41,4 +43,13 @@ public class CafeController {
     return ResponseEntity.ok(cafeDTO);
   }
 
+  @PatchMapping("/registeration/approve/{cafeId}/")
+  public void resolveRegistration(@PathVariable Long cafeId) {
+    cafeService.approveRegistration(cafeId);
+  }
+
+  @PatchMapping("/registeration/deny/{cafeId}")
+  public void denyRegistration(@PathVariable Long cafeId) {
+    cafeService.denyRegistration(cafeId);
+  }
 }

@@ -98,6 +98,120 @@ include::{snippets}/sign-out/http-request.adoc[]
 
 include::{snippets}/sign-out/response-body.adoc[]
 
+==== 비밀번호 변경
+
+===== Path Parameters
+
+include::{snippets}/update-password/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/update-password/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/update-password/response-body.adoc[]
+=== 2-2. Cafe
+
+==== 좋아요 추가
+
+===== Path Parameters
+
+include::{snippets}/add-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/add-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/add-heart/response-body.adoc[]
+
+==== 좋아요 제거
+
+===== Path Parameters
+
+include::{snippets}/remove-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/remove-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/remove-heart/response-body.adoc[]
+
+=== 2-2. Cafe
+
+==== 좋아요 추가
+
+===== Path Parameters
+
+include::{snippets}/add-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/add-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/add-heart/response-body.adoc[]
+
+==== 좋아요 제거
+
+===== Path Parameters
+
+include::{snippets}/remove-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/remove-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/remove-heart/response-body.adoc[]
+
+=== 2-2. Cafe
+
+==== 좋아요 추가
+
+===== Path Parameters
+
+include::{snippets}/add-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/add-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/add-heart/response-body.adoc[]
+
+==== 좋아요 제거
+
+===== Path Parameters
+
+include::{snippets}/remove-heart/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/remove-heart/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/remove-heart/response-body.adoc[]
 
 
+==== 회원탈퇴
 
+===== Path Parameters
+
+include::{snippets}/withdrawal/path-parameters.adoc[]
+
+===== HTTP Request
+
+include::{snippets}/withdrawal/http-request.adoc[]
+
+===== Response Body
+
+include::{snippets}/withdrawal/response-body.adoc[]

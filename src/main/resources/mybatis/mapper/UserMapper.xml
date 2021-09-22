@@ -39,4 +39,9 @@
     FROM user
     WHERE email = #{email}
   </select>
+
+  <update id="updatePassword" parameterType="String">
+        UPDATE USER SET password = #{newPassword}
+        WHERE email = #{email}
+    </update>
 </mapper>

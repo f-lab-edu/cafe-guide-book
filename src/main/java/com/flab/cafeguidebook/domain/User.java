@@ -4,6 +4,7 @@ import com.flab.cafeguidebook.enumeration.UserType;
 
 public class User {
 
+  private Long id;
   private String email;
   private String password;
   private String name;
@@ -12,6 +13,7 @@ public class User {
   private UserType userType;
 
   public User(Builder builder) {
+    this.id = builder.id;
     this.email = builder.email;
     this.password = builder.password;
     this.name = builder.name;
@@ -20,8 +22,9 @@ public class User {
     this.userType = builder.userType;
   }
 
-  public User(String email, String password, String name, String phone, String address,
+  public User(Long id, String email, String password, String name, String phone, String address,
       UserType userType) {
+    this.id = id;
     this.email = email;
     this.password = password;
     this.name = name;
@@ -32,6 +35,14 @@ public class User {
 
   public static Builder builder() {
     return new Builder();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getEmail() {
@@ -84,6 +95,7 @@ public class User {
 
   public static class Builder {
 
+    private Long id;
     private String email;
     private String password;
     private String name;
@@ -92,6 +104,11 @@ public class User {
     private UserType userType;
 
     public Builder Builder() {
+      return this;
+    }
+
+    public Builder id(Long id) {
+      this.id = id;
       return this;
     }
 

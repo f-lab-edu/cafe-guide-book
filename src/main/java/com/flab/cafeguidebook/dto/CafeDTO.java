@@ -10,11 +10,11 @@ public class CafeDTO {
 
   @NonNull
   @NotBlank
-  private String userEmail;
+  private Long userId;
 
   @NonNull
   @NotBlank
-  private String cafeId;
+  private Long cafeId;
 
   private String hashTageId;
 
@@ -58,7 +58,7 @@ public class CafeDTO {
   }
 
   public CafeDTO(Builder builder) {
-    this.userEmail = builder.userEmail;
+    this.userId = builder.userId;
     this.cafeId = builder.cafeId;
     this.hashTageId = builder.hashTageId;
     this.cafeName = builder.cafeName;
@@ -80,14 +80,14 @@ public class CafeDTO {
     this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public CafeDTO(@NonNull String userEmail, @NonNull String cafeId, String hashTageId,
+  public CafeDTO(@NonNull Long userId, @NonNull Long cafeId, String hashTageId,
       @NonNull String cafeName, String bizNumber, String tel, String addressCode,
       String addressDetail, String operatingTime, String cafeInfo, String socialMedia,
       LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
       Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet,
       CafeCondition cafeCondition,
       CafeRegistration cafeRegistration) {
-    this.userEmail = userEmail;
+    this.userId = userId;
     this.cafeId = cafeId;
     this.hashTageId = hashTageId;
     this.cafeName = cafeName;
@@ -114,20 +114,20 @@ public class CafeDTO {
   }
 
   @NonNull
-  public String getUserEmail() {
-    return userEmail;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setUserEmail(@NonNull String userEmail) {
-    this.userEmail = userEmail;
+  public void setUserId(@NonNull Long userId) {
+    this.userId = userId;
   }
 
   @NonNull
-  public String getCafeId() {
+  public Long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(@NonNull String cafeId) {
+  public void setCafeId(@NonNull Long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -278,8 +278,8 @@ public class CafeDTO {
 
   public static class Builder {
 
-    private String userEmail;
-    private String cafeId;
+    private Long userId;
+    private Long cafeId;
     private String hashTageId;
     private String cafeName;
     private String bizNumber;
@@ -303,12 +303,12 @@ public class CafeDTO {
       return this;
     }
 
-    public CafeDTO.Builder userEmail(@NonNull final String userEmail) {
-      this.userEmail = userEmail;
+    public CafeDTO.Builder userId(@NonNull final Long userId) {
+      this.userId = userId;
       return this;
     }
 
-    public CafeDTO.Builder cafeId(@NonNull final String cafeId) {
+    public CafeDTO.Builder cafeId(@NonNull final Long cafeId) {
       this.cafeId = cafeId;
       return this;
     }
@@ -404,7 +404,7 @@ public class CafeDTO {
     }
 
     public CafeDTO build() {
-      return new CafeDTO(this.userEmail, this.cafeId, this.hashTageId, this.cafeName,
+      return new CafeDTO(this.userId, this.cafeId, this.hashTageId, this.cafeName,
           this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
           this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
           this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,

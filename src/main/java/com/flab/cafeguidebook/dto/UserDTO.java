@@ -7,6 +7,8 @@ import javax.validation.constraints.Pattern;
 
 public class UserDTO {
 
+  private Long id;
+
   @NotNull(message = "이메일을 반드시 입력해야 합니다.")
   @Email(message = "유효하지 않은 이메일 형식입니다.")
   private String email;
@@ -31,6 +33,7 @@ public class UserDTO {
   }
 
   public UserDTO(Builder builder) {
+    this.id = builder.id;
     this.email = builder.email;
     this.password = builder.password;
     this.name = builder.name;
@@ -39,8 +42,9 @@ public class UserDTO {
     this.userType = builder.userType;
   }
 
-  public UserDTO(String email, String password, String name, String phone,
+  public UserDTO(Long id, String email, String password, String name, String phone,
       String address, UserType userType) {
+    this.id = id;
     this.email = email;
     this.password = password;
     this.name = name;
@@ -51,6 +55,14 @@ public class UserDTO {
 
   public static Builder builder() {
     return new Builder();
+  }
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
   }
 
   public String getEmail() {
@@ -103,6 +115,7 @@ public class UserDTO {
 
   public static class Builder {
 
+    private Long id;
     private String email;
     private String password;
     private String name;
@@ -111,6 +124,11 @@ public class UserDTO {
     private UserType userType;
 
     public Builder Builder() {
+      return this;
+    }
+
+    public UserDTO.Builder id(Long id) {
+      this.id = id;
       return this;
     }
 
