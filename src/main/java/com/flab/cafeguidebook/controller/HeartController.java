@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/heart")
+@RequestMapping
 public class HeartController {
 
   @Autowired
   private HeartService heartService;
 
   @SignInCheck
-  @PostMapping("/{cafeId}")
+  @PostMapping("/cafes/{cafeId}/hearts")
   public void addHeart(@PathVariable Long cafeId, HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     heartService.addHeart(userId, cafeId);
   }
 
   @SignInCheck
-  @DeleteMapping("/{cafeId}")
+  @DeleteMapping("/cafes/{cafeId}/hearts")
   public void removeHeart(@PathVariable Long cafeId, HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     heartService.removeHeart(userId, cafeId);
