@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.cafeguidebook.mapper.OptionMapper">
+  <insert id="insertOption" parameterType="com.flab.cafeguidebook.dto.OptionDTO">
+    INSERT INTO MENUOPTION(option_name,
+                           menu_id,
+                           option_price,
+                           option_status)
+    VALUES (#{optionName},
+            #{menuId},
+            #{optionPrice},
+            #{optionStatus})
+  </insert>
+  <update id="updateOption" parameterType="com.flab.cafeguidebook.dto.OptionDTO">
+    UPDATE MENUOPTION
+    SET
+    <if test="optionName != null">option_name = #{optionName},</if>
+    <if test="optionPrice != null">option_price = #{optionPrice},</if>
+    <if test="optionStatus != null">option_status = #{optionStatus}</if>
+    WHERE option_id = #{optionId}
+  </update>
+</mapper>

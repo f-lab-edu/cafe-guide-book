@@ -3,12 +3,11 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
-import org.springframework.lang.NonNull;
 
 public class Cafe {
 
-  private String userEmail;
-  private String cafeId;
+  private Long userId;
+  private Long cafeId;
   private String hashTageId;
   private String cafeName;
   private String bizNumber;
@@ -29,7 +28,7 @@ public class Cafe {
   private CafeRegistration cafeRegistration;
 
   public Cafe(Builder builder) {
-    this.userEmail = builder.userEmail;
+    this.userId = builder.userId;
     this.cafeId = builder.cafeId;
     this.hashTageId = builder.hashTageId;
     this.cafeName = builder.cafeName;
@@ -51,14 +50,14 @@ public class Cafe {
     this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public Cafe(String userEmail, String cafeId, String hashTageId, String cafeName,
+  public Cafe(Long userId, Long cafeId, String hashTageId, String cafeName,
       String bizNumber, String tel, String addressCode, String addressDetail,
       String operatingTime, String cafeInfo, String socialMedia,
       LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
       Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet,
       CafeCondition cafeCondition,
       CafeRegistration cafeRegistration) {
-    this.userEmail = userEmail;
+    this.userId = userId;
     this.cafeId = cafeId;
     this.hashTageId = hashTageId;
     this.cafeName = cafeName;
@@ -84,19 +83,19 @@ public class Cafe {
     return new Builder();
   }
 
-  public String getUserEmail() {
-    return userEmail;
+  public Long getUserId() {
+    return userId;
   }
 
-  public void setUserEmail(String userEmail) {
-    this.userEmail = userEmail;
+  public void setUserId(Long userId) {
+    this.userId = userId;
   }
 
-  public String getCafeId() {
+  public Long getCafeId() {
     return cafeId;
   }
 
-  public void setCafeId(String cafeId) {
+  public void setCafeId(Long cafeId) {
     this.cafeId = cafeId;
   }
 
@@ -246,8 +245,8 @@ public class Cafe {
 
   public static class Builder {
 
-    private String userEmail;
-    private String cafeId;
+    private Long userId;
+    private Long cafeId;
     private String hashTageId;
     private String cafeName;
     private String bizNumber;
@@ -271,12 +270,12 @@ public class Cafe {
       return this;
     }
 
-    public Cafe.Builder userEmail(final String userEmail) {
-      this.userEmail = userEmail;
+    public Cafe.Builder userId(@NonNull final Long userId) {
+      this.userId = userId;
       return this;
     }
 
-    public Cafe.Builder cafeId(final String cafeId) {
+    public Cafe.Builder cafeId(@NonNull final Long cafeId) {
       this.cafeId = cafeId;
       return this;
     }
@@ -372,7 +371,7 @@ public class Cafe {
     }
 
     public Cafe build() {
-      return new Cafe(this.userEmail, this.cafeId, this.hashTageId, this.cafeName,
+      return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName,
           this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
           this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
           this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,

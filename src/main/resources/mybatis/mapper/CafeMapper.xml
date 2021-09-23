@@ -3,8 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.cafeguidebook.mapper.CafeMapper">
   <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
-    INSERT INTO CAFE(cafe_id,
-                     user_email,
+    INSERT INTO CAFE(user_email,
                      cafe_name,
                      biz_number,
                      tel,
@@ -22,8 +21,7 @@
                      with_pet,
                      cafe_condition,
                      cafe_registration)
-    VALUES (#{cafeId},
-            #{userEmail},
+    VALUES (#{userEmail},
             #{cafeName},
             #{bizNumber},
             #{tel},
@@ -42,5 +40,10 @@
             #{cafeCondition},
             #{cafeRegistration})
   </insert>
+
+  <update id="updateRegistration">
+        UPDATE CAFE SET registration = #{registration}
+        WHERE id = #{id}
+    </update>
 </mapper>
 

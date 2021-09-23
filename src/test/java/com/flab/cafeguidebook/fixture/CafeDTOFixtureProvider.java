@@ -18,8 +18,8 @@ public class CafeDTOFixtureProvider implements ParameterResolver {
   public Object resolveParameter(ParameterContext parameterContext,
       ExtensionContext extensionContext) throws ParameterResolutionException {
     return CafeDTO.builder()
-        .userEmail("testId@gmail.com")
-        .cafeId("testCafeId1")
+        .userId(388291L)
+        .cafeId(2341L)
         .cafeName("testId의 첫번째 카페")
         .tel("010-1234-5678")
         .build();

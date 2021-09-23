@@ -1,4 +1,3 @@
-
 package com.flab.cafeguidebook.service;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -14,11 +13,13 @@ import com.flab.cafeguidebook.dto.UserDTO;
 import com.flab.cafeguidebook.exception.UserNotFoundException;
 import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.mapper.UserMapper;
+import com.flab.cafeguidebook.service.impl.UserServiceImpl;
 import com.flab.cafeguidebook.util.HashingUtil;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockHttpSession;
@@ -34,15 +35,13 @@ class UserServiceTest {
   @Mock
   private MockHttpSession mockHttpSession;
 
-  @Mock
-  private UserService userService;
+  @InjectMocks
+  private UserServiceImpl userService;
 
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
   public void signUpTestSuccess(UserDTO user) {
-
     String originalPassword = user.getPassword();
-
     boolean isSuccess = userService.signUp(user);
 
     assertEquals(
@@ -57,8 +56,8 @@ class UserServiceTest {
   public void signInTestSuccess(UserDTO user) {
     userService.signIn(user.getEmail(), user.getPassword());
 
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isNotNull();
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL)).isEqualTo(user.getEmail());
+    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isNotNull();
+    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isEqualTo(user.getEmail());
   }
 
   @Test
@@ -78,7 +77,7 @@ class UserServiceTest {
   }
 
   @Test
-  @DisplayName("이메일")
+  @DisplayName("이메일 중복 검사 단위테스트")
   public void isDuplicatedEmailTrue(UserDTO user) {
     when(userMapper.selectUserByEmail(user.getEmail())).thenReturn(user);
     when(userMapper.selectUserByEmail(user.getEmail() + "no-duplicated")).thenReturn(null);
@@ -92,8 +91,41 @@ class UserServiceTest {
   @Test
   @DisplayName("로그아웃 성공")
   public void signOutUserTestWithSuccess(UserDTO user) {
-    mockHttpSession.setAttribute(SessionKeys.USER_EMAIL, user.getEmail());
+    mockHttpSession.setAttribute(SessionKeys.USER_ID, user.getId());
     userService.signOut();
-    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_EMAIL));
+    assertNull(mockHttpSession.getAttribute(SessionKeys.USER_ID));
+  }
+
+  @Test
+  @DisplayName("비밀번호 변경 성공 단위 테스트")
+  public void updatePasswordTestWithSuccess(UserDTO user) {
+    when(userMapper.updatePassword(user.getEmail(),
+        HashingUtil.sha256Hashing(user.getPassword() + "newPassword")))
+        .thenReturn(1);
+
+    assertTrue(userService.updatePassword(user.getEmail(), user.getPassword() + "newPassword"));
+
+    verify(userMapper)
+        .updatePassword(user.getEmail(),
+            HashingUtil.sha256Hashing(user.getPassword() + "newPassword"));
+  }
+
+  @Test
+  @DisplayName("회원탈퇴 성공 단위 테스트")
+  public void withdrawalTestWithSuccess(UserDTO user) {
+    when(userMapper.deleteUser(user.getEmail())).thenReturn(1);
+
+    assertEquals(userService.deleteUser(user.getEmail()), true);
+  }
+
+  @Test
+  @DisplayName("유저가 테이블에 없는 경우 회원탈퇴 실패 단위 테스트")
+  public void withdrawalTestFailWithUserNotFound(UserDTO user) {
+    when(userMapper.deleteUser(user.getEmail())).thenReturn(0);
+
+    assertEquals(userService.deleteUser(user.getEmail()), false);
+    assertThrows(UserNotFoundException.class, () -> {
+      userService.getUserInfo(user.getEmail());
+    });
   }
 }

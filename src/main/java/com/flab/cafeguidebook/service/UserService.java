@@ -17,4 +17,8 @@ public interface UserService {
   public boolean deleteUser(String email);
 
   public void signOut();
+
+  public Long getSignInUserId();
+
+  public boolean updatePassword(String email, String newPassword);
 }
