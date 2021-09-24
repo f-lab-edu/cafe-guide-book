@@ -9,17 +9,14 @@ import org.springframework.lang.NonNull;
 public class CafeDTO {
 
   @NonNull
-  @NotBlank
   private Long userId;
 
   @NonNull
-  @NotBlank
   private Long cafeId;
 
   private String hashTageId;
 
   @NonNull
-  @NotBlank
   private String cafeName;
 
   private String bizNumber;
