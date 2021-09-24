@@ -47,3 +47,4 @@ public class CafeServiceTest {
     assertThat(cafeService.denyRegistration(33333L)).isEqualTo(true);
   }
 }
+
