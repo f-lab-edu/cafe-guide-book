@@ -55,7 +55,7 @@ public class ReviewControllerTest {
   }
 
   private void addReview(ReviewDTO review) throws Exception {
-    mockMvc.perform(post("/reviews")
+    mockMvc.perform(post("/cafes/" + review.getCafeId() + "/reviews")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(review))
         .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -75,6 +75,22 @@ public class ReviewControllerTest {
     addReview(review);
 
     mockMvc.perform(get("/users/" + review.getUserId() + "/reviews")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(review))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(4)));
+  }
+
+  @Test
+  public void getCafesReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+    addReview(review);
+    addReview(review);
+    addReview(review);
+
+    mockMvc.perform(get("/cafes/" + review.getCafeId() + "/reviews")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(review))
         .accept(MediaType.APPLICATION_JSON_UTF8))
