@@ -270,12 +270,12 @@ public class Cafe {
       return this;
     }
 
-    public Cafe.Builder userId(@NonNull final Long userId) {
+    public Cafe.Builder userId(final Long userId) {
       this.userId = userId;
       return this;
     }
 
-    public Cafe.Builder cafeId(@NonNull final Long cafeId) {
+    public Cafe.Builder cafeId(final Long cafeId) {
       this.cafeId = cafeId;
       return this;
     }
