@@ -13,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -138,4 +139,25 @@ public class MenuController {
     }
   }
 
+  @DeleteMapping(value = "/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity deleteMenu(@PathVariable long cafeId, @PathVariable long menuId) {
+    boolean deleteMenu = menuService.deleteMenu(menuId);
+    if (!deleteMenu) {
+      LOGGER.info("해당 메뉴를 삭제할 수 없습니다. cafeId = {}, menuId = {}", cafeId, menuId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok().build();
+    }
+  }
+
+  @DeleteMapping(value = "/{menuId}/options/{optionId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity deleteOption(@PathVariable long menuId, @PathVariable long optionId) {
+    boolean deleteOption = optionService.deleteOption(optionId);
+    if (!deleteOption) {
+      LOGGER.info("해당 옵션을 삭제할 수 없습니다. menuId = {}, optionId = {}", menuId, optionId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok().build();
+    }
+  }
 }

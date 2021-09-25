@@ -15,4 +15,8 @@ public interface OptionMapper {
   public List<OptionDTO> selectAllOption(long menuId);
 
   public OptionDTO selectOption(long optionId);
+
+  public int deleteOption(long optionId);
+
+  public void deleteAllOption();
 }

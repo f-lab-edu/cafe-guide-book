@@ -50,4 +50,13 @@
     FROM menu
     WHERE menu_id = #{menuId}
   </select>
+  <delete id="deleteMenu" parameterType="long">
+    DELETE
+    FROM menu
+    WHERE menu_id = #{menuId}
+  </delete>
+  <delete id="deleteAllMenu">
+    DELETE
+    FROM menu;
+  </delete>
 </mapper>

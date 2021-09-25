@@ -35,4 +35,9 @@ public class OptionService {
     OptionDTO selectOption = optionMapper.selectOption(optionId);
     return selectOption;
   }
+
+  public boolean deleteOption(long optionId) {
+    int deleteOption = optionMapper.deleteOption(optionId);
+    return deleteOption == 1;
+  }
 }

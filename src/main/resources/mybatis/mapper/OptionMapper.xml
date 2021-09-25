@@ -30,4 +30,13 @@
     FROM menuoption
     WHERE option_id = #{optionId}
   </select>
+  <delete id="deleteOption" parameterType="long">
+    DELETE
+    FROM menuoption
+    WHERE option_id = #{optionId}
+  </delete>
+  <delete id="deleteAllOption" parameterType="long">
+    DELETE
+    FROM menuoption;
+  </delete>
 </mapper>

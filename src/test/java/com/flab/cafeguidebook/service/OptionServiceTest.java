@@ -59,4 +59,10 @@ public class OptionServiceTest {
     assertThat(optionService.getOption(testOptionDTO.getOptionId())).isEqualTo(testOptionDTO);
   }
 
+  @Test
+  public void deleteOption(OptionDTO testOptionDTO) {
+    given(optionMapper.deleteOption(testOptionDTO.getOptionId())).willReturn(1);
+    assertThat(optionService.deleteOption(testOptionDTO.getOptionId())).isEqualTo(true);
+  }
+
 }

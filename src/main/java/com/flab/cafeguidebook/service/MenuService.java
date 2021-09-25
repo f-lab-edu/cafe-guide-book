@@ -44,4 +44,9 @@ public class MenuService {
     MenuDTO selectMenu = menuMapper.selectMenu(menuId);
     return selectMenu;
   }
+
+  public boolean deleteMenu(long menuId) {
+    int deleteMenu = menuMapper.deleteMenu(menuId);
+    return deleteMenu == 1;
+  }
 }

@@ -13,7 +13,10 @@ import com.flab.cafeguidebook.fixture.MenuDTOListFixtureProvider;
 import com.flab.cafeguidebook.fixture.MenuDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.OptionDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.OptionDTOListFixtureProvider;
+import com.flab.cafeguidebook.mapper.MenuMapper;
+import com.flab.cafeguidebook.mapper.OptionMapper;
 import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -36,11 +39,23 @@ public class MenuControllerTest {
   private ObjectMapper objectMapper;
 
   @Autowired
+  private MenuMapper menuMapper;
+
+  @Autowired
+  private OptionMapper optionMapper;
+
+  @Autowired
   private WebApplicationContext webApplicationContext;
 
   @BeforeEach
   public void init() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
+
+  @AfterEach
+  public void deleteMenuAndOption() {
+    menuMapper.deleteAllMenu();
+    optionMapper.deleteAllOption();
   }
 
   @Test
@@ -166,10 +181,11 @@ public class MenuControllerTest {
       addOption(testOptionDTOList.get(i));
     }
 
-    mockMvc.perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0)
+    mockMvc
+        .perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0)
             .getMenuId() + "/options/")
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(testOptionDTOList.size())));
@@ -186,10 +202,11 @@ public class MenuControllerTest {
     String menuStatusEnum =
         testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(testMenuDTO))
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+    mockMvc
+        .perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(objectMapper.writeValueAsString(testMenuDTO))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("cafeId").value(testMenuDTO.getCafeId()))

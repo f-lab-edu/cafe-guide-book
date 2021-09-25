@@ -58,4 +58,10 @@ public class MenuServiceTest {
     given(menuMapper.selectMenu(testMenuDTO.getMenuId())).willReturn(testMenuDTO);
     assertThat(menuService.getMenu(testMenuDTO.getMenuId())).isEqualTo(testMenuDTO);
   }
+
+  @Test
+  public void deleteMenu(MenuDTO testMenuDTO) {
+    given(menuMapper.deleteMenu(testMenuDTO.getMenuId())).willReturn(1);
+    assertThat(menuService.deleteMenu(testMenuDTO.getMenuId())).isEqualTo(true);
+  }
 }

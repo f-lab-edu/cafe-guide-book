@@ -15,4 +15,8 @@ public interface MenuMapper {
   public List<MenuDTO> selectAllMenu(long cafeId);
 
   public MenuDTO selectMenu(long menuId);
+
+  public int deleteMenu(long menuId);
+
+  public void deleteAllMenu();
 }
