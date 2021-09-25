@@ -30,4 +30,9 @@ public class OptionService {
     List<OptionDTO> selectAllOption = optionMapper.selectAllOption(menuId);
     return selectAllOption;
   }
+
+  public OptionDTO getOption(long optionId) {
+    OptionDTO selectOption = optionMapper.selectOption(optionId);
+    return selectOption;
+  }
 }

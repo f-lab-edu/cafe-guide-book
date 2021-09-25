@@ -13,4 +13,6 @@ public interface OptionMapper {
   public int updateOption(Option optionDTO);
 
   public List<OptionDTO> selectAllOption(long menuId);
+
+  public OptionDTO selectOption(long optionId);
 }

@@ -46,8 +46,10 @@ public class MenuControllerTest {
   @Test
   public void addMenu(MenuDTO testMenuDTO) throws Exception {
 
-    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
-    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
     mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -67,9 +69,11 @@ public class MenuControllerTest {
 
     final long CAFEID = 1;
 
-    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/")
+    mockMvc
+        .perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/")
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .content(objectMapper.writeValueAsString(testOptionDTO))
             .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -88,13 +92,16 @@ public class MenuControllerTest {
 
     testMenuDTO.setMenuId(MENUID);
 
-    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
-    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(testMenuDTO))
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+    mockMvc
+        .perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(objectMapper.writeValueAsString(testMenuDTO))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("menuId").value(testMenuDTO.getMenuId()))
@@ -117,9 +124,11 @@ public class MenuControllerTest {
     testOptionDTO.setMenuId(MENUID);
     testOptionDTO.setOptionId(OPTIONID);
 
-    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
+    mockMvc.perform(post(
+        "/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
             .getOptionId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testOptionDTO))
@@ -148,7 +157,8 @@ public class MenuControllerTest {
   }
 
   @Test
-  public void getAllOption(MenuDTO testMenuDTO, List<OptionDTO> testOptionDTOList) throws Exception {
+  public void getAllOption(MenuDTO testMenuDTO, List<OptionDTO> testOptionDTOList)
+      throws Exception {
 
     addMenu(testMenuDTO);
 
@@ -156,12 +166,61 @@ public class MenuControllerTest {
       addOption(testOptionDTOList.get(i));
     }
 
-    mockMvc.perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0).getMenuId() + "/options/")
+    mockMvc.perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0)
+            .getMenuId() + "/options/")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(testOptionDTOList.size())));
 
+  }
+
+  @Test
+  public void getMenu(MenuDTO testMenuDTO) throws Exception {
+
+    addMenu(testMenuDTO);
+
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+
+    mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testMenuDTO))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("cafeId").value(testMenuDTO.getCafeId()))
+        .andExpect(jsonPath("menuName").value(testMenuDTO.getMenuName()))
+        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()))
+        .andExpect(jsonPath("menuGroup").value(menuGroupEnum))
+        .andExpect(jsonPath("menuStatus").value(menuStatusEnum));
+
+  }
+
+  @Test
+  public void getOption(OptionDTO testOptionDTO) throws Exception {
+
+    final long CAFEID = 1;
+
+    addOption(testOptionDTO);
+
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+
+    mockMvc.perform(post(
+        "/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
+            .getOptionId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testOptionDTO))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("optionId").value(testOptionDTO.getOptionId()))
+        .andExpect(jsonPath("optionName").value(testOptionDTO.getOptionName()))
+        .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()))
+        .andExpect(jsonPath("optionStatus").value(optionStatusEnum));
   }
 }

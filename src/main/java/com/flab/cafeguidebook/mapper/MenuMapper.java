@@ -13,4 +13,6 @@ public interface MenuMapper {
   public int updateMenu(Menu menu);
 
   public List<MenuDTO> selectAllMenu(long cafeId);
+
+  public MenuDTO selectMenu(long menuId);
 }

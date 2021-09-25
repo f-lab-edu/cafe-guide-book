@@ -25,4 +25,9 @@
     FROM menuoption
     WHERE menu_id = #{menuId}
   </select>
+  <select id="selectOption" parameterType="long" resultType="com.flab.cafeguidebook.dto.OptionDTO">
+    SELECT *
+    FROM menuoption
+    WHERE option_id = #{optionId}
+  </select>
 </mapper>

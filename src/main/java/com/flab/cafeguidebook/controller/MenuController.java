@@ -116,4 +116,26 @@ public class MenuController {
     }
   }
 
+  @GetMapping(value = "/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getMenu(@PathVariable long cafeId, @PathVariable long menuId) {
+    MenuDTO menuDTO = menuService.getMenu(menuId);
+    if (menuDTO == null) {
+      LOGGER.info("해당 메뉴를 조회할 수 없습니다. cafeId = {}, menuId = {}", cafeId, menuId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok(menuDTO);
+    }
+  }
+
+  @GetMapping(value = "/{menuId}/options/{optionId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getOption(@PathVariable long menuId, @PathVariable long optionId) {
+    OptionDTO optionDTO = optionService.getOption(optionId);
+    if (optionDTO == null) {
+      LOGGER.info("해당 옵션을 조회할 수 없습니다. menuId = {}, optionId = {}", menuId, optionId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok(optionDTO);
+    }
+  }
+
 }

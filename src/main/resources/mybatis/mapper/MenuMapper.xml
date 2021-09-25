@@ -45,4 +45,9 @@
     FROM menu
     WHERE cafe_id = #{cafeId}
   </select>
+  <select id="selectMenu" parameterType="long" resultType="com.flab.cafeguidebook.dto.MenuDTO">
+    SELECT *
+    FROM menu
+    WHERE menu_id = #{menuId}
+  </select>
 </mapper>

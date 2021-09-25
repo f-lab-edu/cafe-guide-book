@@ -7,7 +7,6 @@ import static org.mockito.Mockito.when;
 import com.flab.cafeguidebook.converter.MenuConverter.MenuDTOToMenuConverter;
 import com.flab.cafeguidebook.domain.Menu;
 import com.flab.cafeguidebook.dto.MenuDTO;
-import com.flab.cafeguidebook.dto.OptionDTO;
 import com.flab.cafeguidebook.fixture.MenuDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.MenuDTOListFixtureProvider;
 import com.flab.cafeguidebook.fixture.MenuFixtureProvider;
@@ -52,5 +51,11 @@ public class MenuServiceTest {
   public void selectAllMenu(List<MenuDTO> testMenuDTOList) {
     given(menuMapper.selectAllMenu(testMenuDTOList.get(0).getCafeId())).willReturn(testMenuDTOList);
     assertThat(menuService.getAllMenu(testMenuDTOList.get(0).getCafeId())).isEqualTo(testMenuDTOList);
+  }
+
+  @Test
+  public void selectMenu(MenuDTO testMenuDTO) {
+    given(menuMapper.selectMenu(testMenuDTO.getMenuId())).willReturn(testMenuDTO);
+    assertThat(menuService.getMenu(testMenuDTO.getMenuId())).isEqualTo(testMenuDTO);
   }
 }

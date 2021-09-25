@@ -53,4 +53,10 @@ public class OptionServiceTest {
     assertThat(optionService.getAllOption(testOptionDTOList.get(0).getMenuId())).isEqualTo(testOptionDTOList);
   }
 
+  @Test
+  public void selectOption(OptionDTO testOptionDTO) {
+    given(optionMapper.selectOption(testOptionDTO.getOptionId())).willReturn(testOptionDTO);
+    assertThat(optionService.getOption(testOptionDTO.getOptionId())).isEqualTo(testOptionDTO);
+  }
+
 }

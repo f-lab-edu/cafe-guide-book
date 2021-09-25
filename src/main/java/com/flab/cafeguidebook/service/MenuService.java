@@ -39,4 +39,9 @@ public class MenuService {
     List<MenuDTO> selectAllMenu = menuMapper.selectAllMenu(cafeId);
     return selectAllMenu;
   }
+
+  public MenuDTO getMenu(long menuId) {
+    MenuDTO selectMenu = menuMapper.selectMenu(menuId);
+    return selectMenu;
+  }
 }
