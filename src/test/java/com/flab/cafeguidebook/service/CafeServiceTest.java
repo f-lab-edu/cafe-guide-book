@@ -1,13 +1,20 @@
 package com.flab.cafeguidebook.service;
 
+import static com.flab.cafeguidebook.enumeration.CafeRegistration.APPROVAL;
+import static com.flab.cafeguidebook.enumeration.CafeRegistration.DENY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 
+<<<<<<< HEAD
 import com.flab.cafeguidebook.dto.UpdateCafeDTO;
 import com.flab.cafeguidebook.extension.CafeDTOFisxtureListProvider;
 import com.flab.cafeguidebook.extension.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.extension.UpdateCafeDTOFixtureProvider;
+=======
+import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
+>>>>>>> develop
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -22,12 +29,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @SpringBootTest
 public class CafeServiceTest {
 
-    @Mock
-    private CafeMapper cafeMapper;
+  @Mock
+  private CafeMapper cafeMapper;
 
-    @InjectMocks
-    private CafeService cafeService;
+  @InjectMocks
+  private CafeService cafeService;
 
+<<<<<<< HEAD
     @Test
     public void addCafe(CafeDTO testCafeDTO) {
         given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
@@ -65,4 +73,27 @@ public class CafeServiceTest {
         assertThat(cafeService.updateCafe(updateTestCafeDTO)).isEqualTo(true);
     }
 
+=======
+  @Test
+  public void addCafe(CafeDTO testCafeDTO) {
+    given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
+    assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
+  }
+
+  @Test
+  public void approveRegistrationCafeSuccess() {
+    given(cafeMapper.updateRegistration(33333L, APPROVAL))
+        .willReturn(1);
+
+    assertThat(cafeService.approveRegistration(33333L)).isEqualTo(true);
+  }
+
+  @Test
+  public void denyRegistrationCafeSuccess() {
+    given(cafeMapper.updateRegistration(33333L, DENY))
+        .willReturn(1);
+
+    assertThat(cafeService.denyRegistration(33333L)).isEqualTo(true);
+  }
+>>>>>>> develop
 }

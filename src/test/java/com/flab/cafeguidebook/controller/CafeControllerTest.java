@@ -15,7 +15,7 @@ import com.flab.cafeguidebook.extension.UpdateCafeFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import com.flab.cafeguidebook.domain.Cafe;
-import com.flab.cafeguidebook.extension.CafeFixtureProvider;
+import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -32,6 +32,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class CafeControllerTest {
 
+<<<<<<< HEAD
     private MockMvc mockMvc;
 
     @Autowired
@@ -117,4 +118,34 @@ public class CafeControllerTest {
             .andExpect(jsonPath("tel").value(testCafe.getTel()));
     }
 
+=======
+  private MockMvc mockMvc;
+
+  @Autowired
+  private ObjectMapper objectMapper;
+
+  @Autowired
+  private WebApplicationContext webApplicationContext;
+
+  @BeforeEach
+  public void init() {
+    this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
+
+  @Test
+  public void addCafe(Cafe testCafe) throws Exception {
+
+    mockMvc.perform(post("/owner/cafe/")
+        .sessionAttr("userId", testCafe.getUserId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testCafe))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("userId").value(testCafe.getUserId()))
+        .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
+        .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
+        .andExpect(jsonPath("tel").value(testCafe.getTel()));
+  }
+>>>>>>> develop
 }

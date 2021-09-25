@@ -2,6 +2,7 @@ plugins {
     id 'org.springframework.boot' version "2.5.2"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 ext {
@@ -10,6 +11,10 @@ ext {
     springBootMysqlVersion = "8.0.25"
     springGuavaVersion = "30.1.1-jre"
     springMokitoVersion = "3.11.2"
+    springHikariCPVersion = "3.4.5"
+    springRestDocsMockMvcVersion = "2.0.5.RELEASE"
+    snippetsDir = file('build/generated-snippets')
+    springBootStarterAopVersion = "2.5.4"
 }
 
 group = 'com.flab'
@@ -21,6 +26,7 @@ repositories {
 }
 
 configurations {
+    asciidoctorExtensions
     all {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
     }
@@ -35,10 +41,39 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-validation:$springBootVersion"
     implementation "com.google.guava:guava:$springGuavaVersion"
     implementation "org.mockito:mockito-core:$springMokitoVersion"
+    implementation "com.zaxxer:HikariCP:$springHikariCPVersion"
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
+    testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:$springRestDocsMockMvcVersion"
+    asciidoctorExtensions "org.springframework.restdocs:spring-restdocs-asciidoctor:$springRestDocsMockMvcVersion"
+    implementation "org.springframework.boot:spring-boot-starter-aop:$springBootStarterAopVersion"
 }
 
 test {
+    outputs.dir snippetsDir
     useJUnitPlatform()
 }
 
+asciidoctor {
+    configurations 'asciidoctorExtensions'
+    inputs.dir snippetsDir
+    dependsOn test
+}
+
+jar {
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+
+    dependsOn asciidoctor
+    copy {
+        from "${asciidoctor.outputDir}"
+        into 'src/main/resources/static/docs'
+    }
+
+    manifest {
+        attributes 'Main-Class': 'com.flab.cafeguidebook.CafeguidebookApplication'
+    }
+    from {
+        configurations.compileClasspath.collect {
+            it.isDirectory() ? it : zipTree(it)
+        }
+    }
+}

@@ -1,7 +1,11 @@
 package com.flab.cafeguidebook.service;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
+<<<<<<< HEAD
 import com.flab.cafeguidebook.dto.UpdateCafeDTO;
+=======
+import com.flab.cafeguidebook.enumeration.CafeRegistration;
+>>>>>>> develop
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +16,10 @@ import org.springframework.web.client.HttpClientErrorException;
 @Service
 public class CafeService {
 
-    @Autowired
-    private CafeMapper cafeMapper;
+  @Autowired
+  private CafeMapper cafeMapper;
 
+<<<<<<< HEAD
     public boolean addCafe(CafeDTO cafeDTO) {
         int insertCafe = cafeMapper.insertCafe(cafeDTO);
         return insertCafe == 1;
@@ -40,4 +45,18 @@ public class CafeService {
         int updateCafe = cafeMapper.updateCafe(updateCafeDTO);
         return updateCafe == 1;
     }
+=======
+  public boolean addCafe(CafeDTO cafeDTO) {
+    int insertCafe = cafeMapper.insertCafe(cafeDTO);
+    return insertCafe == 1;
+  }
+
+  public boolean approveRegistration(Long cafeId) {
+    return cafeMapper.updateRegistration(cafeId, CafeRegistration.APPROVAL) == 1;
+  }
+
+  public boolean denyRegistration(Long cafeId) {
+    return cafeMapper.updateRegistration(cafeId, CafeRegistration.DENY) == 1;
+  }
+>>>>>>> develop
 }
