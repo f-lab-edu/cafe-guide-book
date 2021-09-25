@@ -17,42 +17,46 @@ public class CafeRegistrationTypeHandler implements TypeHandler<CafeRegistration
     this.type = type;
   }
 
-  public void setParameter(PreparedStatement preparedStatement, int i, CafeRegistration type,
-      JdbcType jdbcType) throws
-      SQLException {
-    preparedStatement.setInt(i, type.getCode());
+  @Override
+  public void setParameter(PreparedStatement ps, int i, CafeRegistration parameter,
+      JdbcType jdbcType) throws SQLException {
+    if (parameter == null) {
+      ps.setNull(i, jdbcType.TYPE_CODE);
+    } else {
+      ps.setInt(i, parameter.getCode());
+    }
   }
 
   @Override
-  public CafeRegistration getResult(ResultSet resultSet, String s) throws SQLException {
-    int statusCode = resultSet.getInt(s);
-    return getStatus(statusCode);
+  public CafeRegistration getResult(ResultSet rs, String columnName) throws SQLException {
+    int code = rs.getInt(columnName);
+    return getCafeRegistration(code);
   }
 
   @Override
-  public CafeRegistration getResult(ResultSet resultSet, int i) throws SQLException {
-    int statusCode = resultSet.getInt(i);
-    return getStatus(statusCode);
+  public CafeRegistration getResult(ResultSet rs, int columnIndex) throws SQLException {
+    int code = rs.getInt(columnIndex);
+    return getCafeRegistration(code);
   }
 
   @Override
-  public CafeRegistration getResult(CallableStatement callableStatement, int i)
-      throws SQLException {
-    int statusCode = callableStatement.getInt(i);
-    return getStatus(statusCode);
+  public CafeRegistration getResult(CallableStatement cs, int columnIndex) throws SQLException {
+    int code = cs.getInt(columnIndex);
+    return getCafeRegistration(code);
   }
 
-  private CafeRegistration getStatus(int statusCode) {
+  private CafeRegistration getCafeRegistration(int code) {
     try {
       CafeRegistration[] enumConstants = (CafeRegistration[]) type.getEnumConstants();
-      for (CafeRegistration status : enumConstants) {
-        if (status.getCode() == statusCode) {
-          return status;
+      for (CafeRegistration cafeRegistration : enumConstants) {
+        if (cafeRegistration.getCode() == code) {
+          return cafeRegistration;
         }
       }
       return null;
-    } catch (Exception exception) {
-      throw new TypeException("Can't make enum object '" + type + "'", exception);
+    } catch (Exception e) {
+      throw new TypeException("Can't make enum object '" + type + "'", e);
     }
   }
 }
+
