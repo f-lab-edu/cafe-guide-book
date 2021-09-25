@@ -1,14 +1,12 @@
 package com.flab.cafeguidebook.service;
 
+import com.flab.cafeguidebook.converter.CafeConverter.CafeDTOToCafeConverter;
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.dto.UpdateCafeDTO;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 @Service
 public class CafeService {
@@ -16,8 +14,11 @@ public class CafeService {
   @Autowired
   private CafeMapper cafeMapper;
 
+  @Autowired
+  private CafeDTOToCafeConverter cafeDTOToCafeConverter;
+
   public boolean addCafe(CafeDTO cafeDTO) {
-    int insertCafe = cafeMapper.insertCafe(cafeDTO);
+    int insertCafe = cafeMapper.insertCafe(cafeDTOToCafeConverter.convert(cafeDTO));
     return insertCafe == 1;
   }
 
@@ -33,20 +34,12 @@ public class CafeService {
     return cafeMapper.selectMyAllCafe(userId);
   }
 
-  public boolean validateMyCafe(Long cafeId, Long userId) throws HttpClientErrorException{
-    boolean isMyCafe = cafeMapper.isMyCafe(cafeId, userId);
-    if (!isMyCafe) {
-      throw new HttpClientErrorException(HttpStatus.UNAUTHORIZED);
-    }
-    return true;
-  }
-
   public CafeDTO getMyCafe(Long cafeId, Long userId) {
     return cafeMapper.selectMyCafe(cafeId, userId);
   }
 
-  public boolean updateCafe(UpdateCafeDTO updateCafeDTO) {
-    int updateCafe = cafeMapper.updateCafe(updateCafeDTO);
+  public boolean updateCafe(CafeDTO cafeDTO) {
+    int updateCafe = cafeMapper.updateCafe(cafeDTOToCafeConverter.convert(cafeDTO));
     return updateCafe == 1;
   }
 }

@@ -1,7 +1,7 @@
 package com.flab.cafeguidebook.mapper;
 
+import com.flab.cafeguidebook.domain.Cafe;
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.dto.UpdateCafeDTO;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface CafeMapper {
 
-  public int insertCafe(CafeDTO cafeDTO);
+  public int insertCafe(Cafe cafe);
 
   public List<CafeDTO> selectMyAllCafe(long userId);
 
@@ -20,8 +20,7 @@ public interface CafeMapper {
 
   public void deleteAllCafe();
 
-  public int updateCafe(UpdateCafeDTO updateCafeDTO);
-
+  public int updateCafe(Cafe cafe);
 
   public int updateRegistration(@Param("id") Long id,
       @Param("registration") CafeRegistration registration);

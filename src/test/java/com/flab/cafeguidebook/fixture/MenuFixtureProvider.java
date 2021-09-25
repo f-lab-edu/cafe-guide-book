@@ -1,6 +1,8 @@
 package com.flab.cafeguidebook.fixture;
 
 import com.flab.cafeguidebook.domain.Menu;
+import com.flab.cafeguidebook.enumeration.MenuGroup;
+import com.flab.cafeguidebook.enumeration.MenuStatus;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.ParameterContext;
 import org.junit.jupiter.api.extension.ParameterResolutionException;
@@ -22,6 +24,8 @@ public class MenuFixtureProvider implements ParameterResolver {
         .menuName("아메리카노")
         .menuPrice(3000)
         .menuPriority(1)
+        .menuGroup(MenuGroup.DRINK)
+        .menuStatus(MenuStatus.SALE)
         .build();
   }
 }

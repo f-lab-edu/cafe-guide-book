@@ -4,12 +4,14 @@ import static com.flab.cafeguidebook.enumeration.CafeRegistration.APPROVAL;
 import static com.flab.cafeguidebook.enumeration.CafeRegistration.DENY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
-import com.flab.cafeguidebook.dto.UpdateCafeDTO;
-import com.flab.cafeguidebook.extension.CafeDTOFisxtureListProvider;
+import com.flab.cafeguidebook.converter.CafeConverter.CafeDTOToCafeConverter;
+import com.flab.cafeguidebook.domain.Cafe;
+import com.flab.cafeguidebook.fixture.CafeDTOListFixtureProvider;
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.extension.UpdateCafeDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
+import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.junit.jupiter.api.Test;
@@ -20,19 +22,23 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith({SpringExtension.class, CafeDTOFixtureProvider.class,
-    CafeDTOFisxtureListProvider.class, UpdateCafeDTOFixtureProvider.class})
+    CafeDTOListFixtureProvider.class, CafeFixtureProvider.class})
 @SpringBootTest
 public class CafeServiceTest {
 
   @Mock
   private CafeMapper cafeMapper;
 
+  @Mock
+  private CafeDTOToCafeConverter cafeDTOToCafeConverter;
+
   @InjectMocks
   private CafeService cafeService;
 
   @Test
-  public void addCafe(CafeDTO testCafeDTO) {
-    given(cafeMapper.insertCafe(testCafeDTO)).willReturn(1);
+  public void addCafe(CafeDTO testCafeDTO, Cafe testCafe) {
+    when(cafeDTOToCafeConverter.convert(testCafeDTO)).thenReturn(testCafe);
+    given(cafeMapper.insertCafe(testCafe)).willReturn(1);
     assertThat(cafeService.addCafe(testCafeDTO)).isEqualTo(true);
   }
 
@@ -61,15 +67,6 @@ public class CafeServiceTest {
   }
 
   @Test
-  public void validateMyCafe(CafeDTO testCafeDTO) {
-    given(cafeMapper.isMyCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId()))
-        .willReturn(true);
-    assertThat(cafeService.validateMyCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId()))
-        .isEqualTo(true);
-
-  }
-
-  @Test
   public void getMyCafe(CafeDTO testCafeDTO) {
     given(cafeMapper.selectMyCafe(testCafeDTO.getCafeId(), testCafeDTO.getUserId()))
         .willReturn(testCafeDTO);
@@ -78,8 +75,9 @@ public class CafeServiceTest {
   }
 
   @Test
-  public void updateCafe(UpdateCafeDTO updateTestCafeDTO) {
-    given(cafeMapper.updateCafe(updateTestCafeDTO)).willReturn(1);
-    assertThat(cafeService.updateCafe(updateTestCafeDTO)).isEqualTo(true);
+  public void updateCafe(CafeDTO testCafeDTO, Cafe testCafe) {
+    when(cafeDTOToCafeConverter.convert(testCafeDTO)).thenReturn(testCafe);
+    given(cafeMapper.updateCafe(testCafe)).willReturn(1);
+    assertThat(cafeService.updateCafe(testCafeDTO)).isEqualTo(true);
   }
 }

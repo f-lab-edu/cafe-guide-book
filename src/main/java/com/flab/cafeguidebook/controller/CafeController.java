@@ -1,7 +1,6 @@
 package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.dto.UpdateCafeDTO;
 import com.flab.cafeguidebook.service.CafeService;
 import java.util.List;
 import javax.servlet.http.HttpSession;
@@ -72,7 +71,6 @@ public class CafeController {
   public ResponseEntity getMyCafe(@PathVariable Long cafeId,
       HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute("userId");
-    cafeService.validateMyCafe(cafeId, userId);
     CafeDTO myCafe = cafeService.getMyCafe(cafeId, userId);
     if (myCafe == null) {
       LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
@@ -83,17 +81,17 @@ public class CafeController {
   }
 
   @PatchMapping("/{cafeId}")
-  public ResponseEntity updateCafe(@PathVariable String cafeId,
-      @RequestBody final UpdateCafeDTO updateCafeDTO, HttpSession httpSession) {
+  public ResponseEntity updateCafe(@PathVariable long cafeId,
+      @RequestBody @Validated CafeDTO cafeDTO, BindingResult bindingResult,
+      HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute("userId");
-    final UpdateCafeDTO copyData = UpdateCafeDTO.copyWithId(updateCafeDTO, cafeId, userId);
-    boolean updateCafe = cafeService.updateCafe(copyData);
-    if (!updateCafe) {
-      LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}", updateCafeDTO);
+    if (bindingResult.hasErrors()) {
+      bindingResult.getAllErrors().forEach(error -> {
+        LOGGER.info("카페를 수정할 수 없습니다. userId = {}, cafeId = {}", userId, cafeId);
+      });
       return ResponseEntity.badRequest().build();
-    } else {
-      CafeDTO updatedCafe = cafeService.getMyCafe(cafeId, userId);
-      return ResponseEntity.ok(updatedCafe);
     }
+    cafeService.updateCafe(cafeDTO);
+    return ResponseEntity.ok(cafeDTO);
   }
 }
