@@ -18,7 +18,7 @@
     #{menuPrice},
     #{menuPhoto},
     (select max(menu_priority) + 1 as priority
-    from (select menu_priority from menu WHERE cafe_id = 1) all_menu),
+    from (select menu_priority from MENU WHERE cafe_id = 1) all_menu),
     #{menuInfo},
     now(),
     now(),
