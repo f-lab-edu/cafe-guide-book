@@ -1,9 +1,11 @@
 package com.flab.cafeguidebook.controller;
 
+import com.flab.cafeguidebook.domain.Option;
 import com.flab.cafeguidebook.dto.MenuDTO;
 import com.flab.cafeguidebook.dto.OptionDTO;
 import com.flab.cafeguidebook.service.MenuService;
 import com.flab.cafeguidebook.service.OptionService;
+import java.util.List;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -89,6 +92,28 @@ public class MenuController {
     }
     optionService.updateOption(optionDTO);
     return ResponseEntity.ok(optionDTO);
+  }
+
+  @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getAllMenu(@PathVariable long cafeId) {
+    List<MenuDTO> AllMenu = menuService.getAllMenu(cafeId);
+    if (AllMenu.size() > 0) {
+      return ResponseEntity.ok().body(AllMenu);
+    } else {
+      LOGGER.info("해당 카페의 전체 메뉴를 조회할 수 없습니다. cafeId = {}", cafeId);
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @GetMapping(value = "/{menuId}/options", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getAllOption(@PathVariable long cafeId, @PathVariable long menuId) {
+    List<OptionDTO> AllOption = optionService.getAllOption(menuId);
+    if (AllOption.size() > 0) {
+      return ResponseEntity.ok().body(AllOption);
+    } else {
+      LOGGER.info("해당 메뉴의 전체 옵션을 조회할 수 없습니다. cafeId = {}, menuId = {}", cafeId, menuId);
+      return ResponseEntity.badRequest().build();
+    }
   }
 
 }

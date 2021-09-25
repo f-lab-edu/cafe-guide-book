@@ -20,4 +20,9 @@
     <if test="optionStatus != null">option_status = #{optionStatus}</if>
     WHERE option_id = #{optionId}
   </update>
+  <select id="selectAllOption" parameterType="long" resultType="com.flab.cafeguidebook.dto.OptionDTO">
+    SELECT *
+    FROM menuoption
+    WHERE menu_id = #{menuId}
+  </select>
 </mapper>

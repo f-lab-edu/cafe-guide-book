@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -8,8 +9,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.dto.MenuDTO;
 import com.flab.cafeguidebook.dto.OptionDTO;
+import com.flab.cafeguidebook.fixture.MenuDTOListFixtureProvider;
 import com.flab.cafeguidebook.fixture.MenuDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.OptionDTOFixtureProvider;
+import com.flab.cafeguidebook.fixture.OptionDTOListFixtureProvider;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +25,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ExtendWith({SpringExtension.class, MenuDTOFixtureProvider.class, OptionDTOFixtureProvider.class})
+@ExtendWith({SpringExtension.class, MenuDTOFixtureProvider.class, OptionDTOFixtureProvider.class,
+    MenuDTOListFixtureProvider.class, OptionDTOListFixtureProvider.class})
 @SpringBootTest
 public class MenuControllerTest {
 
@@ -125,5 +130,38 @@ public class MenuControllerTest {
         .andExpect(jsonPath("optionName").value(testOptionDTO.getOptionName()))
         .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()))
         .andExpect(jsonPath("optionStatus").value(optionStatusEnum));
+  }
+
+  @Test
+  public void getAllMenu(List<MenuDTO> testMenuDTOList) throws Exception {
+
+    for (int i = 0; i < testMenuDTOList.size(); i++) {
+      addMenu(testMenuDTOList.get(i));
+    }
+
+    mockMvc.perform(get("/owner/cafe/" + testMenuDTOList.get(0).getCafeId() + "/menu")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(testMenuDTOList.size())));
+  }
+
+  @Test
+  public void getAllOption(MenuDTO testMenuDTO, List<OptionDTO> testOptionDTOList) throws Exception {
+
+    addMenu(testMenuDTO);
+
+    for (int i = 0; i < testOptionDTOList.size(); i++) {
+      addOption(testOptionDTOList.get(i));
+    }
+
+    mockMvc.perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0).getMenuId() + "/options/")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(testOptionDTOList.size())));
+
   }
 }
