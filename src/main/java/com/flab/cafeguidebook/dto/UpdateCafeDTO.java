@@ -83,8 +83,8 @@ public class UpdateCafeDTO {
         return new UpdateCafeDTO.Builder();
     }
 
-    public static UpdateCafeDTO copyWithId(UpdateCafeDTO updateCafeDTO, String cafeId,
-        String userId) {
+    public static UpdateCafeDTO copyWithId(UpdateCafeDTO updateCafeDTO, Long cafeId,
+        Long userId) {
         UpdateCafeDTO copyData = new UpdateCafeDTO();
         copyData.setUserId(userId);
         copyData.setCafeId(cafeId);

@@ -41,7 +41,6 @@
             #{cafeRegistration})
   </insert>
 
-<<<<<<< HEAD
   <select id="selectMyAllCafe" parameterType="String"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
     SELECT *
@@ -85,11 +84,11 @@
     update_date = now()
     WHERE cafe_id = #{cafeId}
   </update>
-=======
+
   <update id="updateRegistration">
         UPDATE CAFE SET cafe_registration = #{cafeRegistration}
         WHERE cafe_id = #{cafeId}
     </update>
->>>>>>> develop
+
 </mapper>
 

@@ -32,93 +32,6 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 public class CafeControllerTest {
 
-<<<<<<< HEAD
-    private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper objectMapper;
-
-    @Autowired
-    private WebApplicationContext webApplicationContext;
-
-    @Autowired
-    private CafeMapper cafeMapper;
-
-    @BeforeEach
-    public void init() {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
-
-    @BeforeEach
-    public void deleteAllCafe() {
-        cafeMapper.deleteAllCafe();
-    }
-
-    @Test
-    public void addCafe(Cafe testCafe) throws Exception {
-
-        mockMvc.perform(post("/owner/cafe/")
-            .sessionAttr("userId", testCafe.getUserId())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(objectMapper.writeValueAsString(testCafe))
-            .accept(MediaType.APPLICATION_JSON_UTF8))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("userId").value(testCafe.getUserId()))
-            .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
-            .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
-            .andExpect(jsonPath("tel").value(testCafe.getTel()));
-    }
-
-    @Test
-    public void getMyAllCafe(List<Cafe> testCafeList) throws Exception {
-        for (int i = 0; i < testCafeList.size(); i++) {
-            addCafe(testCafeList.get(i));
-        }
-
-        mockMvc.perform(get("/owner/cafe/")
-            .sessionAttr("userId", testCafeList.get(0).getUserId())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .accept(MediaType.APPLICATION_JSON_UTF8))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$", hasSize(2)));
-    }
-
-    @Test
-    public void getMyCafe(Cafe testCafe) throws Exception {
-        addCafe(testCafe);
-
-        mockMvc.perform(get("/owner/cafe/testCafeId1")
-            .sessionAttr("userId", testCafe.getUserId())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .accept(MediaType.APPLICATION_JSON_UTF8))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("userId").value(testCafe.getUserId()))
-            .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
-            .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
-            .andExpect(jsonPath("tel").value(testCafe.getTel()));
-    }
-
-    @Test
-    public void updateCafe(Cafe testCafe, UpdateCafe updateTestCafe) throws Exception {
-        addCafe(testCafe);
-
-        mockMvc.perform(patch("/owner/cafe/testCafeId1")
-            .sessionAttr("userId", updateTestCafe.getUserId())
-            .contentType(MediaType.APPLICATION_JSON_UTF8)
-            .content(objectMapper.writeValueAsString(updateTestCafe))
-            .accept(MediaType.APPLICATION_JSON_UTF8))
-            .andDo(print())
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("userId").value(updateTestCafe.getUserId()))
-            .andExpect(jsonPath("cafeId").value(updateTestCafe.getCafeId()))
-            .andExpect(jsonPath("cafeName").value(updateTestCafe.getCafeName()))
-            .andExpect(jsonPath("tel").value(testCafe.getTel()));
-    }
-
-=======
   private MockMvc mockMvc;
 
   @Autowired
@@ -127,9 +40,17 @@ public class CafeControllerTest {
   @Autowired
   private WebApplicationContext webApplicationContext;
 
+  @Autowired
+  private CafeMapper cafeMapper;
+
   @BeforeEach
   public void init() {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+  }
+
+  @BeforeEach
+  public void deleteAllCafe() {
+    cafeMapper.deleteAllCafe();
   }
 
   @Test
@@ -147,5 +68,53 @@ public class CafeControllerTest {
         .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
         .andExpect(jsonPath("tel").value(testCafe.getTel()));
   }
->>>>>>> develop
+
+  @Test
+  public void getMyAllCafe(List<Cafe> testCafeList) throws Exception {
+    for (int i = 0; i < testCafeList.size(); i++) {
+      addCafe(testCafeList.get(i));
+    }
+
+    mockMvc.perform(get("/owner/cafe/")
+        .sessionAttr("userId", testCafeList.get(0).getUserId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(2)));
+  }
+
+  @Test
+  public void getMyCafe(Cafe testCafe) throws Exception {
+    addCafe(testCafe);
+
+    mockMvc.perform(get("/owner/cafe/testCafeId1")
+        .sessionAttr("userId", testCafe.getUserId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("userId").value(testCafe.getUserId()))
+        .andExpect(jsonPath("cafeId").value(testCafe.getCafeId()))
+        .andExpect(jsonPath("cafeName").value(testCafe.getCafeName()))
+        .andExpect(jsonPath("tel").value(testCafe.getTel()));
+  }
+
+  @Test
+  public void updateCafe(Cafe testCafe, UpdateCafe updateTestCafe) throws Exception {
+    addCafe(testCafe);
+
+    mockMvc.perform(patch("/owner/cafe/testCafeId1")
+        .sessionAttr("userId", updateTestCafe.getUserId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(updateTestCafe))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("userId").value(updateTestCafe.getUserId()))
+        .andExpect(jsonPath("cafeId").value(updateTestCafe.getCafeId()))
+        .andExpect(jsonPath("cafeName").value(updateTestCafe.getCafeName()))
+        .andExpect(jsonPath("tel").value(testCafe.getTel()));
+  }
+
 }

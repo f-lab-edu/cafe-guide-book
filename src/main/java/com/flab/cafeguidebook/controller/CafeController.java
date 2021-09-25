@@ -12,10 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.GetMapping;
-=======
->>>>>>> develop
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -54,51 +51,49 @@ public class CafeController {
     cafeService.approveRegistration(cafeId);
   }
 
-<<<<<<< HEAD
-    @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getMyAllCafe(HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("userId");
-        List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
-        if (myAllCafe.size() > 0) {
-            return ResponseEntity.ok().body(myAllCafe);
-        } else {
-            LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
-            return ResponseEntity.badRequest().build();
-        }
-    }
-
-    @GetMapping(value = "/{cafeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity getMyCafe(@PathVariable String cafeId,
-        HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("userId");
-        cafeService.validateMyCafe(cafeId, userId);
-        CafeDTO myCafe = cafeService.getMyCafe(cafeId, userId);
-        if (myCafe == null) {
-            LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
-            return ResponseEntity.badRequest().build();
-        } else {
-            return ResponseEntity.ok(myCafe);
-        }
-    }
-
-    @PatchMapping("/{cafeId}")
-    public ResponseEntity updateCafe(@PathVariable String cafeId,
-        @RequestBody final UpdateCafeDTO updateCafeDTO, HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("userId");
-        final UpdateCafeDTO copyData = UpdateCafeDTO.copyWithId(updateCafeDTO, cafeId, userId);
-        boolean updateCafe = cafeService.updateCafe(copyData);
-        if (!updateCafe) {
-            LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}", updateCafeDTO);
-            return ResponseEntity.badRequest().build();
-        } else {
-            CafeDTO updatedCafe = cafeService.getMyCafe(cafeId, userId);
-            return ResponseEntity.ok(updatedCafe);
-        }
-    }
-=======
   @PatchMapping("/registeration/deny/{cafeId}")
   public void denyRegistration(@PathVariable Long cafeId) {
     cafeService.denyRegistration(cafeId);
   }
->>>>>>> develop
+
+  @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getMyAllCafe(HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute("userId");
+    List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
+    if (myAllCafe.size() > 0) {
+      return ResponseEntity.ok().body(myAllCafe);
+    } else {
+      LOGGER.info("사장님의 카페를 조회할 수 없습니다.");
+      return ResponseEntity.badRequest().build();
+    }
+  }
+
+  @GetMapping(value = "/{cafeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity getMyCafe(@PathVariable Long cafeId,
+      HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute("userId");
+    cafeService.validateMyCafe(cafeId, userId);
+    CafeDTO myCafe = cafeService.getMyCafe(cafeId, userId);
+    if (myCafe == null) {
+      LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok(myCafe);
+    }
+  }
+
+  @PatchMapping("/{cafeId}")
+  public ResponseEntity updateCafe(@PathVariable String cafeId,
+      @RequestBody final UpdateCafeDTO updateCafeDTO, HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute("userId");
+    final UpdateCafeDTO copyData = UpdateCafeDTO.copyWithId(updateCafeDTO, cafeId, userId);
+    boolean updateCafe = cafeService.updateCafe(copyData);
+    if (!updateCafe) {
+      LOGGER.info("카페를 수정할 수 없습니다. updateCafeDTO ={}", updateCafeDTO);
+      return ResponseEntity.badRequest().build();
+    } else {
+      CafeDTO updatedCafe = cafeService.getMyCafe(cafeId, userId);
+      return ResponseEntity.ok(updatedCafe);
+    }
+  }
 }

@@ -3,10 +3,6 @@ package com.flab.cafeguidebook.domain;
 import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import java.time.LocalDateTime;
-<<<<<<< HEAD
-=======
-import org.checkerframework.checker.nullness.qual.NonNull;
->>>>>>> develop
 
 public class Cafe {
 
@@ -374,149 +370,12 @@ public class Cafe {
       return this;
     }
 
-<<<<<<< HEAD
-    public static class Builder {
-
-        private String userId;
-        private String cafeId;
-        private String hashTageId;
-        private String cafeName;
-        private String bizNumber;
-        private String tel;
-        private String addressCode;
-        private String addressDetail;
-        private String operatingTime;
-        private String cafeInfo;
-        private String socialMedia;
-        private LocalDateTime registrationDate;
-        private LocalDateTime updateDate;
-        private Boolean wifi;
-        private Boolean reservation;
-        private Boolean parkingSpace;
-        private Boolean noKidsZone;
-        private Boolean withPet;
-        private CafeCondition cafeCondition;
-        private CafeRegistration cafeRegistration;
-
-        public Cafe.Builder Builder() {
-            return this;
-        }
-
-        public Cafe.Builder userId(String userId) {
-            this.userId = userId;
-            return this;
-        }
-
-        public Cafe.Builder cafeId(String cafeId) {
-            this.cafeId = cafeId;
-            return this;
-        }
-
-        public Cafe.Builder hashTageId(final String hashTageId) {
-            this.hashTageId = hashTageId;
-            return this;
-        }
-
-        public Cafe.Builder cafeName(final String cafeName) {
-            this.cafeName = cafeName;
-            return this;
-        }
-
-        public Cafe.Builder bizNumber(final String bizNumber) {
-            this.bizNumber = bizNumber;
-            return this;
-        }
-
-        public Cafe.Builder tel(final String tel) {
-            this.tel = tel;
-            return this;
-        }
-
-        public Cafe.Builder addressCode(final String addressCode) {
-            this.addressCode = addressCode;
-            return this;
-        }
-
-        public Cafe.Builder addressDetail(final String addressDetail) {
-            this.addressDetail = addressDetail;
-            return this;
-        }
-
-        public Cafe.Builder operatingTime(final String operatingTime) {
-            this.operatingTime = operatingTime;
-            return this;
-        }
-
-        public Cafe.Builder cafeInfo(final String cafeInfo) {
-            this.cafeInfo = cafeInfo;
-            return this;
-        }
-
-        public Cafe.Builder socialMedia(final String socialMedia) {
-            this.socialMedia = socialMedia;
-            return this;
-        }
-
-        public Cafe.Builder registrationDate(final LocalDateTime registrationDate) {
-            this.registrationDate = registrationDate;
-            return this;
-        }
-
-        public Cafe.Builder updateDate(final LocalDateTime updateDate) {
-            this.updateDate = updateDate;
-            return this;
-        }
-
-        public Cafe.Builder wifi(final Boolean wifi) {
-            this.wifi = wifi;
-            return this;
-        }
-
-        public Cafe.Builder reservation(final Boolean reservation) {
-            this.reservation = reservation;
-            return this;
-        }
-
-        public Cafe.Builder parkingSpace(final Boolean parkingSpace) {
-            this.parkingSpace = parkingSpace;
-            return this;
-        }
-
-        public Cafe.Builder noKidsZone(final Boolean noKidsZone) {
-            this.noKidsZone = noKidsZone;
-            return this;
-        }
-
-        public Cafe.Builder withPet(final Boolean withPet) {
-            this.withPet = withPet;
-            return this;
-        }
-
-        public Cafe.Builder cafeCondition(final CafeCondition cafeCondition) {
-            this.cafeCondition = cafeCondition;
-            return this;
-        }
-
-        public Cafe.Builder cafeRegistration(final CafeRegistration cafeRegistration) {
-            this.cafeRegistration = cafeRegistration;
-            return this;
-        }
-
-        public Cafe build() {
-            return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName,
-                this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
-                this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
-                this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,
-                this.cafeCondition, this.cafeRegistration);
-        }
-=======
     public Cafe build() {
       return new Cafe(this.userId, this.cafeId, this.hashTageId, this.cafeName,
           this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
           this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
           this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,
           this.cafeCondition, this.cafeRegistration);
->>>>>>> develop
     }
   }
 }
