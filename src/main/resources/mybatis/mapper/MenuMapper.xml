@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.flab.cafeguidebook.mapper.MenuMapper">
+  <insert id="insertMenu" parameterType="com.flab.cafeguidebook.dto.MenuDTO">
+    INSERT INTO MENU(cafe_id,
+    menu_name,
+    menu_price,
+    menu_photo,
+    menu_priority,
+    menu_info,
+    create_menu_date,
+    update_menu_date,
+    menu_group,
+    menu_status)
+    VALUES (#{cafeId},
+    #{menuName},
+    #{menuPrice},
+    #{menuPhoto},
+    (select max(menu_priority) + 1 as priority
+    from (select menu_priority from MENU WHERE cafe_id = 1) all_menu),
+    #{menuInfo},
+    now(),
+    now(),
+    #{menuGroup},
+    #{menuStatus})
+    <selectKey resultType="long" keyProperty="menuId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+  </insert>
+  <update id="updateMenu" parameterType="com.flab.cafeguidebook.dto.MenuDTO">
+    UPDATE MENU
+    SET
+    <if test="menuName != null">menu_name = #{menuName},</if>
+    <if test="menuPrice != null">menu_price = #{menuPrice},</if>
+    <if test="menuPhoto != null">menu_photo = #{menuPhoto},</if>
+    <if test="menuPriority != null">menu_priority = #{menuPriority},</if>
+    <if test="menuInfo != null">menu_info = #{menuInfo},</if>
+    <if test="menuStatus != null">menu_status = #{menuStatus},</if>
+    update_menu_date = now()
+    WHERE menu_id = #{menuId}
+  </update>
+</mapper>

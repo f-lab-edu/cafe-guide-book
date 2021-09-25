@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.cafeguidebook.mapper.ReviewMapper">
+  <insert id="insertReview">
+    INSERT INTO review (user_id, cafe_id, content, score)
+    VALUES (#{reviewDTO.userId}, #{cafeId}, #{reviewDTO.content}, #{reviewDTO.score})
+  </insert>
+
+  <select id="selectReviews" parameterType="Long"
+    resultType="com.flab.cafeguidebook.dto.ReviewDTO">
+    SELECT *
+    FROM review
+    WHERE user_id = #{userId}
+  </select>
+
+  <select id="selectCafesReviews" parameterType="Long"
+    resultType="com.flab.cafeguidebook.dto.ReviewDTO">
+    SELECT *
+    FROM review
+    WHERE cafe_id = #{cafeId}
+  </select>
+</mapper>
