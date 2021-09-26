@@ -76,4 +76,6 @@ jar {
             it.isDirectory() ? it : zipTree(it)
         }
     }
+
+    exclude "**/Log4j2Plugins.dat"
 }

@@ -5,7 +5,7 @@ files:
     destination: /home/ec2-user/cafeguidebook/
 file_exists_behavior: OVERWRITE
 permissions:
-  - object: /home/ec2-user/cafeguidebook/
+  - object: /home/ec2-user/cafeguidebook
     pattern: "*"
     owner: ec2-user
     group: ec2-user
