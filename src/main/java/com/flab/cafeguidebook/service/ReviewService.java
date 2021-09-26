@@ -32,4 +32,9 @@ public class ReviewService {
   public List<ReviewDTO> getCafesReviews(Long cafeId) {
     return reviewMapper.selectCafesReviews(cafeId);
   }
+
+  public boolean removeReview(Long userId, Long cafeId) {
+    int deleteReviewResult = reviewMapper.deleteReview(userId, cafeId);
+    return deleteReviewResult == 1;
+  }
 }

@@ -1,6 +1,5 @@
 package com.flab.cafeguidebook.service;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -41,6 +40,9 @@ class UserServiceTest {
   @Test
   @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
   public void signUpTestSuccess(UserDTO user) {
+    when(userMapper.selectUserByEmail(user.getEmail())).thenReturn(user);
+    when(userMapper.insertUser(user)).thenReturn(1);
+
     String originalPassword = user.getPassword();
     boolean isSuccess = userService.signUp(user);
 
@@ -49,15 +51,6 @@ class UserServiceTest {
         userMapper.selectUserByEmail(user.getEmail()).getPassword()
     );
     assertTrue(isSuccess);
-  }
-
-  @Test
-  @DisplayName("이메일, 비밀번호, 이름, 휴대폰번호, 주소, 유저타입이 입력된 경우 회원가입 성공")
-  public void signInTestSuccess(UserDTO user) {
-    userService.signIn(user.getEmail(), user.getPassword());
-
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isNotNull();
-    assertThat(mockHttpSession.getAttribute(SessionKeys.USER_ID)).isEqualTo(user.getEmail());
   }
 
   @Test

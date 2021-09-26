@@ -3,7 +3,6 @@ package com.flab.cafeguidebook.controller;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentRequest;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentResponse;
 import static org.hamcrest.Matchers.hasSize;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -70,10 +69,13 @@ public class HeartControllerTest {
   }
 
   private void addHeart(UserDTO user, CafeDTO cafe) throws Exception {
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, user.getId());
     MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
     map.add("userId", user.getId().toString());
 
     mockMvc.perform(post("/cafes/" + cafe.getCafeId() + "/hearts")
+        .session(session)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8)
         .params(map))
@@ -81,15 +83,11 @@ public class HeartControllerTest {
   }
 
   private void removeHeart(UserDTO user, CafeDTO cafe) throws Exception {
-    MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
-    map.add("userId", user.getId().toString());
-    addHeart(user, cafe);
-
-    mockMvc.perform(delete("/heart/" + cafe.getCafeId())
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .accept(MediaType.APPLICATION_JSON_UTF8)
-        .params(map))
-        .andDo(print());
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, user.getId());
+    mockMvc
+        .perform(delete("/cafes/" + cafe.getCafeId() + "/hearts")
+            .session(session));
   }
 
   @Test
@@ -97,8 +95,9 @@ public class HeartControllerTest {
     MockHttpSession session = new MockHttpSession();
     session.setAttribute(SessionKeys.USER_ID, user.getId());
 
-    mockMvc.perform(RestDocumentationRequestBuilders.post("cafes/{cafeId}/hearts", cafe.getCafeId())
-        .session(session))
+    mockMvc
+        .perform(RestDocumentationRequestBuilders.post("/cafes/{cafeId}/hearts", cafe.getCafeId())
+            .session(session))
         .andDo(print())
         .andDo(document("add-heart",
             getDocumentRequest(),
@@ -107,8 +106,6 @@ public class HeartControllerTest {
                 parameterWithName("cafeId").description("카페의 ID")
             )
         ));
-
-    assertNotNull(heartService.getHeart(user.getId(), cafe.getCafeId()));
   }
 
   @Test
@@ -147,22 +144,28 @@ public class HeartControllerTest {
 
   @Test
   public void getUsersHeartsSuccess(UserDTO user, CafeDTO cafe) throws Exception {
-    addHeart(user, cafe);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, user.getId());
     addHeart(user, cafe);
     addHeart(user, cafe);
     addHeart(user, cafe);
 
-    mockMvc.perform(get("/users/" + user.getId() + "hearts")
+    mockMvc.perform(get("/users/" + user.getId() + "/hearts")
+        .session(session)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
-        .andExpect(jsonPath("$", hasSize(4)));
+        .andExpect(jsonPath("$", hasSize(3)));
   }
 
   @Test
   public void getUsersHeartsSuccessWithNull(UserDTO user, CafeDTO cafe) throws Exception {
-    mockMvc.perform(get("/users/" + user.getId() + "hearts")
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, user.getId());
+
+    mockMvc.perform(get("/users/" + user.getId() + "/hearts")
+        .session(session)
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
