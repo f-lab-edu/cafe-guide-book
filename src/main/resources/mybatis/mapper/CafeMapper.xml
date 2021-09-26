@@ -44,14 +44,14 @@
   <select id="selectMyAllCafe" parameterType="long"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
     SELECT *
-    FROM cafe
+    FROM CAFE
     WHERE user_id = #{userId}
   </select>
 
   <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
     SELECT *
-    FROM cafe
+    FROM CAFE
     WHERE cafe_id = #{cafeId}
       AND user_id = #{userId}
   </select>
@@ -62,7 +62,7 @@
   </delete>
 
   <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
-    UPDATE cafe
+    UPDATE CAFE
     SET
     <if test="cafeName != null">cafe_name = #{cafeName},</if>
     <if test="tel != null">tel = #{tel},</if>
