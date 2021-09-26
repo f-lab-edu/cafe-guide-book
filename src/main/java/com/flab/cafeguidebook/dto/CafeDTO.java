@@ -1,9 +1,5 @@
 package com.flab.cafeguidebook.dto;
 
-import com.flab.cafeguidebook.enumeration.CafeCondition;
-import com.flab.cafeguidebook.enumeration.CafeRegistration;
-import java.time.LocalDateTime;
-import javax.validation.constraints.NotBlank;
 import org.springframework.lang.NonNull;
 
 public class CafeDTO {
@@ -13,8 +9,6 @@ public class CafeDTO {
 
   @NonNull
   private Long cafeId;
-
-  private String hashTageId;
 
   @NonNull
   private String cafeName;
@@ -33,10 +27,6 @@ public class CafeDTO {
 
   private String socialMedia;
 
-  private LocalDateTime registrationDate;
-
-  private LocalDateTime updateDate;
-
   private Boolean wifi;
 
   private Boolean reservation;
@@ -47,17 +37,12 @@ public class CafeDTO {
 
   private Boolean withPet;
 
-  private CafeCondition cafeCondition;
-
-  private CafeRegistration cafeRegistration;
-
   public CafeDTO() {
   }
 
   public CafeDTO(Builder builder) {
     this.userId = builder.userId;
     this.cafeId = builder.cafeId;
-    this.hashTageId = builder.hashTageId;
     this.cafeName = builder.cafeName;
     this.bizNumber = builder.bizNumber;
     this.tel = builder.tel;
@@ -66,27 +51,20 @@ public class CafeDTO {
     this.operatingTime = builder.operatingTime;
     this.cafeInfo = builder.cafeInfo;
     this.socialMedia = builder.socialMedia;
-    this.registrationDate = builder.registrationDate;
-    this.updateDate = builder.updateDate;
     this.wifi = builder.wifi;
     this.reservation = builder.reservation;
     this.parkingSpace = builder.parkingSpace;
     this.noKidsZone = builder.noKidsZone;
     this.withPet = builder.withPet;
-    this.cafeCondition = builder.cafeCondition;
-    this.cafeRegistration = builder.cafeRegistration;
   }
 
-  public CafeDTO(@NonNull Long userId, @NonNull Long cafeId, String hashTageId,
+  public CafeDTO(@NonNull Long userId, @NonNull Long cafeId,
       @NonNull String cafeName, String bizNumber, String tel, String addressCode,
       String addressDetail, String operatingTime, String cafeInfo, String socialMedia,
-      LocalDateTime registrationDate, LocalDateTime updateDate, Boolean wifi,
-      Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet,
-      CafeCondition cafeCondition,
-      CafeRegistration cafeRegistration) {
+      Boolean wifi,
+      Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet) {
     this.userId = userId;
     this.cafeId = cafeId;
-    this.hashTageId = hashTageId;
     this.cafeName = cafeName;
     this.bizNumber = bizNumber;
     this.tel = tel;
@@ -95,15 +73,11 @@ public class CafeDTO {
     this.operatingTime = operatingTime;
     this.cafeInfo = cafeInfo;
     this.socialMedia = socialMedia;
-    this.registrationDate = registrationDate;
-    this.updateDate = updateDate;
     this.wifi = wifi;
     this.reservation = reservation;
     this.parkingSpace = parkingSpace;
     this.noKidsZone = noKidsZone;
     this.withPet = withPet;
-    this.cafeCondition = cafeCondition;
-    this.cafeRegistration = cafeRegistration;
   }
 
   public static Builder builder() {
@@ -126,14 +100,6 @@ public class CafeDTO {
 
   public void setCafeId(@NonNull Long cafeId) {
     this.cafeId = cafeId;
-  }
-
-  public String getHashTageId() {
-    return hashTageId;
-  }
-
-  public void setHashTageId(String hashTageId) {
-    this.hashTageId = hashTageId;
   }
 
   @NonNull
@@ -201,22 +167,6 @@ public class CafeDTO {
     this.socialMedia = socialMedia;
   }
 
-  public LocalDateTime getRegistrationDate() {
-    return registrationDate;
-  }
-
-  public void setRegistrationDate(LocalDateTime registrationDate) {
-    this.registrationDate = registrationDate;
-  }
-
-  public LocalDateTime getUpdateDate() {
-    return updateDate;
-  }
-
-  public void setUpdateDate(LocalDateTime updateDate) {
-    this.updateDate = updateDate;
-  }
-
   public Boolean getWifi() {
     return wifi;
   }
@@ -257,27 +207,11 @@ public class CafeDTO {
     this.withPet = withPet;
   }
 
-  public CafeCondition getCafeCondition() {
-    return cafeCondition;
-  }
-
-  public void setCafeCondition(CafeCondition cafeCondition) {
-    this.cafeCondition = cafeCondition;
-  }
-
-  public CafeRegistration getCafeRegistration() {
-    return cafeRegistration;
-  }
-
-  public void setCafeRegistration(CafeRegistration cafeRegistration) {
-    this.cafeRegistration = cafeRegistration;
-  }
 
   public static class Builder {
 
     private Long userId;
     private Long cafeId;
-    private String hashTageId;
     private String cafeName;
     private String bizNumber;
     private String tel;
@@ -286,15 +220,11 @@ public class CafeDTO {
     private String operatingTime;
     private String cafeInfo;
     private String socialMedia;
-    private LocalDateTime registrationDate;
-    private LocalDateTime updateDate;
     private Boolean wifi;
     private Boolean reservation;
     private Boolean parkingSpace;
     private Boolean noKidsZone;
     private Boolean withPet;
-    private CafeCondition cafeCondition;
-    private CafeRegistration cafeRegistration;
 
     public Builder Builder() {
       return this;
@@ -307,11 +237,6 @@ public class CafeDTO {
 
     public CafeDTO.Builder cafeId(@NonNull final Long cafeId) {
       this.cafeId = cafeId;
-      return this;
-    }
-
-    public CafeDTO.Builder hashTageId(final String hashTageId) {
-      this.hashTageId = hashTageId;
       return this;
     }
 
@@ -355,16 +280,6 @@ public class CafeDTO {
       return this;
     }
 
-    public CafeDTO.Builder registrationDate(final LocalDateTime registrationDate) {
-      this.registrationDate = registrationDate;
-      return this;
-    }
-
-    public CafeDTO.Builder updateDate(final LocalDateTime updateDate) {
-      this.updateDate = updateDate;
-      return this;
-    }
-
     public CafeDTO.Builder wifi(final Boolean wifi) {
       this.wifi = wifi;
       return this;
@@ -390,22 +305,11 @@ public class CafeDTO {
       return this;
     }
 
-    public CafeDTO.Builder cafeCondition(final CafeCondition cafeCondition) {
-      this.cafeCondition = cafeCondition;
-      return this;
-    }
-
-    public CafeDTO.Builder cafeRegistration(final CafeRegistration cafeRegistration) {
-      this.cafeRegistration = cafeRegistration;
-      return this;
-    }
-
     public CafeDTO build() {
-      return new CafeDTO(this.userId, this.cafeId, this.hashTageId, this.cafeName,
+      return new CafeDTO(this.userId, this.cafeId, this.cafeName,
           this.bizNumber, this.tel, this.addressCode, this.addressDetail, this.operatingTime,
-          this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
-          this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,
-          this.cafeCondition, this.cafeRegistration);
+          this.cafeInfo, this.socialMedia, this.wifi,
+          this.reservation, this.parkingSpace, this.noKidsZone, this.withPet);
     }
   }
 }

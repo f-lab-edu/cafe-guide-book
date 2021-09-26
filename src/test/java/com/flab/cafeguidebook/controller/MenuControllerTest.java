@@ -41,6 +41,9 @@ public class MenuControllerTest {
   @Test
   public void addMenu(MenuDTO testMenuDTO) throws Exception {
 
+    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+
     mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testMenuDTO))
@@ -49,7 +52,9 @@ public class MenuControllerTest {
         .andExpect(status().isOk())
         .andExpect(jsonPath("cafeId").value(testMenuDTO.getCafeId()))
         .andExpect(jsonPath("menuName").value(testMenuDTO.getMenuName()))
-        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()));
+        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()))
+        .andExpect(jsonPath("menuGroup").value(menuGroupEnum))
+        .andExpect(jsonPath("menuStatus").value(menuStatusEnum));
   }
 
   @Test
@@ -57,15 +62,18 @@ public class MenuControllerTest {
 
     final long CAFEID = 1;
 
+    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+
     mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/")
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(testOptionDTO))
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(objectMapper.writeValueAsString(testOptionDTO))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("optionName").value(testOptionDTO.getOptionName()))
         .andExpect(jsonPath("menuId").value(testOptionDTO.getMenuId()))
-        .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()));
+        .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()))
+        .andExpect(jsonPath("optionStatus").value(optionStatusEnum));
   }
 
   @Test
@@ -74,6 +82,9 @@ public class MenuControllerTest {
     final long MENUID = 1;
 
     testMenuDTO.setMenuId(MENUID);
+
+    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
     mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -84,7 +95,9 @@ public class MenuControllerTest {
         .andExpect(jsonPath("menuId").value(testMenuDTO.getMenuId()))
         .andExpect(jsonPath("cafeId").value(testMenuDTO.getCafeId()))
         .andExpect(jsonPath("menuName").value(testMenuDTO.getMenuName()))
-        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()));
+        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()))
+        .andExpect(jsonPath("menuGroup").value(menuGroupEnum))
+        .andExpect(jsonPath("menuStatus").value(menuStatusEnum));
   }
 
   @Test
@@ -99,7 +112,10 @@ public class MenuControllerTest {
     testOptionDTO.setMenuId(MENUID);
     testOptionDTO.setOptionId(OPTIONID);
 
-    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO.getOptionId())
+    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+
+    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
+            .getOptionId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testOptionDTO))
         .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -108,7 +124,6 @@ public class MenuControllerTest {
         .andExpect(jsonPath("optionId").value(testOptionDTO.getOptionId()))
         .andExpect(jsonPath("optionName").value(testOptionDTO.getOptionName()))
         .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()))
-        .andExpect(jsonPath("optionStatus").value(testOptionDTO.getOptionStatus()));
-
+        .andExpect(jsonPath("optionStatus").value(optionStatusEnum));
   }
 }

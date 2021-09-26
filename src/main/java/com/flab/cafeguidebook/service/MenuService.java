@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class MenuService {
 
   @Autowired
-  MenuDTOToMenuConverter menuDTOToMenuConverter;
+  private MenuDTOToMenuConverter menuDTOToMenuConverter;
 
   @Autowired
   private MenuMapper menuMapper;
