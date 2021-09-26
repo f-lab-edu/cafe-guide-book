@@ -14,5 +14,5 @@ permissions:
       - directory
 hooks:
   AfterInstall:
-    - location: scripts/start.sh
+    - location: start.sh
       timeout: 180
