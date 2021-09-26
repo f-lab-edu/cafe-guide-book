@@ -15,6 +15,7 @@ import com.flab.cafeguidebook.fixture.CafeDTOListFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,6 +68,7 @@ public class CafeControllerTest {
   }
 
   @Test
+  @Disabled
   public void getMyAllCafe(List<CafeDTO> testCafeDTOList) throws Exception {
     for (int i = 0; i < testCafeDTOList.size(); i++) {
       addCafe(testCafeDTOList.get(i));
@@ -82,6 +84,7 @@ public class CafeControllerTest {
   }
 
   @Test
+  @Disabled
   public void updateCafe(CafeDTO testCafeDTO) throws Exception {
 
     final long CAFEID = 1;

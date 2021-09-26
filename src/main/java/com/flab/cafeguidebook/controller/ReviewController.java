@@ -1,8 +1,11 @@
 package com.flab.cafeguidebook.controller;
 
+import com.flab.cafeguidebook.annotation.SignInCheck;
 import com.flab.cafeguidebook.dto.ReviewDTO;
 import com.flab.cafeguidebook.service.ReviewService;
+import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
+import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -51,5 +55,12 @@ public class ReviewController {
   @GetMapping(value = "/cafes/{cafeId}/reviews", produces = MediaType.APPLICATION_JSON_VALUE)
   public List<ReviewDTO> getCafesReviews(@PathVariable Long cafeId) {
     return reviewService.getCafesReviews(cafeId);
+  }
+
+  @SignInCheck
+  @DeleteMapping("/cafes/{cafeId}/reviews/{reviewId}")
+  public void removeCafesReviews(@PathVariable Long cafeId, HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    reviewService.removeReview(userId, cafeId);
   }
 }

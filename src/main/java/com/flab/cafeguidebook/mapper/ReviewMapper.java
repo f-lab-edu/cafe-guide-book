@@ -13,7 +13,8 @@ public interface ReviewMapper {
 
   public List<ReviewDTO> selectReviews(Long userId);
 
-  public List<ReviewDTO> selectCafesReviews(Long cafeId);
+  public List<ReviewDTO> selectCafesReviews(@Param("cafeId") Long cafeId);
 
+  public int deleteReview(@Param("userId") Long userId, @Param("cafeId") Long cafeId);
 }
 
