@@ -17,7 +17,7 @@
   </insert>
 
   <select id="selectUserByEmailAndPassword" resultType="com.flab.cafeguidebook.dto.UserDTO">
-    SELECT email, name, phone, address, type
+    SELECT id, email, name, phone, address, type
     FROM user
     WHERE email = #{email}
       AND password = #{password}

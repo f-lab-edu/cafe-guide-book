@@ -2,12 +2,12 @@ package com.flab.cafeguidebook.controller;
 
 import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.service.CafeService;
+import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
 import javax.servlet.http.HttpSession;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -32,7 +32,7 @@ public class CafeController {
   public ResponseEntity addCafe(HttpSession httpSession,
       @RequestBody @Validated CafeDTO cafeDTO,
       BindingResult bindingResult) {
-    Long userId = (Long) httpSession.getAttribute("userId");
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     cafeDTO.setUserId(userId);
 
     if (bindingResult.hasErrors()) {
@@ -57,7 +57,7 @@ public class CafeController {
 
   @GetMapping
   public ResponseEntity getMyAllCafe(HttpSession httpSession) {
-    Long userId = (Long) httpSession.getAttribute("userId");
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
     if (myAllCafe.size() > 0) {
       return ResponseEntity.ok().body(myAllCafe);
@@ -70,7 +70,7 @@ public class CafeController {
   @GetMapping("/{cafeId}")
   public ResponseEntity getMyCafe(@PathVariable Long cafeId,
       HttpSession httpSession) {
-    Long userId = (Long) httpSession.getAttribute("userId");
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     CafeDTO myCafe = cafeService.getMyCafe(cafeId, userId);
     if (myCafe == null) {
       LOGGER.info("사장님의 카페를 조회할 수 없습니다. cafeId ={}, loginUser={}", cafeId, userId);
@@ -84,7 +84,7 @@ public class CafeController {
   public ResponseEntity updateCafe(@PathVariable long cafeId,
       @RequestBody @Validated CafeDTO cafeDTO, BindingResult bindingResult,
       HttpSession httpSession) {
-    Long userId = (Long) httpSession.getAttribute("userId");
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
     if (bindingResult.hasErrors()) {
       bindingResult.getAllErrors().forEach(error -> {
         LOGGER.info("카페를 수정할 수 없습니다. userId = {}, cafeId = {}", userId, cafeId);
