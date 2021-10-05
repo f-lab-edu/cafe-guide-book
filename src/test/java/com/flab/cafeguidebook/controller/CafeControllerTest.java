@@ -13,9 +13,9 @@ import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.CafeDTOListFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
+import com.flab.cafeguidebook.util.SessionKeys;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,7 +55,7 @@ public class CafeControllerTest {
   public void addCafe(CafeDTO testCafeDTO) throws Exception {
 
     mockMvc.perform(post("/owner/cafe/")
-        .sessionAttr("userId", testCafeDTO.getUserId())
+        .sessionAttr(SessionKeys.USER_ID, testCafeDTO.getUserId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testCafeDTO))
         .accept(MediaType.APPLICATION_JSON_UTF8))
