@@ -28,7 +28,7 @@ public class CafeController {
   @Autowired
   private CafeService cafeService;
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping
   public ResponseEntity addCafe(HttpSession httpSession,
       @RequestBody @Validated CafeDTO cafeDTO,
       BindingResult bindingResult) {
@@ -55,7 +55,7 @@ public class CafeController {
     cafeService.denyRegistration(cafeId);
   }
 
-  @GetMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping
   public ResponseEntity getMyAllCafe(HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute("userId");
     List<CafeDTO> myAllCafe = cafeService.getMyAllCafe(userId);
@@ -67,7 +67,7 @@ public class CafeController {
     }
   }
 
-  @GetMapping(value = "/{cafeId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @GetMapping("/{cafeId}")
   public ResponseEntity getMyCafe(@PathVariable Long cafeId,
       HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute("userId");
