@@ -74,7 +74,7 @@ public class CafeControllerTest {
     }
 
     mockMvc.perform(get("/owner/cafe/")
-        .sessionAttr("userId", testCafeDTOList.get(0).getUserId())
+        .sessionAttr(SessionKeys.USER_ID, testCafeDTOList.get(0).getUserId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())

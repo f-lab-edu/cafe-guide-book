@@ -44,10 +44,6 @@ public class UserServiceImpl implements UserService {
   public void signIn(String email, String password) {
     UserDTO loginedUser = userMapper
         .selectUserByEmailAndPassword(email, HashingUtil.sha256Hashing(password));
-
-    System.out.println("loginedUser id" + loginedUser.getId());
-    System.out.println("loginedUser email" + loginedUser.getEmail());
-
     if (loginedUser == null) {
       throw new UserNotFoundException("이메일 혹은 비밀번호가 잘못되었습니다.");
     }
