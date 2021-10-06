@@ -7,7 +7,7 @@
 
 <h4>기술 블로그</h4>
 
-- [https://blog.minseong.kim/](김민성 블로그)
+- [https://blog.minseong.kim/](https://blog.minseong.kim)
 - [https://velog.io/@jsj3282](https://velog.io/@jsj3282)
 
 <h4>프로젝트 목표</h4>
@@ -24,13 +24,13 @@
 
 - Java 11
 - Spring Boot 2.5.2
-- Junit5
+- Junit5, Mokito
 - MySQL
 - Redis
 - AWS
 - jenkins
-- Docker
-- Git
+- Git, Github Actions
+- nGrinder, Naver Pinpoint
 
 <h4>프로토타입</h4>
 
