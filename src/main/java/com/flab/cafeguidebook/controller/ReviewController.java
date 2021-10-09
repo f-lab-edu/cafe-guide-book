@@ -77,4 +77,10 @@ public class ReviewController {
       throw new UnautorizedException();
     }
   }
+
+  @DeleteMapping(value = "/reviews/{reviewId}")
+  public void deleteReviews(@PathVariable Long reviewId, HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    reviewService.deleteReview(reviewId, userId);
+  }
 }

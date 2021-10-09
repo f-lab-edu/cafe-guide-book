@@ -17,9 +17,9 @@ public interface ReviewMapper {
 
   public int deleteReview(@Param("userId") Long userId, @Param("cafeId") Long cafeId);
 
-  public int updateReview(@Param("reviewId") Long reviewId, @Param("userId") Long userId,
-      @Param("newContent") String newContent);
+  public int updateReview(@Param("reviewId") Long reviewId, @Param("newContent") String newContent);
 
   public Long selectReviewOwnerId(@Param("reviewId") Long reviewId);
+  public int deleteReview(@Param("reviewId") Long reviewId);
 }
 

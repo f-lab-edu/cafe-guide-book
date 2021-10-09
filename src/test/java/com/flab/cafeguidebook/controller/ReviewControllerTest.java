@@ -4,6 +4,8 @@ import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -133,6 +135,15 @@ public class ReviewControllerTest {
     mockMvc.perform(patch("/reviews/" + review.getId())
         .param("newContent", newContent)
         .session(session))
+        .andExpect(status().isOk())
+        .andDo(print());
+  }
+
+  @Test
+  public void deleteReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+
+    mockMvc.perform(delete("/reviews/" + review.getId()))
         .andExpect(status().isOk())
         .andDo(print());
   }

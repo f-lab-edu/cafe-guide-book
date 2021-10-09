@@ -44,6 +44,14 @@ public class ReviewService {
     if (!userId.equals(ownerId)) {
       throw new UnautorizedException();
     }
-    return reviewMapper.updateReview(reviewId, userId, newContent) == 1;
+    return reviewMapper.updateReview(reviewId, newContent) == 1;
+  }
+
+  public boolean deleteReview(Long reviewId, Long userId) {
+    Long ownerId = reviewMapper.selectReviewOwnerId(reviewId);
+    if (!userId.equals(ownerId)) {
+      throw new UnautorizedException();
+    }
+    return reviewMapper.deleteReview(reviewId) == 1;
   }
 }
