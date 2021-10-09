@@ -15,4 +15,6 @@ public interface HeartMapper {
   public List<HeartDTO> selectUsersHearts(@Param("userId") Long userId);
 
   public int deleteHeart(@Param("userId") Long userId, @Param("cafeId") Long cafeId);
+
+  public List<HeartDTO> selectCafesHearts(@Param("userId") Long userId);
 }
