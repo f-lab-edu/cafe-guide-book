@@ -1,5 +1,6 @@
 package com.flab.cafeguidebook.config;
 
+import com.flab.cafeguidebook.domain.CartItem;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,6 +26,9 @@ public class RedisConfig {
   @Value("${spring.redis.password}")
   private String redisPassword;
 
+  @Value("${spring.redis.cart.port}")
+  private int redisCartPort;
+
   @Bean
   public RedisConnectionFactory redisConnectionFactory() {
 
@@ -45,6 +49,20 @@ public class RedisConfig {
         new GenericJackson2JsonRedisSerializer();
 
     RedisTemplate<String, Object> redisTemplate = new RedisTemplate<>();
+
+    redisTemplate.setConnectionFactory(redisConnectionFactory());
+    redisTemplate.setKeySerializer(new StringRedisSerializer());
+    redisTemplate.setValueSerializer(genericJackson2JsonRedisSerializer);
+
+    return redisTemplate;
+  }
+
+  @Bean
+  public RedisTemplate<String, CartItem> cartItemDTORedisTemplate() {
+    GenericJackson2JsonRedisSerializer genericJackson2JsonRedisSerializer =
+        new GenericJackson2JsonRedisSerializer();
+
+    RedisTemplate<String, CartItem> redisTemplate = new RedisTemplate<>();
 
     redisTemplate.setConnectionFactory(redisConnectionFactory());
     redisTemplate.setKeySerializer(new StringRedisSerializer());
