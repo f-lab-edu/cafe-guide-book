@@ -3,6 +3,7 @@ package com.flab.cafeguidebook.controller;
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -18,6 +19,7 @@ import com.flab.cafeguidebook.fixture.UserDTOFixtureProvider;
 import com.flab.cafeguidebook.util.SessionKeys;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,8 @@ import org.springframework.mock.web.MockHttpSession;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.context.WebApplicationContext;
 
 @ExtendWith({SpringExtension.class, UserDTOFixtureProvider.class, CafeDTOFixtureProvider.class,
@@ -115,5 +119,21 @@ public class ReviewControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(1)));
+  }
+
+  @Test
+  @Disabled
+  public void updateReviewSuccess(ReviewDTO review) throws Exception {
+    addReview(review);
+    MockHttpSession session = new MockHttpSession();
+    session.setAttribute(SessionKeys.USER_ID, review.getUserId());
+    MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
+    final String newContent = "I want to modify my review.";
+
+    mockMvc.perform(patch("/reviews/" + review.getId())
+        .param("newContent", newContent)
+        .session(session))
+        .andExpect(status().isOk())
+        .andDo(print());
   }
 }
