@@ -1,5 +1,6 @@
 package com.flab.cafeguidebook.mapper;
 
+import com.flab.cafeguidebook.domain.User;
 import com.flab.cafeguidebook.dto.UserDTO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -9,6 +10,8 @@ public interface UserMapper {
   int insertUser(UserDTO userDTO);
 
   UserDTO selectUserByEmail(String email);
+
+  User selectUserById(Long userId);
 
   UserDTO getUserInfo(String email);
 

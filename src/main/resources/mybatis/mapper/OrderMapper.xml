@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.flab.cafeguidebook.mapper.OrderMapper">
+  <insert id="insertOrder">
+    INSERT INTO order (id, cafe_id, menu_id, amount, user_id, price)
+    VALUES (#{order.id}, #{order.cafeId}, #{order.munuId}, #{order.amount}, #{order.userId}, #{order.price})
+    SELECT LAST_INSERT_ID();
+  </insert>
+
+  <insert id="insertOrderMenus">
+    INSERT INTO order_menu (order_id, menu_id, count)
+    VALUES
+    <foreach collection="orderMenuList" item="orderMenu" separator=",">
+      (#{orderMenu.orderId}, #{orderMenu.menuId}, #{orderMenu.count})
+    </foreach>
+  </insert>
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+  </insert>
+</mapper>
