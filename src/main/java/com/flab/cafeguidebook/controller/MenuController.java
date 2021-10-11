@@ -33,7 +33,7 @@ public class MenuController {
   @Autowired
   private OptionService optionService;
 
-  @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping
   public ResponseEntity addMenu(@PathVariable long cafeId,
       @RequestBody @Validated MenuDTO menuDTO,
       BindingResult bindingResult) {
@@ -49,7 +49,7 @@ public class MenuController {
     return ResponseEntity.ok(menuDTO);
   }
 
-  @PostMapping(value = "/{menuId}/options/", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping( "/{menuId}/options/")
   public ResponseEntity addOption(@PathVariable long cafeId, @PathVariable long menuId,
       @RequestBody @Validated OptionDTO optionDTO,
       BindingResult bindingResult) {
@@ -67,7 +67,7 @@ public class MenuController {
     return ResponseEntity.ok(optionDTO);
   }
 
-  @PostMapping(value = "/{menuId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping( "/{menuId}")
   public ResponseEntity updateMenu(@PathVariable long cafeId, @PathVariable long menuId,
       @RequestBody @Validated MenuDTO menuDTO, BindingResult bindingResult) {
 
@@ -81,7 +81,7 @@ public class MenuController {
     return ResponseEntity.ok(menuDTO);
   }
 
-  @PostMapping(value = "/{menuId}/options/{optionId}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+  @PostMapping( "/{menuId}/options/{optionId}")
   public ResponseEntity updateOption(@PathVariable long menuId, @PathVariable long optionId,
       @RequestBody @Validated OptionDTO optionDTO, BindingResult bindingResult) {
 
