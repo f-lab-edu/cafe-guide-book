@@ -453,6 +453,8 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <li><a href="#_2_rest_api">2. REST API</a>
 <ul class="sectlevel2">
 <li><a href="#_2_1_user">2-1. User</a></li>
+<li><a href="#_2_2_cafe">2-2. Cafe</a></li>
+<li><a href="#_2_2_cafe_2">2-2. Cafe</a></li>
 </ul>
 </li>
 </ul>
@@ -621,6 +623,328 @@ CI/CD와 클라우드 서비스를 이용해 직접 서버에 배포까지 해�
 </div>
 </div>
 </div>
+<div class="sect3">
+<h4 id="_비밀번호_변경">비밀번호 변경</h4>
+<div class="sect4">
+<h5 id="_path_parameters_2">Path Parameters</h5>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::C:\Users\User\f-lab-project\cafe-guide-book\build\generated-snippets/update-password/path-parameters.adoc[]</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_http_request_5">HTTP Request</h5>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::C:\Users\User\f-lab-project\cafe-guide-book\build\generated-snippets/update-password/http-request.adoc[]</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_5">Response Body</h5>
+<div class="paragraph">
+<p>Unresolved directive in index.adoc - include::C:\Users\User\f-lab-project\cafe-guide-book\build\generated-snippets/update-password/response-body.adoc[]
+=== 2-2. Cafe</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_좋아요_추가">좋아요 추가</h4>
+<div class="sect4">
+<h5 id="_path_parameters_3">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_6">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_6">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_좋아요_제거">좋아요 제거</h4>
+<div class="sect4">
+<h5 id="_path_parameters_4">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_7">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_7">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_2_cafe">2-2. Cafe</h3>
+<div class="sect3">
+<h4 id="_좋아요_추가_2">좋아요 추가</h4>
+<div class="sect4">
+<h5 id="_path_parameters_5">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 3. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_8">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_8">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_좋아요_제거_2">좋아요 제거</h4>
+<div class="sect4">
+<h5 id="_path_parameters_6">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 4. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_9">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_9">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_2_2_cafe_2">2-2. Cafe</h3>
+<div class="sect3">
+<h4 id="_좋아요_추가_3">좋아요 추가</h4>
+<div class="sect4">
+<h5 id="_path_parameters_7">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 5. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_10">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">POST /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_10">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_좋아요_제거_3">좋아요 제거</h4>
+<div class="sect4">
+<h5 id="_path_parameters_8">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 6. /cafes/{cafeId}/hearts</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>cafeId</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">카페의 ID</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_11">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /cafes/2341/hearts HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_11">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_회원탈퇴">회원탈퇴</h4>
+<div class="sect4">
+<h5 id="_path_parameters_9">Path Parameters</h5>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 7. /users/{email}</caption>
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">Parameter</th>
+<th class="tableblock halign-left valign-top">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>email</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">회원탈퇴할 계정의 이메일</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect4">
+<h5 id="_http_request_12">HTTP Request</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code data-lang="http" class="language-http hljs">DELETE /users/yssj2049@gmail.com HTTP/1.1
+Host: docs.api.com</code></pre>
+</div>
+</div>
+</div>
+<div class="sect4">
+<h5 id="_response_body_12">Response Body</h5>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight nowrap"><code class="language-none hljs"></code></pre>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -628,7 +952,7 @@ CI/CD와 클라우드 서비스를 이용해 직접 서버에 배포까지 해�
 <div id="footer">
 <div id="footer-text">
 Version 0.0.1-SNAPSHOT<br>
-Last updated 2021-09-11 21:48:52 +0900
+Last updated 2021-09-26 01:51:01 +0900
 </div>
 </div>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/github.min.css">
