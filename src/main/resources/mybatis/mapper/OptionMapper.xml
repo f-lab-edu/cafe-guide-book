@@ -22,21 +22,21 @@
   </update>
   <select id="selectAllOption" parameterType="long" resultType="com.flab.cafeguidebook.dto.OptionDTO">
     SELECT *
-    FROM menuoption
+    FROM MENUOPTION
     WHERE menu_id = #{menuId}
   </select>
   <select id="selectOption" parameterType="long" resultType="com.flab.cafeguidebook.dto.OptionDTO">
     SELECT *
-    FROM menuoption
+    FROM MENUOPTION
     WHERE option_id = #{optionId}
   </select>
   <delete id="deleteOption" parameterType="long">
     DELETE
-    FROM menuoption
+    FROM MENUOPTION
     WHERE option_id = #{optionId}
   </delete>
   <delete id="deleteAllOption" parameterType="long">
     DELETE
-    FROM menuoption;
+    FROM MENUOPTION;
   </delete>
 </mapper>
