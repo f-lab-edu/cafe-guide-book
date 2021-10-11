@@ -3,8 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.flab.cafeguidebook.mapper.CafeMapper">
   <insert id="insertCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
-    INSERT INTO CAFE(cafe_id,
-                     user_id,
+    INSERT INTO CAFE(user_id,
                      cafe_name,
                      biz_number,
                      tel,
@@ -22,8 +21,7 @@
                      with_pet,
                      cafe_condition,
                      cafe_registration)
-    VALUES (#{cafeId},
-            #{userId},
+    VALUES (#{userId},
             #{cafeName},
             #{bizNumber},
             #{tel},
@@ -41,35 +39,29 @@
             #{withPet},
             #{cafeCondition},
             #{cafeRegistration})
+    <selectKey resultType="long" keyProperty="cafeId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
-
-  <select id="selectMyAllCafe" parameterType="String"
+  <select id="selectMyAllCafe" parameterType="long"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
     SELECT *
-    FROM cafe
+    FROM CAFE
     WHERE user_id = #{userId}
   </select>
-
-  <select id="isMyCafe" resultType="boolean" parameterType="map">
-    SELECT EXISTS
-             (SELECT cafe_name FROM cafe WHERE cafe_id = #{cafeId} AND user_id = #{userId})
-  </select>
-
   <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
     SELECT *
-    FROM cafe
+    FROM CAFE
     WHERE cafe_id = #{cafeId}
       AND user_id = #{userId}
   </select>
-
   <delete id="deleteAllCafe">
     DELETE
     FROM CAFE;
   </delete>
-
-  <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.UpdateCafeDTO">
-    UPDATE cafe
+  <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
+    UPDATE CAFE
     SET
     <if test="cafeName != null">cafe_name = #{cafeName},</if>
     <if test="tel != null">tel = #{tel},</if>
@@ -86,23 +78,18 @@
     update_date = now()
     WHERE cafe_id = #{cafeId}
   </update>
-
-  <delete id="deleteCafe">
-    DELETE
-    FROM cafe
-    WHERE cafe_id = #{cafeId}
-      AND user_id = #{userId}
-  </delete>
-
   <update id="openCafe">
-    UPDATE cafe
-    SET cafe_condition = 'OPEN'
+    UPDATE CAFE
+    SET cafe_condition = #{cafeCondition}
     WHERE cafe_id = #{cafeId}
   </update>
-
   <update id="closeCafe">
-    UPDATE cafe
-    SET cafe_condition = 'CLOSE'
+    UPDATE CAFE
+    SET cafe_condition = #{cafeCondition}
+    WHERE cafe_id = #{cafeId}
+  </update>
+  <update id="updateRegistration">
+    UPDATE CAFE SET cafe_registration = #{cafeRegistration}
     WHERE cafe_id = #{cafeId}
   </update>
 </mapper>

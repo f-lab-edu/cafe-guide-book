@@ -1,29 +1,33 @@
 package com.flab.cafeguidebook.mapper;
 
+import com.flab.cafeguidebook.domain.Cafe;
 import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.dto.UpdateCafeDTO;
+import com.flab.cafeguidebook.enumeration.CafeCondition;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface CafeMapper {
 
-    public int insertCafe(CafeDTO cafeDTO);
+  public int insertCafe(Cafe cafe);
 
-    public List<CafeDTO> selectMyAllCafe(String userId);
+  public List<CafeDTO> selectMyAllCafe(long userId);
 
-    public boolean isMyCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
+  public boolean isMyCafe(@Param("cafeId") long cafeId, @Param("userId") long userId);
 
-    public CafeDTO selectMyCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
+  public CafeDTO selectMyCafe(@Param("cafeId") long cafeId, @Param("userId") long userId);
 
-    public void deleteAllCafe();
+  public void deleteAllCafe();
 
-    public int updateCafe(UpdateCafeDTO updateCafeDTO);
+  public int updateCafe(Cafe cafe);
 
-    public int deleteCafe(@Param("cafeId") String cafeId, @Param("userId") String userId);
+  public int updateRegistration(@Param("id") Long id,
+      @Param("registration") CafeRegistration registration);
 
-    public int openCafe(@Param("cafeId") String cafeId);
+  public int openCafe(@Param("cafeId") long cafeId, @Param("cafeCondition") CafeCondition cafeCondition);
 
-    public int closeCafe(@Param("cafeId") String cafeId);
+  public int closeCafe(@Param("cafeId") long cafeId, @Param("cafeCondition") CafeCondition cafeCondition);
+
 }
