@@ -17,4 +17,4 @@ else
 fi
 
 
-nohup $JAVA_HOME/bin/java -jar $JAR_NAME --spring.profiles.active=local > /dev/null 2>&1 &
+nohup java -jar $JAR_NAME --spring.profiles.active=release > /dev/null 2>&1 &

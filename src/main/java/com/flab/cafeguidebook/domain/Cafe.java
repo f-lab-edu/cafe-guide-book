@@ -79,6 +79,23 @@ public class Cafe {
     this.cafeRegistration = cafeRegistration;
   }
 
+  public Cafe(Long userId, Long cafeId, String cafeName, String bizNumber, String tel, String addressCode, String addressDetail, String operatingTime, String cafeInfo,
+      String socialMedia, Boolean wifi, Boolean reservation, Boolean parkingSpace, Boolean noKidsZone, Boolean withPet) {
+    this.userId = userId;
+    this.cafeId = cafeId;
+    this.cafeName = cafeName;
+    this.bizNumber = bizNumber;
+    this.tel = tel;
+    this.addressCode = addressCode;
+    this.addressDetail = addressDetail;
+    this.socialMedia = socialMedia;
+    this.wifi = wifi;
+    this.reservation = reservation;
+    this.parkingSpace = parkingSpace;
+    this.noKidsZone = noKidsZone;
+    this.withPet = withPet;
+  }
+
   public static Builder builder() {
     return new Builder();
   }
@@ -376,7 +393,6 @@ public class Cafe {
           this.cafeInfo, this.socialMedia, this.registrationDate, this.updateDate, this.wifi,
           this.reservation, this.parkingSpace, this.noKidsZone, this.withPet,
           this.cafeCondition, this.cafeRegistration);
-
     }
   }
 }

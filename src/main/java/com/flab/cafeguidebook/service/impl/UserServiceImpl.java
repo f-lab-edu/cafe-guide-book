@@ -44,12 +44,11 @@ public class UserServiceImpl implements UserService {
   public void signIn(String email, String password) {
     UserDTO loginedUser = userMapper
         .selectUserByEmailAndPassword(email, HashingUtil.sha256Hashing(password));
-
     if (loginedUser == null) {
       throw new UserNotFoundException("이메일 혹은 비밀번호가 잘못되었습니다.");
     }
 
-    httpSession.setAttribute(SessionKeys.USER_ID, loginedUser.getEmail());
+    httpSession.setAttribute(SessionKeys.USER_ID, loginedUser.getId());
   }
 
   @Override
