@@ -40,4 +40,23 @@
     update_menu_date = now()
     WHERE menu_id = #{menuId}
   </update>
+  <select id="selectAllMenu" parameterType="long" resultType="com.flab.cafeguidebook.dto.MenuDTO">
+    SELECT *
+    FROM MENU
+    WHERE cafe_id = #{cafeId}
+  </select>
+  <select id="selectMenu" parameterType="long" resultType="com.flab.cafeguidebook.dto.MenuDTO">
+    SELECT *
+    FROM MENU
+    WHERE menu_id = #{menuId}
+  </select>
+  <delete id="deleteMenu" parameterType="long">
+    DELETE
+    FROM MENU
+    WHERE menu_id = #{menuId}
+  </delete>
+  <delete id="deleteAllMenu">
+    DELETE
+    FROM MENU;
+  </delete>
 </mapper>

@@ -1,6 +1,7 @@
 package com.flab.cafeguidebook.controller;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.hamcrest.Matchers.hasSize;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -8,8 +9,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.dto.MenuDTO;
 import com.flab.cafeguidebook.dto.OptionDTO;
+import com.flab.cafeguidebook.fixture.MenuDTOListFixtureProvider;
 import com.flab.cafeguidebook.fixture.MenuDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.OptionDTOFixtureProvider;
+import com.flab.cafeguidebook.fixture.OptionDTOListFixtureProvider;
+import com.flab.cafeguidebook.mapper.MenuMapper;
+import com.flab.cafeguidebook.mapper.OptionMapper;
+import java.util.List;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +28,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
-@ExtendWith({SpringExtension.class, MenuDTOFixtureProvider.class, OptionDTOFixtureProvider.class})
+@ExtendWith({SpringExtension.class, MenuDTOFixtureProvider.class, OptionDTOFixtureProvider.class,
+    MenuDTOListFixtureProvider.class, OptionDTOListFixtureProvider.class})
 @SpringBootTest
 public class MenuControllerTest {
 
@@ -31,6 +39,12 @@ public class MenuControllerTest {
   private ObjectMapper objectMapper;
 
   @Autowired
+  private MenuMapper menuMapper;
+
+  @Autowired
+  private OptionMapper optionMapper;
+
+  @Autowired
   private WebApplicationContext webApplicationContext;
 
   @BeforeEach
@@ -38,11 +52,19 @@ public class MenuControllerTest {
     this.mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
   }
 
+  @AfterEach
+  public void deleteMenuAndOption() {
+    menuMapper.deleteAllMenu();
+    optionMapper.deleteAllOption();
+  }
+
   @Test
   public void addMenu(MenuDTO testMenuDTO) throws Exception {
 
-    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
-    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
     mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu")
         .contentType(MediaType.APPLICATION_JSON_UTF8)
@@ -62,9 +84,11 @@ public class MenuControllerTest {
 
     final long CAFEID = 1;
 
-    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/")
+    mockMvc
+        .perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/")
             .contentType(MediaType.APPLICATION_JSON_UTF8)
             .content(objectMapper.writeValueAsString(testOptionDTO))
             .accept(MediaType.APPLICATION_JSON_UTF8))
@@ -83,13 +107,16 @@ public class MenuControllerTest {
 
     testMenuDTO.setMenuId(MENUID);
 
-    String menuGroupEnum = testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
-    String menuStatusEnum = testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
-        .contentType(MediaType.APPLICATION_JSON_UTF8)
-        .content(objectMapper.writeValueAsString(testMenuDTO))
-        .accept(MediaType.APPLICATION_JSON_UTF8))
+    mockMvc
+        .perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(objectMapper.writeValueAsString(testMenuDTO))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("menuId").value(testMenuDTO.getMenuId()))
@@ -112,9 +139,96 @@ public class MenuControllerTest {
     testOptionDTO.setMenuId(MENUID);
     testOptionDTO.setOptionId(OPTIONID);
 
-    String optionStatusEnum = testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
 
-    mockMvc.perform(post("/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
+    mockMvc.perform(post(
+        "/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
+            .getOptionId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .content(objectMapper.writeValueAsString(testOptionDTO))
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("optionId").value(testOptionDTO.getOptionId()))
+        .andExpect(jsonPath("optionName").value(testOptionDTO.getOptionName()))
+        .andExpect(jsonPath("optionPrice").value(testOptionDTO.getOptionPrice()))
+        .andExpect(jsonPath("optionStatus").value(optionStatusEnum));
+  }
+
+  @Test
+  public void getAllMenu(List<MenuDTO> testMenuDTOList) throws Exception {
+
+    for (int i = 0; i < testMenuDTOList.size(); i++) {
+      addMenu(testMenuDTOList.get(i));
+    }
+
+    mockMvc.perform(get("/owner/cafe/" + testMenuDTOList.get(0).getCafeId() + "/menu")
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(testMenuDTOList.size())));
+  }
+
+  @Test
+  public void getAllOption(MenuDTO testMenuDTO, List<OptionDTO> testOptionDTOList)
+      throws Exception {
+
+    addMenu(testMenuDTO);
+
+    for (int i = 0; i < testOptionDTOList.size(); i++) {
+      addOption(testOptionDTOList.get(i));
+    }
+
+    mockMvc
+        .perform(get("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testOptionDTOList.get(0)
+            .getMenuId() + "/options/")
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(testOptionDTOList.size())));
+
+  }
+
+  @Test
+  public void getMenu(MenuDTO testMenuDTO) throws Exception {
+
+    addMenu(testMenuDTO);
+
+    String menuGroupEnum =
+        testMenuDTO.getMenuGroup() == null ? null : testMenuDTO.getMenuGroup().toString();
+    String menuStatusEnum =
+        testMenuDTO.getMenuStatus() == null ? null : testMenuDTO.getMenuStatus().toString();
+
+    mockMvc
+        .perform(post("/owner/cafe/" + testMenuDTO.getCafeId() + "/menu/" + testMenuDTO.getMenuId())
+            .contentType(MediaType.APPLICATION_JSON_UTF8)
+            .content(objectMapper.writeValueAsString(testMenuDTO))
+            .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("cafeId").value(testMenuDTO.getCafeId()))
+        .andExpect(jsonPath("menuName").value(testMenuDTO.getMenuName()))
+        .andExpect(jsonPath("menuPrice").value(testMenuDTO.getMenuPrice()))
+        .andExpect(jsonPath("menuGroup").value(menuGroupEnum))
+        .andExpect(jsonPath("menuStatus").value(menuStatusEnum));
+
+  }
+
+  @Test
+  public void getOption(OptionDTO testOptionDTO) throws Exception {
+
+    final long CAFEID = 1;
+
+    addOption(testOptionDTO);
+
+    String optionStatusEnum =
+        testOptionDTO.getOptionStatus() == null ? null : testOptionDTO.getOptionStatus().toString();
+
+    mockMvc.perform(post(
+        "/owner/cafe/" + CAFEID + "/menu/" + testOptionDTO.getMenuId() + "/options/" + testOptionDTO
             .getOptionId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testOptionDTO))
