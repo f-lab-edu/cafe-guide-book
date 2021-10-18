@@ -69,6 +69,7 @@ public class CafeControllerTest {
 
   @Test
   public void getMyAllCafe(List<CafeDTO> testCafeDTOList) throws Exception {
+
     for (int i = 0; i < testCafeDTOList.size(); i++) {
       addCafe(testCafeDTOList.get(i));
     }
@@ -85,12 +86,10 @@ public class CafeControllerTest {
   @Test
   public void updateCafe(CafeDTO testCafeDTO) throws Exception {
 
-    final long CAFEID = 1;
-    testCafeDTO.setCafeId(CAFEID);
     addCafe(testCafeDTO);
 
-    mockMvc.perform(patch("/owner/cafe/" + CAFEID)
-        .sessionAttr("userId", testCafeDTO.getUserId())
+    mockMvc.perform(patch("/owner/cafe/" + testCafeDTO.getCafeId())
+        .sessionAttr(SessionKeys.USER_ID, testCafeDTO.getUserId())
         .contentType(MediaType.APPLICATION_JSON_UTF8)
         .content(objectMapper.writeValueAsString(testCafeDTO))
         .accept(MediaType.APPLICATION_JSON_UTF8))

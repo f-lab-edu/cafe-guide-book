@@ -81,7 +81,7 @@ public class CafeController {
   }
 
   @PatchMapping("/{cafeId}")
-  public ResponseEntity updateCafe(@PathVariable long cafeId,
+  public ResponseEntity updateCafe(@PathVariable Long cafeId,
       @RequestBody @Validated CafeDTO cafeDTO, BindingResult bindingResult,
       HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
@@ -93,5 +93,29 @@ public class CafeController {
     }
     cafeService.updateCafe(cafeDTO);
     return ResponseEntity.ok(cafeDTO);
+  }
+
+  @PatchMapping("/{cafeId}/open")
+  public ResponseEntity openCafe (@PathVariable Long cafeId, HttpSession httpSession){
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    boolean openCafe = cafeService.openCafe(cafeId);
+    if (!openCafe) {
+      LOGGER.info("카페를 오픈할 수 없습니다. userId = {}, cafeId = {}", userId, cafeId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok().build();
+    }
+  }
+
+  @PatchMapping("/{cafeId}/close")
+  public ResponseEntity closeCafe (@PathVariable Long cafeId, HttpSession httpSession){
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    boolean closeCafe = cafeService.closeCafe(cafeId);
+    if (!closeCafe) {
+      LOGGER.info("카페를 마감할 수 없습니다. userId = {}, cafeId = {}", userId, cafeId);
+      return ResponseEntity.badRequest().build();
+    } else {
+      return ResponseEntity.ok().build();
+    }
   }
 }

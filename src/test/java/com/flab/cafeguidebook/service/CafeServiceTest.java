@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.flab.cafeguidebook.converter.CafeConverter.CafeDTOToCafeConverter;
 import com.flab.cafeguidebook.domain.Cafe;
+import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.fixture.CafeDTOListFixtureProvider;
 import com.flab.cafeguidebook.dto.CafeDTO;
 import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
@@ -79,5 +80,17 @@ public class CafeServiceTest {
     when(cafeDTOToCafeConverter.convert(testCafeDTO)).thenReturn(testCafe);
     given(cafeMapper.updateCafe(testCafe)).willReturn(1);
     assertThat(cafeService.updateCafe(testCafeDTO)).isEqualTo(true);
+  }
+
+  @Test
+  public void openCafe(CafeDTO testCafeDTO) {
+    given(cafeMapper.openCafe(testCafeDTO.getCafeId(), CafeCondition.OPEN)).willReturn(1);
+    assertThat(cafeService.openCafe(testCafeDTO.getCafeId())).isEqualTo(true);
+  }
+
+  @Test
+  public void closeCafe(CafeDTO testCafeDTO) {
+    given(cafeMapper.closeCafe(testCafeDTO.getCafeId(), CafeCondition.CLOSE)).willReturn(1);
+    assertThat(cafeService.closeCafe(testCafeDTO.getCafeId())).isEqualTo(true);
   }
 }

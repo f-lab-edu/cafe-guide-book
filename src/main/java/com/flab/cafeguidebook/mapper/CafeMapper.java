@@ -2,6 +2,7 @@ package com.flab.cafeguidebook.mapper;
 
 import com.flab.cafeguidebook.domain.Cafe;
 import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.enumeration.CafeCondition;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
@@ -24,5 +25,9 @@ public interface CafeMapper {
 
   public int updateRegistration(@Param("id") Long id,
       @Param("registration") CafeRegistration registration);
+
+  public int openCafe(@Param("cafeId") long cafeId, @Param("cafeCondition") CafeCondition cafeCondition);
+
+  public int closeCafe(@Param("cafeId") long cafeId, @Param("cafeCondition") CafeCondition cafeCondition);
 
 }

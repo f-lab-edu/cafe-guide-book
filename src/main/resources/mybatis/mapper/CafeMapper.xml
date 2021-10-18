@@ -39,15 +39,16 @@
             #{withPet},
             #{cafeCondition},
             #{cafeRegistration})
+    <selectKey resultType="long" keyProperty="cafeId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
-
   <select id="selectMyAllCafe" parameterType="long"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
     SELECT *
     FROM CAFE
     WHERE user_id = #{userId}
   </select>
-
   <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
     SELECT *
@@ -55,12 +56,10 @@
     WHERE cafe_id = #{cafeId}
       AND user_id = #{userId}
   </select>
-
   <delete id="deleteAllCafe">
     DELETE
     FROM CAFE;
   </delete>
-
   <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
     UPDATE CAFE
     SET
@@ -79,11 +78,19 @@
     update_date = now()
     WHERE cafe_id = #{cafeId}
   </update>
-
+  <update id="openCafe">
+    UPDATE CAFE
+    SET cafe_condition = #{cafeCondition}
+    WHERE cafe_id = #{cafeId}
+  </update>
+  <update id="closeCafe">
+    UPDATE CAFE
+    SET cafe_condition = #{cafeCondition}
+    WHERE cafe_id = #{cafeId}
+  </update>
   <update id="updateRegistration">
-        UPDATE CAFE SET cafe_registration = #{cafeRegistration}
-        WHERE cafe_id = #{cafeId}
-    </update>
-
+    UPDATE CAFE SET cafe_registration = #{cafeRegistration}
+    WHERE cafe_id = #{cafeId}
+  </update>
 </mapper>
 

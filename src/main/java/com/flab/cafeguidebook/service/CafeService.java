@@ -2,6 +2,7 @@ package com.flab.cafeguidebook.service;
 
 import com.flab.cafeguidebook.converter.CafeConverter.CafeDTOToCafeConverter;
 import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.enumeration.CafeCondition;
 import com.flab.cafeguidebook.enumeration.CafeRegistration;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
@@ -41,5 +42,15 @@ public class CafeService {
   public boolean updateCafe(CafeDTO cafeDTO) {
     int updateCafe = cafeMapper.updateCafe(cafeDTOToCafeConverter.convert(cafeDTO));
     return updateCafe == 1;
+  }
+
+  public boolean openCafe(Long cafeId) {
+    int openCafe = cafeMapper.openCafe(cafeId, CafeCondition.OPEN);
+    return openCafe == 1;
+  }
+
+  public boolean closeCafe(Long cafeId) {
+    int closeCafe = cafeMapper.closeCafe(cafeId, CafeCondition.CLOSE);
+    return closeCafe == 1;
   }
 }

@@ -11,6 +11,9 @@
             #{menuId},
             #{optionPrice},
             #{optionStatus})
+    <selectKey resultType="long" keyProperty="optionId" order="AFTER">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
   </insert>
   <update id="updateOption" parameterType="com.flab.cafeguidebook.dto.OptionDTO">
     UPDATE MENUOPTION
