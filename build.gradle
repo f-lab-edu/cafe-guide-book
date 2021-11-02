@@ -15,6 +15,8 @@ ext {
     springRestDocsMockMvcVersion = "2.0.5.RELEASE"
     snippetsDir = file('build/generated-snippets')
     springBootStarterAopVersion = "2.5.4"
+    springDataRedisVersion = "2.5.5"
+    lettuceCoreVersion = "6.1.5.RELEASE"
 }
 
 group = 'com.flab'
@@ -42,10 +44,13 @@ dependencies {
     implementation "com.google.guava:guava:$springGuavaVersion"
     implementation "org.mockito:mockito-core:$springMokitoVersion"
     implementation "com.zaxxer:HikariCP:$springHikariCPVersion"
+    implementation 'org.projectlombok:lombok:1.18.18'
     testImplementation "org.springframework.boot:spring-boot-starter-test:$springBootVersion"
     testImplementation "org.springframework.restdocs:spring-restdocs-mockmvc:$springRestDocsMockMvcVersion"
     asciidoctorExtensions "org.springframework.restdocs:spring-restdocs-asciidoctor:$springRestDocsMockMvcVersion"
     implementation "org.springframework.boot:spring-boot-starter-aop:$springBootStarterAopVersion"
+    implementation group: 'org.springframework.data', name: 'spring-data-redis', version: "$springDataRedisVersion"
+    implementation group: 'io.lettuce', name: 'lettuce-core', version: "$lettuceCoreVersion"
 }
 
 test {

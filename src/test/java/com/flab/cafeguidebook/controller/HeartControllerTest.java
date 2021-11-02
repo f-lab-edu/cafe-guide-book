@@ -3,6 +3,8 @@ package com.flab.cafeguidebook.controller;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentRequest;
 import static com.flab.cafeguidebook.util.ApiDocumentUtils.getDocumentResponse;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.hasSize;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
@@ -14,6 +16,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.flab.cafeguidebook.dto.CafeDTO;
@@ -171,5 +174,20 @@ public class HeartControllerTest {
         .andDo(print())
         .andExpect(status().isOk())
         .andExpect(jsonPath("$", hasSize(0)));
+  }
+
+  @Test
+  public void getCafesHeartsSuccess(UserDTO user, CafeDTO cafe) throws Exception {
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+    addHeart(user, cafe);
+
+    mockMvc.perform(get("/owner/cafe/hearts/" + cafe.getCafeId())
+        .contentType(MediaType.APPLICATION_JSON_UTF8)
+        .accept(MediaType.APPLICATION_JSON_UTF8))
+        .andDo(print())
+        .andExpect(status().isOk())
+        .andExpect(jsonPath("$", hasSize(4)));
   }
 }
