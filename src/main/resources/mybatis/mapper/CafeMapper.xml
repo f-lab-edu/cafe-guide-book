@@ -76,12 +76,17 @@
     WHERE cafe_id = #{cafeId}
   </update>
   <update id="updateRegistration">
-        UPDATE CAFE SET cafe_registration = #{cafeRegistration}
-        WHERE cafe_id = #{cafeId}
+    UPDATE CAFE
+    SET cafe_registration = #{cafeRegistration}
+    WHERE cafe_id = #{cafeId}
   </update>
   <delete id="deleteAllCafe">
     DELETE
     FROM CAFE;
   </delete>
+  <select id="isMyCafe" resultType="boolean">
+    SELECT EXISTS
+             (SELECT cafe_name FROM CAFE WHERE user_id = #{userId} AND cafe_id = #{cafeId})
+  </select>
 </mapper>
 

@@ -65,10 +65,15 @@ public class CafeController {
   @DeleteMapping("/{cafeId}")
   public ResponseEntity deleteCafe(@PathVariable Long cafeId, HttpSession httpSession) {
     Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    boolean isMyCafe = cafeService.validateMyCafe(userId, cafeId);
+    if (!isMyCafe) {
+      LOGGER.info("카페를 삭제할 권한이 없습니다. userId ={}, cafeId={}", userId, cafeId);
+      return ResponseEntity.status(401).build();
+    }
     boolean deleteCafe = cafeService.deleteCafe(cafeId);
     if (!deleteCafe) {
       LOGGER.info("카페를 삭제할 수 없습니다. userId ={}, cafeId={}", userId, cafeId);
-      return ResponseEntity.badRequest().build();
+      return ResponseEntity.internalServerError().build();
     } else {
       return ResponseEntity.ok().build();
     }
@@ -114,8 +119,8 @@ public class CafeController {
     return ResponseEntity.ok(cafeDTO);
   }
 
-  @GetMapping("/{cafeId}/hearts")
-  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
-    return heartService.getCafesHearts(cafeId);
-  }
+//  @GetMapping("/{cafeId}/hearts")
+//  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
+//    return heartService.getCafesHearts(cafeId);
+//  }
 }

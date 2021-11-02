@@ -48,4 +48,8 @@ public class CafeService {
     return updateCafe == 1;
 
   }
+
+  public boolean validateMyCafe(Long userId, Long cafeId) {
+    return cafeMapper.isMyCafe(userId, cafeId);
+  }
 }
