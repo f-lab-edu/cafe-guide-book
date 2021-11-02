@@ -119,8 +119,8 @@ public class CafeController {
     return ResponseEntity.ok(cafeDTO);
   }
 
-//  @GetMapping("/{cafeId}/hearts")
-//  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
-//    return heartService.getCafesHearts(cafeId);
-//  }
+  @GetMapping("/{cafeId}/hearts")
+  public List<HeartDTO> getCafesHearts(@PathVariable Long cafeId) {
+    return heartService.getCafesHearts(cafeId);
+  }
 }
