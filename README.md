@@ -43,6 +43,7 @@
 
 ### [김민성 블로그](https://blog.minseong.kim)
 
+- [nGrinder과 Pinpoint를 통한 부하 테스트 및 힙덤프 분석](https://blog.minseong.kim/ngrinder-test-pinpoint-monitor.html)
 - [부하테스트를 통한 HikariCP의 적절한 Connection Pool Size 도출](https://blog.minseong.kim/db-connection-pool-size.html)
 - [Redis Pipeline를 통한 네트워크 병목 해결](https://blog.minseong.kim/about-redis-pipelining.html)
 - [MySQL Replication을 통한 부하 분산](https://blog.minseong.kim/spring-with-mysql-replication.html)
