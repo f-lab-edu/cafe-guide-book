@@ -30,6 +30,11 @@ public class CafeService {
     return cafeMapper.updateRegistration(cafeId, CafeRegistration.DENY) == 1;
   }
 
+  public boolean deleteCafe(Long cafeId) {
+    int deleteCafe = cafeMapper.deleteCafe(cafeId);
+    return deleteCafe == 1;
+  }
+
   public List<CafeDTO> getMyAllCafe(Long userId) {
     return cafeMapper.selectMyAllCafe(userId);
   }
@@ -41,5 +46,10 @@ public class CafeService {
   public boolean updateCafe(CafeDTO cafeDTO) {
     int updateCafe = cafeMapper.updateCafe(cafeDTOToCafeConverter.convert(cafeDTO));
     return updateCafe == 1;
+
+  }
+
+  public boolean validateMyCafe(Long userId, Long cafeId) {
+    return cafeMapper.isMyCafe(userId, cafeId);
   }
 }

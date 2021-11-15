@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +59,23 @@ public class CafeController {
       cafeService.approveRegistration(cafeId);
     } else {
       cafeService.denyRegistration(cafeId);
+    }
+  }
+
+  @DeleteMapping("/{cafeId}")
+  public ResponseEntity deleteCafe(@PathVariable Long cafeId, HttpSession httpSession) {
+    Long userId = (Long) httpSession.getAttribute(SessionKeys.USER_ID);
+    boolean isMyCafe = cafeService.validateMyCafe(userId, cafeId);
+    if (!isMyCafe) {
+      LOGGER.info("카페를 삭제할 권한이 없습니다. userId ={}, cafeId={}", userId, cafeId);
+      return ResponseEntity.status(401).build();
+    }
+    boolean deleteCafe = cafeService.deleteCafe(cafeId);
+    if (!deleteCafe) {
+      LOGGER.info("카페를 삭제할 수 없습니다. userId ={}, cafeId={}", userId, cafeId);
+      return ResponseEntity.internalServerError().build();
+    } else {
+      return ResponseEntity.ok().build();
     }
   }
 

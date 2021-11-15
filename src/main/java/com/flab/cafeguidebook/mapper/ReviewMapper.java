@@ -31,5 +31,5 @@ public interface ReviewMapper {
 
   @DataSource(dataSourceType = DataSourceType.MASTER)
   public int deleteReview(@Param("reviewId") Long reviewId);
-}
 
+}

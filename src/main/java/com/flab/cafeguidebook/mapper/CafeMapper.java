@@ -12,6 +12,8 @@ import org.apache.ibatis.annotations.Param;
 @Mapper
 public interface CafeMapper {
 
+  public int insertCafe(CafeDTO cafeDTO);
+
   @DataSource(dataSourceType = DataSourceType.MASTER)
   public int insertCafe(Cafe cafe);
 
@@ -33,5 +35,7 @@ public interface CafeMapper {
   @DataSource(dataSourceType = DataSourceType.MASTER)
   public int updateRegistration(@Param("id") Long id,
       @Param("registration") CafeRegistration registration);
+
+  public int deleteCafe(@Param("cafeId") Long cafeId);
 
 }

@@ -40,27 +40,23 @@
             #{cafeCondition},
             #{cafeRegistration})
   </insert>
-
+  <delete id="deleteCafe">
+    DELETE
+    FROM cafe
+    WHERE cafe_id = #{cafeId}
+  </delete>
   <select id="selectMyAllCafe" parameterType="long"
     resultType="com.flab.cafeguidebook.dto.CafeDTO">
     SELECT *
     FROM CAFE
     WHERE user_id = #{userId}
   </select>
-
   <select id="selectMyCafe" resultType="com.flab.cafeguidebook.dto.CafeDTO"
     parameterType="map">
     SELECT *
     FROM CAFE
     WHERE cafe_id = #{cafeId}
-      AND user_id = #{userId}
   </select>
-
-  <delete id="deleteAllCafe">
-    DELETE
-    FROM CAFE;
-  </delete>
-
   <update id="updateCafe" parameterType="com.flab.cafeguidebook.dto.CafeDTO">
     UPDATE CAFE
     SET
@@ -79,11 +75,18 @@
     update_date = now()
     WHERE cafe_id = #{cafeId}
   </update>
-
   <update id="updateRegistration">
-        UPDATE CAFE SET cafe_registration = #{cafeRegistration}
-        WHERE cafe_id = #{cafeId}
-    </update>
-
+    UPDATE CAFE
+    SET cafe_registration = #{cafeRegistration}
+    WHERE cafe_id = #{cafeId}
+  </update>
+  <delete id="deleteAllCafe">
+    DELETE
+    FROM CAFE;
+  </delete>
+  <select id="isMyCafe" resultType="boolean">
+    SELECT EXISTS
+             (SELECT cafe_name FROM CAFE WHERE user_id = #{userId} AND cafe_id = #{cafeId})
+  </select>
 </mapper>
 

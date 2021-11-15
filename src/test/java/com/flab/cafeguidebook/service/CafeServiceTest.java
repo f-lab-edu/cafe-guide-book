@@ -4,13 +4,14 @@ import static com.flab.cafeguidebook.enumeration.CafeRegistration.APPROVAL;
 import static com.flab.cafeguidebook.enumeration.CafeRegistration.DENY;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.flab.cafeguidebook.dto.CafeDTO;
+import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.converter.CafeConverter.CafeDTOToCafeConverter;
 import com.flab.cafeguidebook.domain.Cafe;
 import com.flab.cafeguidebook.fixture.CafeDTOListFixtureProvider;
-import com.flab.cafeguidebook.dto.CafeDTO;
-import com.flab.cafeguidebook.fixture.CafeDTOFixtureProvider;
 import com.flab.cafeguidebook.fixture.CafeFixtureProvider;
 import com.flab.cafeguidebook.mapper.CafeMapper;
 import java.util.List;
@@ -56,6 +57,13 @@ public class CafeServiceTest {
         .willReturn(1);
 
     assertThat(cafeService.denyRegistration(33333L)).isEqualTo(true);
+  }
+
+  @Test
+  public void deleteCafe(CafeDTO testCafeDTO) {
+    given(cafeMapper.deleteCafe(testCafeDTO.getCafeId())).willReturn(1);
+    assertThat(cafeService.deleteCafe(testCafeDTO.getCafeId())).isEqualTo(true);
+    verify(cafeMapper).deleteCafe(testCafeDTO.getCafeId());
   }
 
   @Test
