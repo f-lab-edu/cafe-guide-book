@@ -56,6 +56,10 @@
 - [REST API란?](https://velog.io/@jsj3282/REST-API)
 - [객체 지향 설계 5원칙](https://velog.io/@jsj3282/%EA%B0%9D%EC%B2%B4-%EC%A7%80%ED%96%A5-%EC%84%A4%EA%B3%84-5%EC%9B%90%EC%B9%99-SOLID)
 
+## ☕ Entity Relation Diagram
+
+![](https://user-images.githubusercontent.com/44136364/142628592-48f2f134-d004-46ac-9dd7-12881fe2ea7e.png)
+
 ## ☕ 사용기술
 
 * Java 11
